@@ -49,6 +49,12 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    StepTimer1: TTimer;
+    StepTimer2: TTimer;
+    StepTimer3: TTimer;
+    StepTimer4: TTimer;
+    StepTimer5: TTimer;
+    StepTimer6: TTimer;
     StopTimer: TTimer;
     StartTimeLE: TLabeledEdit;
     FinishTimeLE: TLabeledEdit;
@@ -255,6 +261,12 @@ type
     procedure Step4UseCBChange(Sender: TObject);
     procedure Step5UseCBChange(Sender: TObject);
     procedure Step6UseCBChange(Sender: TObject);
+    procedure StepTimer1Finished(Sender: TObject);
+    procedure StepTimer2Finished(Sender: TObject);
+    procedure StepTimer3Finished(Sender: TObject);
+    procedure StepTimer4Finished(Sender: TObject);
+    procedure StepTimer5Finished(Sender: TObject);
+    procedure StepTimer6Finished(Sender: TObject);
     procedure StopBBClick(Sender: TObject);
     procedure StopTimerFinished;
     procedure OverallTimerFinished;
@@ -267,7 +279,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.30';
+  Version : string = '2.31';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -1129,6 +1141,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer1.Interval:= trunc(timeCalc);
    //end step 1
 
    // step 2-------------------------------------------------------------------
@@ -1311,6 +1325,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer2.Interval:= trunc(timeStep);
    end; //end step 2
 
    //step 3--------------------------------------------------------------------
@@ -1476,7 +1492,7 @@ begin
      or (Pump3OnOffCB1.Checked and Pump3OnOffCB3.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG3.ItemIndex))
      or (Pump4OnOffCB1.Checked and Pump4OnOffCB3.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG3.ItemIndex)) then
     begin
-     // only output if there is no signle run
+     // only output if there is no single run
      if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
      begin
       command:= command + 'I0000M1000'; // stop for 1000 ms
@@ -1493,6 +1509,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer3.Interval:= trunc(timeStep);
    end; //end step 3
 
    // step 4-------------------------------------------------------------------
@@ -1658,7 +1676,7 @@ begin
      or (Pump3OnOffCB1.Checked and Pump3OnOffCB4.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG4.ItemIndex))
      or (Pump4OnOffCB1.Checked and Pump4OnOffCB4.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG4.ItemIndex)) then
     begin
-     // only output if there is no signle run
+     // only output if there is no single run
      if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
      begin
       command:= command + 'I0000M1000'; // stop for 1000 ms
@@ -1675,6 +1693,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer4.Interval:= trunc(timeStep);
    end; //end step 4
 
    // step 5-------------------------------------------------------------------
@@ -1840,7 +1860,7 @@ begin
      or (Pump3OnOffCB1.Checked and Pump3OnOffCB5.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG5.ItemIndex))
      or (Pump4OnOffCB1.Checked and Pump4OnOffCB5.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG5.ItemIndex)) then
     begin
-     // only output if there is no signle run
+     // only output if there is no single run
      if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
      begin
       command:= command + 'I0000M1000'; // stop for 1000 ms
@@ -1857,6 +1877,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer5.Interval:= trunc(timeStep);
    end; //end step 5
 
    // step 6 ------------------------------------------------------------------
@@ -2007,7 +2029,7 @@ begin
     or (Pump3OnOffCB1.Checked and Pump3OnOffCB6.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG6.ItemIndex))
     or (Pump4OnOffCB1.Checked and Pump4OnOffCB6.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG6.ItemIndex)) then
    begin
-    // only output if there is no signle run
+    // only output if there is no single run
     if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
     begin
      command:= command + 'I0000M1000'; // stop for 1000 ms
@@ -2023,6 +2045,8 @@ begin
     result:= False;
     exit;
    end;
+   // set timer interval
+   StepTimer6.Interval:= trunc(timeStep);
    end; //end step 6
 
    // end loop flag
@@ -2174,7 +2198,7 @@ begin
     if ser.LastError = 9997 then
     begin
      StopBB.Enabled:= False;
-     exit; // we cannot close socket or free when the connection timed out
+     exit; // we cannot close socket or free if the connection timed out
     end;
     ser.CloseSocket;
     ser.Free;
@@ -2182,7 +2206,7 @@ begin
     exit;
    end;
   end
-  else
+  else // no serial connection
   begin
    RunBB.Enabled:= False;
    RunFreeBB.Enabled:= False;
@@ -2196,7 +2220,7 @@ begin
   RunSettingsGB.Enabled:= False;
   for j:= 1 to 6 do
    (FindComponent('Step' + IntToStr(j) + 'TS')
-      as TTabSheet).Enabled := False;
+      as TTabSheet).Enabled:= False;
   RepeatOutputLE.Visible:= False;
   IndicatorPanelP.Caption:= 'Pumps are running';
   IndicatorPanelP.Color:= clRed;
@@ -2228,6 +2252,17 @@ begin
   OverallTimer.Enabled:= True;
   // set time that will later be evaluated when the timer ends
   globalTime:= time;
+  // show first tab and start its timer
+  RepeatPC.ActivePage:= Step1TS;
+  StepTimer1.Enabled:= true;
+  // do not show unused steps
+  for j:= 2 to 6 do
+  begin
+   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Checked = False then
+    (FindComponent('Step' + IntToStr(j) + 'TS')
+     as TTabSheet).TabVisible:= False;
+  end;
 
 end;
 
@@ -2291,8 +2326,119 @@ begin
  // enable all setting possibilities
  RunSettingsGB.Enabled:= True;
  for j:= 1 to 6 do
-   (FindComponent('Step' + IntToStr(j) + 'TS')
-      as TTabSheet).Enabled := True;
+ begin
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+     as TTabSheet).Enabled:= True;
+  // stop all timers
+  (FindComponent('StepTimer' + IntToStr(j))
+     as TTimer).Enabled:= False;
+ end;
+ // view tab after last used step
+  for j:= 5 downto 2 do
+  begin
+   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Checked = True then
+    begin
+     (FindComponent('Step' + IntToStr(j+1) + 'TS')
+      as TTabSheet).TabVisible:= True;
+     break;
+    end;
+  end;
+  // tab must always be visible
+  Step2TS.TabVisible:= True;
+
+end;
+
+procedure TMainForm.StepTimer1Finished(Sender: TObject);
+begin
+ StepTimer1.Enabled:= False;
+ // if there is a step 2, start its timer and show its tab
+ if Step2UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer2.Enabled:= True;
+  RepeatPC.ActivePage:= Step2TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer2Finished(Sender: TObject);
+begin
+ StepTimer2.Enabled:= False;
+ // if there is a step 3, start its timer and show its tab
+ if Step3UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer3.Enabled:= True;
+  RepeatPC.ActivePage:= Step3TS;
+ end
+ else // there might be a repeat
+ begin
+  // switch to step 1
+  StepTimer1.Enabled:= True;
+  RepeatPC.ActivePage:= Step1TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer3Finished(Sender: TObject);
+begin
+ StepTimer3.Enabled:= False;
+ // if there is a step 4, start its timer and show its tab
+ if Step4UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer4.Enabled:= True;
+  RepeatPC.ActivePage:= Step4TS;
+ end
+ else // there might be a repeat
+ begin
+  // switch to step 1
+  StepTimer1.Enabled:= True;
+  RepeatPC.ActivePage:= Step1TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer4Finished(Sender: TObject);
+begin
+ StepTimer4.Enabled:= False;
+ // if there is a step 5, start its timer and show its tab
+ if Step5UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer5.Enabled:= True;
+  RepeatPC.ActivePage:= Step5TS;
+ end
+ else // there might be a repeat
+ begin
+  // switch to step 1
+  StepTimer1.Enabled:= True;
+  RepeatPC.ActivePage:= Step1TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer5Finished(Sender: TObject);
+begin
+ StepTimer5.Enabled:= False;
+ // if there is a step 6, start its timer and show its tab
+ if Step6UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer6.Enabled:= True;
+  RepeatPC.ActivePage:= Step6TS;
+ end
+ else // there might be a repeat
+ begin
+  // switch to step 1
+  StepTimer1.Enabled:= True;
+  RepeatPC.ActivePage:= Step1TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer6Finished(Sender: TObject);
+begin
+ StepTimer6.Enabled:= False;
+ // switch to step 1
+ StepTimer1.Enabled:= True;
+ RepeatPC.ActivePage:= Step1TS;
 end;
 
 procedure TMainForm.StopBBClick(Sender: TObject);
@@ -2357,8 +2503,27 @@ begin
   // enable all setting possibilities
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 6 do
+  begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
-      as TTabSheet).Enabled := True;
+     as TTabSheet).Enabled:= True;
+   // stop all timers
+   (FindComponent('StepTimer' + IntToStr(j))
+     as TTimer).Enabled:= False;
+  end;
+  // view tab after last used step
+  for j:= 5 downto 2 do
+  begin
+   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Checked = True then
+    begin
+     (FindComponent('Step' + IntToStr(j+1) + 'TS')
+      as TTabSheet).TabVisible:= True;
+     break;
+    end;
+  end;
+  // tab must always be visible
+  Step2TS.TabVisible:= True;
+
 end;
 
 procedure TMainForm.StopTimerFinished;
@@ -2393,18 +2558,18 @@ begin
    for j:= 1 to 4 do
    begin
     (FindComponent('Pump' + IntToStr(j) + 'OnOffCB' + IntToStr(i))
-      as TCheckBox).Checked := True;
+      as TCheckBox).Checked:= True;
     // set voltage to 3.3 V
     (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(i))
-      as TFloatSpinEdit).Value := 3.3;
+      as TFloatSpinEdit).Value:= 3.3;
     // forward 30 seconds
     if i=1 then
     (FindComponent('Pump' + IntToStr(j) + 'DirectionRG' + IntToStr(i))
-      as TRadioGroup).ItemIndex := 0
+      as TRadioGroup).ItemIndex:= 0
     // backward 30 seconds
     else
      (FindComponent('Pump' + IntToStr(j) + 'DirectionRG' + IntToStr(i))
-      as TRadioGroup).ItemIndex := 1;
+      as TRadioGroup).ItemIndex:= 1;
    end;
   // repeat 9 times
   RepeatSE.Value:= 9;
@@ -2558,11 +2723,11 @@ begin
  if (DutyCycle1FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS1')
-      as TFloatSpinEdit).MinValue := 1.1
+      as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS1')
-      as TFloatSpinEdit).MinValue := 0;
+      as TFloatSpinEdit).MinValue:= 0;
 end;
 
 procedure TMainForm.DutyCycle2FSEChange(Sender: TObject);
@@ -2572,11 +2737,11 @@ begin
  if (DutyCycle2FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS2')
-     as TFloatSpinEdit).MinValue := 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS2')
-     as TFloatSpinEdit).MinValue := 0;
+     as TFloatSpinEdit).MinValue:= 0;
 end;
 
 procedure TMainForm.DutyCycle3FSEChange(Sender: TObject);
@@ -2586,11 +2751,11 @@ begin
  if (DutyCycle3FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS3')
-     as TFloatSpinEdit).MinValue := 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS3')
-     as TFloatSpinEdit).MinValue := 0;
+     as TFloatSpinEdit).MinValue:= 0;
 end;
 
 procedure TMainForm.DutyCycle4FSEChange(Sender: TObject);
@@ -2600,11 +2765,11 @@ begin
  if (DutyCycle4FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS4')
-     as TFloatSpinEdit).MinValue := 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS4')
-     as TFloatSpinEdit).MinValue := 0;
+     as TFloatSpinEdit).MinValue:= 0;
 end;
 
 procedure TMainForm.DutyCycle5FSEChange(Sender: TObject);
@@ -2614,11 +2779,11 @@ begin
  if (DutyCycle5FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS5')
-     as TFloatSpinEdit).MinValue := 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS5')
-     as TFloatSpinEdit).MinValue := 0;
+     as TFloatSpinEdit).MinValue:= 0;
 end;
 
 procedure TMainForm.DutyCycle6FSEChange(Sender: TObject);
@@ -2628,11 +2793,11 @@ begin
  if (DutyCycle6FSE.Value < 100) then
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
-     as TFloatSpinEdit).MinValue := 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
-     as TFloatSpinEdit).MinValue := 0;
+     as TFloatSpinEdit).MinValue:= 0;
 end;
 
 

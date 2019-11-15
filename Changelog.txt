@@ -1,0 +1,7 @@
+Changes from version 2.30 to 2.31
+
+- Main new feature:
+  When the pumps are run, the currenty executed step is highlighted,
+  by showing the tab of this step.
+- Hide steps that are not used when the pumps are run
+- Some new and improved tooltips
