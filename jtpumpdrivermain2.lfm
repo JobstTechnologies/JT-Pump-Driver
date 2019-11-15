@@ -1,5 +1,5 @@
 object MainForm: TMainForm
-  Left = 611
+  Left = 612
   Height = 666
   Top = 116
   Width = 554
@@ -15,10 +15,13 @@ object MainForm: TMainForm
   object RepeatPC: TPageControl
     Left = 16
     Height = 496
+    Hint = 'Use step 6'
     Top = 8
     Width = 368
     ActivePage = Step1TS
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     TabIndex = 0
     TabOrder = 0
     object Step1TS: TTabSheet
@@ -412,11 +415,14 @@ object MainForm: TMainForm
       object Step2UseCB: TCheckBox
         Left = 8
         Height = 19
+        Hint = 'Use step 2'
         Top = 20
         Width = 39
         Caption = 'Use'
         OnChange = Step2UseCBChange
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
       end
       object Pump3GB2: TGroupBox
@@ -801,11 +807,14 @@ object MainForm: TMainForm
       object Step3UseCB: TCheckBox
         Left = 8
         Height = 19
+        Hint = 'Use step 3'
         Top = 20
         Width = 39
         Caption = 'Use'
         OnChange = Step3UseCBChange
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
       end
       object Pump3GB3: TGroupBox
@@ -1190,11 +1199,14 @@ object MainForm: TMainForm
       object Step4UseCB: TCheckBox
         Left = 8
         Height = 19
+        Hint = 'Use step 4'
         Top = 20
         Width = 39
         Caption = 'Use'
         OnChange = Step4UseCBChange
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
       end
       object Pump3GB4: TGroupBox
@@ -1579,11 +1591,14 @@ object MainForm: TMainForm
       object Step5UseCB: TCheckBox
         Left = 8
         Height = 19
+        Hint = 'Use step 5'
         Top = 20
         Width = 39
         Caption = 'Use'
         OnChange = Step5UseCBChange
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
       end
       object Pump3GB5: TGroupBox
@@ -2538,7 +2553,7 @@ object MainForm: TMainForm
     object GenerateCommandBB: TBitBtn
       Left = 376
       Height = 47
-      Hint = 'Generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings.'#13#10'It also calculates the overall action time.'
+      Hint = 'Generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings.'#13#10'It also calculates the Total Time.'
       Top = 0
       Width = 128
       Caption = 'Generate Command'
@@ -2713,5 +2728,47 @@ object MainForm: TMainForm
     Visible = False
     left = 117
     top = 592
+  end
+  object StepTimer1: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer1Finished
+    left = 352
+    top = 440
+  end
+  object StepTimer2: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer2Finished
+    left = 352
+    top = 392
+  end
+  object StepTimer3: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer3Finished
+    left = 352
+    top = 344
+  end
+  object StepTimer4: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer4Finished
+    left = 352
+    top = 296
+  end
+  object StepTimer5: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer5Finished
+    left = 352
+    top = 248
+  end
+  object StepTimer6: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer6Finished
+    left = 352
+    top = 200
   end
 end

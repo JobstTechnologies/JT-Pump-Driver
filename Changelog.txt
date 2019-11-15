@@ -1,0 +1,6 @@
+Changes compared to version 2.30:
+
+- when running the pumps the currently executed step is indicated
+  by showing it
+- only the used steps will be visible when the pumps are run
+- improved tooltips
