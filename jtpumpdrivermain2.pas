@@ -30,7 +30,7 @@ type
     DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle1GB: TGroupBox;
     DutyCycle3GB: TGroupBox;
-    DutyCycle24B: TGroupBox;
+    DutyCycle4GB: TGroupBox;
     DutyCycle5GB: TGroupBox;
     DutyCycle6GB: TGroupBox;
     GenerateCommandBB: TBitBtn;
@@ -279,7 +279,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.31';
+  Version : string = '2.32';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -2602,6 +2602,7 @@ begin
   begin
    Step3TS.TabVisible:= True;
    ActionTime2GB.Enabled:= True;
+   DutyCycle2GB.Enabled:= True;
    Pump1GB2.Enabled:= True;
    Pump2GB2.Enabled:= True;
    Pump3GB2.Enabled:= True;
@@ -2614,6 +2615,7 @@ begin
   begin
    Step3TS.TabVisible:= False;
    ActionTime2GB.Enabled:= False;
+   DutyCycle2GB.Enabled:= False;
    Pump1GB2.Enabled:= False;
    Pump2GB2.Enabled:= False;
    Pump3GB2.Enabled:= False;
@@ -2631,6 +2633,7 @@ begin
   begin
    Step4TS.TabVisible:= True;
    ActionTime3GB.Enabled:= True;
+   DutyCycle3GB.Enabled:= True;
    Pump1GB3.Enabled:= True;
    Pump2GB3.Enabled:= True;
    Pump3GB3.Enabled:= True;
@@ -2640,6 +2643,7 @@ begin
   begin
    Step4TS.TabVisible:= False;
    ActionTime3GB.Enabled:= False;
+   DutyCycle3GB.Enabled:= False;
    Pump1GB3.Enabled:= False;
    Pump2GB3.Enabled:= False;
    Pump3GB3.Enabled:= False;
@@ -2654,6 +2658,7 @@ begin
   begin
    Step5TS.TabVisible:= True;
    ActionTime4GB.Enabled:= True;
+   DutyCycle4GB.Enabled:= True;
    Pump1GB4.Enabled:= True;
    Pump2GB4.Enabled:= True;
    Pump3GB4.Enabled:= True;
@@ -2663,6 +2668,7 @@ begin
   begin
    Step5TS.TabVisible:= False;
    ActionTime4GB.Enabled:= False;
+   DutyCycle4GB.Enabled:= False;
    Pump1GB4.Enabled:= False;
    Pump2GB4.Enabled:= False;
    Pump3GB4.Enabled:= False;
@@ -2677,6 +2683,7 @@ begin
   begin
    Step6TS.TabVisible:= True;
    ActionTime5GB.Enabled:= True;
+   DutyCycle5GB.Enabled:= True;
    Pump1GB5.Enabled:= True;
    Pump2GB5.Enabled:= True;
    Pump3GB5.Enabled:= True;
@@ -2686,6 +2693,7 @@ begin
   begin
    Step6TS.TabVisible:= False;
    ActionTime5GB.Enabled:= False;
+   DutyCycle5GB.Enabled:= False;
    Pump1GB5.Enabled:= False;
    Pump2GB5.Enabled:= False;
    Pump3GB5.Enabled:= False;
@@ -2699,6 +2707,7 @@ begin
  if Step6UseCB.Checked then
   begin
    ActionTime6GB.Enabled:= True;
+   DutyCycle6GB.Enabled:= True;
    Pump1GB6.Enabled:= True;
    Pump2GB6.Enabled:= True;
    Pump3GB6.Enabled:= True;
@@ -2707,6 +2716,7 @@ begin
   else
   begin
    ActionTime6GB.Enabled:= False;
+   DutyCycle6GB.Enabled:= False;
    Pump1GB6.Enabled:= False;
    Pump2GB6.Enabled:= False;
    Pump3GB6.Enabled:= False;

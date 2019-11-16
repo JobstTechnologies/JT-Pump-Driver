@@ -772,6 +772,7 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
+        Enabled = False
         ParentFont = False
         TabOrder = 6
         object Label1: TLabel
@@ -1164,6 +1165,7 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
+        Enabled = False
         ParentFont = False
         TabOrder = 6
         object Label3: TLabel
@@ -1548,7 +1550,7 @@ object MainForm: TMainForm
           TabOrder = 3
         end
       end
-      object DutyCycle24B: TGroupBox
+      object DutyCycle4GB: TGroupBox
         Left = 258
         Height = 49
         Top = 4
@@ -1556,6 +1558,7 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
+        Enabled = False
         ParentFont = False
         TabOrder = 6
         object Label4: TLabel
@@ -1948,6 +1951,7 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
+        Enabled = False
         ParentFont = False
         TabOrder = 6
         object Label5: TLabel
@@ -2337,6 +2341,7 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
+        Enabled = False
         ParentFont = False
         TabOrder = 6
         object Label6: TLabel
