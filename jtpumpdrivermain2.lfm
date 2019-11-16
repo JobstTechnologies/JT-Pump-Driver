@@ -96,7 +96,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 39
+          Width = 40
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -168,7 +168,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 39
+          Width = 40
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -241,7 +241,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 39
+          Width = 40
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -313,7 +313,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 39
+          Width = 40
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2371,18 +2371,18 @@ object MainForm: TMainForm
   end
   object StatusGB: TGroupBox
     Left = 396
-    Height = 312
-    Top = 152
+    Height = 384
+    Top = 120
     Width = 148
     Caption = 'Status Info'
-    ClientHeight = 292
+    ClientHeight = 364
     ClientWidth = 144
     ParentFont = False
     TabOrder = 4
     object RepeatOutputLE: TLabeledEdit
       Left = 26
       Height = 23
-      Top = 256
+      Top = 328
       Width = 84
       Alignment = taCenter
       EditLabel.Height = 15
@@ -2409,9 +2409,9 @@ object MainForm: TMainForm
       TabOrder = 3
     end
     object ConnComPortLE: TLabeledEdit
-      Left = 9
+      Left = 8
       Height = 23
-      Top = 64
+      Top = 72
       Width = 124
       Alignment = taCenter
       Color = clHighlight
@@ -2422,14 +2422,15 @@ object MainForm: TMainForm
       EditLabel.ParentFont = False
       ParentFont = False
       ParentShowHint = False
+      ReadOnly = True
       TabOrder = 1
       Text = 'Not connected'
     end
     object TotalTimeLE: TLabeledEdit
-      Left = 9
+      Left = 8
       Height = 23
       Hint = 'Total time the pumps will act after pressing ''Run Pumps'''
-      Top = 112
+      Top = 184
       Width = 124
       Alignment = taCenter
       EditLabel.Height = 15
@@ -2444,10 +2445,10 @@ object MainForm: TMainForm
       TabOrder = 0
     end
     object StartTimeLE: TLabeledEdit
-      Left = 9
+      Left = 8
       Height = 23
       Hint = 'Time when ''Run Pumps'' was pressed'
-      Top = 160
+      Top = 232
       Width = 124
       EditLabel.Height = 15
       EditLabel.Width = 124
@@ -2461,10 +2462,10 @@ object MainForm: TMainForm
       TabOrder = 4
     end
     object FinishTimeLE: TLabeledEdit
-      Left = 9
+      Left = 8
       Height = 23
       Hint = 'Time when either the action was finished'#13#10'or when ''Stop Pumps'' was pressed'
-      Top = 208
+      Top = 280
       Width = 124
       EditLabel.Height = 15
       EditLabel.Width = 124
@@ -2476,6 +2477,29 @@ object MainForm: TMainForm
       ReadOnly = True
       ShowHint = True
       TabOrder = 5
+    end
+    object LoadedActionFileM: TMemo
+      Left = 8
+      Height = 40
+      Hint = 'Name of the loaded action file'
+      Top = 122
+      Width = 124
+      Alignment = taCenter
+      Lines.Strings = (
+        'None'
+      )
+      ParentShowHint = False
+      ReadOnly = True
+      ShowHint = True
+      TabOrder = 6
+    end
+    object Label8: TLabel
+      Left = 7
+      Height = 15
+      Top = 104
+      Width = 98
+      Caption = 'Loaded Action File'
+      ParentColor = False
     end
   end
   object RunSettingsGB: TGroupBox
@@ -2558,7 +2582,7 @@ object MainForm: TMainForm
     object GenerateCommandBB: TBitBtn
       Left = 376
       Height = 47
-      Hint = 'Generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings.'#13#10'It also calculates the Total Time.'
+      Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a an loaded action file'
       Top = 0
       Width = 128
       Caption = 'Generate Command'
@@ -2628,25 +2652,36 @@ object MainForm: TMainForm
     ParentFont = False
   end
   object MainMenu: TMainMenu
-    left = 443
+    left = 432
     top = 592
-    object ConnectionMenu: TMenuItem
+    object ConnectionMI: TMenuItem
       Caption = 'Connection'
-      OnClick = ConnectionMenuClick
+      OnClick = ConnectionMIClick
     end
-    object MiscMenu: TMenuItem
+    object FileMI: TMenuItem
+      Caption = 'File'
+      object LoadActionMI: TMenuItem
+        Caption = 'Load Action'
+        OnClick = LoadActionMIClick
+      end
+      object SaveActionMI: TMenuItem
+        Caption = 'Save Action'
+        OnClick = SaveActionMIClick
+      end
+    end
+    object MiscellaneousMI: TMenuItem
       Caption = 'Miscellaneous'
-      object AboutMenu: TMenuItem
+      object AboutMI: TMenuItem
         Caption = 'About'
-        OnClick = AboutMenuClick
+        OnClick = AboutMIClick
       end
-      object GetFirmwareVersionMenu: TMenuItem
+      object GetFirmwareVersionMI: TMenuItem
         Caption = 'Get Firmware Version'
-        OnClick = GetFirmwareVersionMenuClick
+        OnClick = GetFirmwareVersionMIClick
       end
-      object FirmwareUpdateMenu: TMenuItem
+      object FirmwareUpdateMI: TMenuItem
         Caption = 'Firmware Update'
-        OnClick = FirmwareUpdateMenuClick
+        OnClick = FirmwareUpdateMIClick
       end
     end
   end
@@ -2668,14 +2703,14 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 1500
     OnTimer = StopTimerFinished
-    left = 373
+    left = 368
     top = 592
   end
   object FirmwareFileDialog: TOpenDialog
     Title = 'Open firmware file'
     Filter = 'Binary file|*.bin'
     InitialDir = 'ExtractFileDir(Application.ExeName)'
-    left = 288
+    left = 280
     top = 592
   end
   object COMConnect: TLazSerial
@@ -2687,7 +2722,7 @@ object MainForm: TMainForm
     StopBits = sbOne
     Device = 'COM1'
     RcvLineCRLF = False
-    left = 197
+    left = 184
     top = 592
   end
   object FirmwareNote: TPopupNotifier
@@ -2731,7 +2766,7 @@ object MainForm: TMainForm
     Text = 'Firmware update is in progress'
     Title = 'Firmware update'
     Visible = False
-    left = 117
+    left = 104
     top = 592
   end
   object StepTimer1: TTimer
@@ -2775,5 +2810,15 @@ object MainForm: TMainForm
     OnTimer = StepTimer6Finished
     left = 352
     top = 200
+  end
+  object SaveDialog: TSaveDialog
+    Filter = 'Pump Driver Actions|*.PDAction'
+    left = 496
+    top = 592
+  end
+  object OpenDialog: TOpenDialog
+    Filter = 'Pump Driver Actions|*.PDAction'
+    left = 24
+    top = 592
   end
 end

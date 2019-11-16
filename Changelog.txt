@@ -1,12 +1,22 @@
 Changes
 
+from version 2.33 to 2.40
+
+- Main new feature:
+  Possibility to save the current action settings.
+  (the saved *.PDAction files contains the command)
+  Possibility to load action settings
+
+
 from version 2.32 to 2.33
 
 - Display correct step time for very small duty cycles
 
+
 from version 2.31 to 2.32
 
 - Fix enabling/disabling of duty cycle settings for step 2 - 6
+
 
 from version 2.30 to 2.31
 

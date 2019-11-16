@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, EditBtn, Buttons, LCLType, Registry, Process,
   {Serial,} SynaSer, LazSerial, Crt, SerialUSBSelection, StrUtils,
-  PopupNotifier;
+  PopupNotifier, Character;
 
 type
 
@@ -38,17 +38,24 @@ type
     CommandL: TLabel;
     CommandM: TMemo;
     ActionTime1GB: TGroupBox;
-    FirmwareUpdateMenu: TMenuItem;
-    AboutMenu: TMenuItem;
+    FirmwareUpdateMI: TMenuItem;
+    AboutMI: TMenuItem;
     FirmwareFileDialog: TOpenDialog;
     FirmwareNote: TPopupNotifier;
     Label1: TLabel;
     Label2: TLabel;
-    GetFirmwareVersionMenu: TMenuItem;
+    GetFirmwareVersionMI: TMenuItem;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label8: TLabel;
+    LoadActionMI: TMenuItem;
+    LoadedActionFileM: TMemo;
+    SaveActionMI: TMenuItem;
+    FileMI: TMenuItem;
+    OpenDialog: TOpenDialog;
+    SaveDialog: TSaveDialog;
     StepTimer1: TTimer;
     StepTimer2: TTimer;
     StepTimer3: TTimer;
@@ -219,8 +226,8 @@ type
     Step6TS: TTabSheet;
     Step6UseCB: TCheckBox;
     StopBB: TBitBtn;
-    ConnectionMenu: TMenuItem;
-    MiscMenu: TMenuItem;
+    ConnectionMI: TMenuItem;
+    MiscellaneousMI: TMenuItem;
     ConnComPortLE: TLabeledEdit;
     MainMenu: TMainMenu;
     OverallTimer: TTimer;
@@ -234,28 +241,27 @@ type
     Unit4RBs: TRadioButton;
     Unit5RBs: TRadioButton;
     Unit6RBs: TRadioButton;
-    procedure AboutMenuClick(Sender: TObject);
-    procedure ConnectionMenuClick(Sender: TObject);
+    procedure AboutMIClick(Sender: TObject);
+    procedure ConnectionMIClick(Sender: TObject);
     procedure DutyCycle1FSEChange(Sender: TObject);
     procedure DutyCycle2FSEChange(Sender: TObject);
     procedure DutyCycle3FSEChange(Sender: TObject);
     procedure DutyCycle4FSEChange(Sender: TObject);
     procedure DutyCycle5FSEChange(Sender: TObject);
     procedure DutyCycle6FSEChange(Sender: TObject);
-    procedure FirmwareUpdateMenuClick(Sender: TObject);
+    procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure GenerateCommandBBClick(Sender: TObject);
-    function  GenerateCommand(out time: Double; out command : string) : boolean;
-    function  DialogWithPos(const Message: string; DialogType: TMsgDlgType;
-               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
-    procedure GetFirmwareVersionMenuClick(Sender: TObject);
+    procedure GetFirmwareVersionMIClick(Sender: TObject);
+    procedure LoadActionMIClick(Sender: TObject);
     procedure PumpOnOffCBSingleChange(Sender: TObject);
     procedure PumpOnOffCBLoopChange(Sender: TObject);
     procedure RepeatPCChange(Sender: TObject);
     procedure RunBBClick(Sender: TObject);
     procedure RunEndlessCBChange(Sender: TObject);
     procedure RunFreeBBClick(Sender: TObject);
+    procedure SaveActionMIClick(Sender: TObject);
     procedure Step2UseCBChange(Sender: TObject);
     procedure Step3UseCBChange(Sender: TObject);
     procedure Step4UseCBChange(Sender: TObject);
@@ -274,20 +280,27 @@ type
   private
 
   public
+    function GenerateCommand({out time: Double;} out command: string): boolean;
+    function ParseCommand(command: string): boolean;
+    function  DialogWithPos(const Message: string; DialogType: TMsgDlgType;
+               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
+    function OpenFile(InputName : string): Boolean;
+    function SaveHandling(InName : string; const Calculation : Boolean):string;
 
   end;
 
 var
   MainForm : TMainForm;
-  Version : string = '2.33';
+  Version : string = '2.40';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
   CurrentRepeat : integer;
-  globalTime : Double = 0;
-  globalRepeatTime : Double = 0;
+  GlobalTime : Double = 0;
+  GlobalRepeatTime : Double = 0;
   RepeatTime : Double = 0;
   HaveSerial : Boolean = False;
+  InName : string; // name of load file
 
 implementation
 
@@ -301,7 +314,7 @@ begin
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
 end;
 
-procedure TMainForm.ConnectionMenuClick(Sender: TObject);
+procedure TMainForm.ConnectionMIClick(Sender: TObject);
 // opens the connection settings dialog and opens a connections according
 // to the dialog input
 var
@@ -313,8 +326,8 @@ begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  // enable all menus because they would be disabled when formerly
  // connected to an unknown device
- GetFirmwareVersionMenu.Enabled:= true;
- FirmwareUpdateMenu.Enabled:= true;
+ GetFirmwareVersionMI.Enabled:= true;
+ FirmwareUpdateMI.Enabled:= true;
  // determine all possible COM ports
  Reg:= TRegistry.Create;
  try
@@ -442,8 +455,8 @@ begin
     ConnComPortLE.Color:= clRed;
     IndicatorPanelP.Caption:= 'Wrong device';
     IndicatorPanelP.Color:= clRed;
-    GetFirmwareVersionMenu.Enabled:= false;
-    FirmwareUpdateMenu.Enabled:= false;
+    GetFirmwareVersionMI.Enabled:= false;
+    FirmwareUpdateMI.Enabled:= false;
     // disable all buttons
     RunBB.Enabled:= false;
     StopBB.Enabled:= false;
@@ -505,7 +518,7 @@ begin
  end; //end outer finally
 end;
 
-procedure TMainForm.FirmwareUpdateMenuClick(Sender: TObject);
+procedure TMainForm.FirmwareUpdateMIClick(Sender: TObject);
 // flashes the program cache in the TinyZero controller with a new firmware
 var
  COMListStart, COMListBoot : TStringList;
@@ -868,7 +881,7 @@ begin
  end;
 end;
 
-procedure TMainForm.GetFirmwareVersionMenuClick(Sender: TObject);
+procedure TMainForm.GetFirmwareVersionMIClick(Sender: TObject);
 // reads the forware version from the board
 var
  StringFound : integer;
@@ -877,7 +890,7 @@ begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  StringFound:= Pos('COM', ConnComPortLE.Text);
  if (StringFound = 0) or (ConnComPortLE.Color = clRed) then // connect first
-  ConnectionMenuClick(Sender);
+  ConnectionMIClick(Sender);
  // check again
  StringFound:= Pos('COM', ConnComPortLE.Text);
  if (StringFound = 0) or (ConnComPortLE.Color = clRed) then // abort
@@ -893,7 +906,7 @@ begin
  end;
 end;
 
-procedure TMainForm.AboutMenuClick(Sender: TObject);
+procedure TMainForm.AboutMIClick(Sender: TObject);
 var
  MousePointer : TPoint;
 begin
@@ -936,21 +949,45 @@ end;
 procedure TMainForm.GenerateCommandBBClick(Sender: TObject);
 // call function to collect data an generate command
 var
-  command : string;
-  time : Double;
+ command : string;
+ j : integer;
 begin
-  GenerateCommand(time, command);
-  CommandM.Text:= command;
+ GenerateCommand(command);
+ CommandM.Text:= command;
+ // the button re-enables editing after an action file was loaded
+ // enable all setting possibilities
+ RunSettingsGB.Enabled:= True;
+ for j:= 1 to 6 do
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+   as TTabSheet).Enabled:= True;
+ // view tab after last used step
+ for j:= 5 downto 2 do
+ begin
+  if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Checked = True then
+   begin
+    (FindComponent('Step' + IntToStr(j+1) + 'TS')
+     as TTabSheet).TabVisible:= True;
+    break;
+   end;
+ end;
+ // tab must always be visible
+ Step2TS.TabVisible:= True;
+ // loaded settings are no longer valid
+ LoadedActionFileM.Text:= 'None';
+ LoadedActionFileM.Color:= clDefault;
+ // enable saving
+ SaveActionMI.Enabled:= True;
 end;
 
-function TMainForm.GenerateCommand(out time: Double; out command : string): boolean;
+function TMainForm.GenerateCommand(out command: string): boolean;
 // collect data an generate command to be sent
 var
-  voltage : string;
-  SOrder : array [0..3] of char;
-  timeFactor, DutyRepeats, XTime, OnTime, OffTime : integer;
-  timeCalc, timeOut, timeStep : Double;
-  HaveS : Boolean = False;
+ voltage : string;
+ SOrder : array [0..3] of char;
+ timeFactor, DutyRepeats, XTime, OnTime, OffTime : integer;
+ timeCalc, timeOut, timeStep : Double;
+ HaveS : Boolean = False;
 begin
   timeFactor:= 1; timeCalc:= 0;
   command:= ''; voltage:= '';
@@ -2106,10 +2143,8 @@ begin
    TotalTimeLE.Text:= 'Until Stop pressed';
 
   // output the time and result
-  time:= trunc(timeCalc);
-  globalTime:= time;
+  GlobalTime:= trunc(timeCalc);
   result:= True;
-
 end;
 
 procedure TMainForm.PumpOnOffCBSingleChange(Sender: TObject);
@@ -2167,13 +2202,12 @@ procedure TMainForm.RunBBClick(Sender: TObject);
 var
   command, StartTime : string;
   j : integer;
-  commandResult : Boolean = False;
-  time : Double;
+  CommandResult : Boolean = False;
 begin
   // generate command
-  commandResult:= GenerateCommand(time, command);
+  CommandResult:= GenerateCommand(command);
   // if GenerateCommand returns e.g. a too long time do nothing
-  if not commandResult then
+  if not CommandResult then
    exit;
   StopTimer.Enabled:= False;
   // whatever might happen, there must be a way to stop
@@ -2196,8 +2230,8 @@ begin
   begin
    // disable the connection menu that the user cannot close
    // the conenction while the pumps are running
-   ConnectionMenu.Enabled:= False;
-   FirmwareUpdateMenu.Enabled:= False;
+   ConnectionMI.Enabled:= False;
+   FirmwareUpdateMI.Enabled:= False;
    ser.SendString(command);
    if ser.LastError <> 0 then
    begin
@@ -2240,7 +2274,7 @@ begin
   if (StrToInt(RepeatSE.Text) > 0) and (RunEndlessCB.Checked = False) then
   begin
    RepeatOutputLE.Visible:= True;
-   RepeatTime:= trunc(time / (StrToFloat(RepeatSE.Text) + 1));
+   RepeatTime:= trunc(GlobalTime / (StrToFloat(RepeatSE.Text) + 1));
    if RepeatTime < 86400000 then // if less than one day
     RepeatTimer.Interval:= trunc(RepeatTime)
    else // to restart timer every day
@@ -2249,7 +2283,7 @@ begin
    CurrentRepeat:= 0;
    RepeatOutputLE.Text:= '0';
    // set time that will later be evaluated when the timer ends
-  globalRepeatTime:= RepeatTime;
+  GlobalRepeatTime:= RepeatTime;
   end;
   // delete finish time
   FinishTimeLE.Text:= '';
@@ -2263,8 +2297,6 @@ begin
   else // to restart timer every day
    OverallTimer.Interval:= 86400000;
   OverallTimer.Enabled:= True;
-  // set time that will later be evaluated when the timer ends
-  globalTime:= time;
   // show first tab and start its timer
   RepeatPC.ActivePage:= Step1TS;
   StepTimer1.Enabled:= true;
@@ -2283,11 +2315,11 @@ procedure TMainForm.RepeatTimerFinished;
 // Actions after repeat time interval ends
 begin
  // if one day has passed but the pumps must run longer
- if globalRepeatTime > 86400000 then
+ if GlobalRepeatTime > 86400000 then
  begin
-  globalRepeatTime:= globalRepeatTime - 4000;
-  if globalRepeatTime < 86400000 then // if less than one day
-   RepeatTimer.Interval:= trunc(globalRepeatTime)
+  GlobalRepeatTime:= GlobalRepeatTime - 4000;
+  if GlobalRepeatTime < 86400000 then // if less than one day
+   RepeatTimer.Interval:= trunc(GlobalRepeatTime)
   else // to restart timer every day
    RepeatTimer.Interval:= 86400000;
   RepeatTimer.Enabled:= True;
@@ -2296,7 +2328,7 @@ begin
  if StrToInt(RepeatSE.Text) > StrToInt(RepeatOutputLE.Text) then
  begin
   inc(CurrentRepeat);
-  globalRepeatTime:= RepeatTime;
+  GlobalRepeatTime:= RepeatTime;
   RepeatTimer.Enabled:= True;
   // only increase shown repeat if not already stopped
   if IndicatorPanelP.Caption <> 'Manually stopped' then
@@ -2313,11 +2345,11 @@ var
   j : integer;
 begin
  // if one day has passed but the pumps must run longer
- if globalTime > 86400000 then
+ if GlobalTime > 86400000 then
  begin
-  globalTime:= globalTime - 86400000;
-  if globalTime < 86400000 then // if less than one day
-   OverallTimer.Interval:= trunc(globalTime)
+  GlobalTime:= GlobalTime - 86400000;
+  if GlobalTime < 86400000 then // if less than one day
+   OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
    OverallTimer.Interval:= 86400000;
   OverallTimer.Enabled:= True;
@@ -2327,8 +2359,8 @@ begin
  finishTime := FormatDateTime('dd.mm.yyyy, hh:nn:ss', now);
  FinishTimeLE.Text:= finishTime;
  OverallTimer.Enabled:= False;
- ConnectionMenu.Enabled:= True;
- FirmwareUpdateMenu.Enabled:= True;
+ ConnectionMI.Enabled:= True;
+ FirmwareUpdateMI.Enabled:= True;
  RunBB.Caption:= 'Run Pumps';
  RunBB.Enabled:= True;
  RunFreeBB.Enabled:= True;
@@ -2461,8 +2493,8 @@ var
   j : integer;
 begin
   // re-enable the connection menu in every case
-  ConnectionMenu.Enabled:= True;
-  FirmwareUpdateMenu.Enabled:= True;
+  ConnectionMI.Enabled:= True;
+  FirmwareUpdateMI.Enabled:= True;
   command:= '';
   // address
   command:= '/0';
@@ -2536,7 +2568,6 @@ begin
   end;
   // tab must always be visible
   Step2TS.TabVisible:= True;
-
 end;
 
 procedure TMainForm.StopTimerFinished;
@@ -2599,13 +2630,13 @@ begin
    RepeatOutputLE.Visible:= False;
    // disable runtime only, if there is only one step
    if not Step2UseCB.Checked then
-    ActionTime1GB.Enabled := False;
+    ActionTime1GB.Enabled:= False;
   end
   else
   begin
    RepeatSE.Enabled:= True;
    if not Step2UseCB.Checked then
-    ActionTime1GB.Enabled := True;
+    ActionTime1GB.Enabled:= True;
   end;
 end;
 
@@ -2823,6 +2854,409 @@ begin
      as TFloatSpinEdit).MinValue:= 0;
 end;
 
+// opening --------------------------------------------------------------------
+
+procedure TMainForm.LoadActionMIClick(Sender: TObject);
+var
+ FileSuccess : Boolean = false;
+ ParseSuccess : Boolean = false;
+ MousePointer : TPoint;
+ command, DummyString : string;
+ j : integer;
+begin
+ MousePointer:= Mouse.CursorPos; // store mouse position
+ // make all steps visible because they might be invisible due to a prior loading
+  for j:= 2 to 6 do
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+    as TTabSheet).TabVisible:= True;
+ OpenDialog.InitialDir:= '';
+ OpenDialog.FileName:= '';
+ if OpenDialog.Execute then
+  FileSuccess:= OpenFile(OpenDialog.FileName)
+ else
+  exit; // user aboorted the loading
+ if not FileSuccess then
+  MessageDlgPos('Error while attempting to open file',
+   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
+ else
+ begin
+  InName:= OpenDialog.FileName;
+  // display file name without suffix
+  DummyString:= ExtractFileName(InName);
+  SetLength(DummyString, Length(DummyString) - 9);
+  LoadedActionFileM.Text:= DummyString;
+  LoadedActionFileM.Color:= clHighlight;
+  command:= CommandM.Text;
+  ParseSuccess:= ParseCommand(command);
+  if ParseSuccess then
+   // call command generation just to get the action time calculated
+   GenerateCommand(command);
+  // disable all setting possibilities
+  RunSettingsGB.Enabled:= False;
+  for j:= 1 to 6 do
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+      as TTabSheet).Enabled:= False;
+  RepeatOutputLE.Visible:= False;
+  // do not show unused steps
+  for j:= 2 to 6 do
+  begin
+   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Checked = False then
+    (FindComponent('Step' + IntToStr(j) + 'TS')
+     as TTabSheet).TabVisible:= False;
+  end;
+  // disable saving, will be re-enabled by GererateCommand
+ SaveActionMI.Enabled:= False;
+ end; // else if not FileSuccess
+end;
+
+function TMainForm.OpenFile(InputName : string):Boolean;
+// read file content
+var
+ FileData : string;
+ OpenFileStream : TFileStream;
+ FileSize : longint;
+begin
+ result:= False;
+ try
+  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
+  FileSize := OpenFileStream.Size;
+  SetLength(FileData, FileSize);
+  OpenFileStream.Read(FileData[1], FileSize);
+  CommandM.Text:= FileData;
+  result:= True;
+ finally
+  OpenFileStream.Free;
+ end;
+end;
+
+function TMainForm.ParseCommand(command: string): boolean;
+// parses the input command
+var
+ address : string;
+ SOrder : array [0..3] of char;
+ StepCounter, MCounter, ICounter, i, j, k, G1 : integer;
+ MousePointer : TPoint;
+ StepTime, M1, M2 : Double;
+ HasDuty : Boolean;
+begin
+ MousePointer:= Mouse.CursorPos; // store mouse position
+ StepCounter:= 0; MCounter:= 0; ICounter:= 0;
+ SOrder:= '0000'; M1:= 0; M2:= 0; G1:= 0;
+ result:= false; HasDuty:= false;
+
+ // first check address
+ address:= Copy(command, 0, 2);
+ if address <> '/0' then
+ begin
+  MessageDlgPos('Error: Loaded file does not begin with ''/0''.',
+   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+  LoadedActionFileM.Text:= 'None';
+  CommandM.Text:= '';
+  exit;
+ end;
+
+ // disable all steps, will be re-enabled while parsing
+ for j:= 2 to 6 do
+  (FindComponent('Step' + IntToStr(j) + 'UseCB')
+   as TCheckBox).Checked:= false;
+
+ // set default values
+ RepeatSE.Value:= 0;
+ RunEndlessCB.Checked:= false;
+ // set all duty cylces to 100%
+ for j:= 1 to 6 do
+  (FindComponent('DutyCycle' + IntToStr(j) + 'FSE')
+   as TFloatSpinEdit).Value:= 100;
+
+ // parse the command
+ for i:= 2 to Length(command) do
+ begin
+
+  // parse step 'S'
+  if command[i] = 'S' then
+  begin
+   // syntax is "Sxyyy" with yyy/1000 * 3.3 = voltage
+   inc(StepCounter);
+   MCounter:= 0; // there can be several occurrences of 'M' for every step
+   ICounter:= 0; // there can be several occurrences of 'I' for every step
+   SOrder:= '0000';
+   // determine the length
+   j:= i;
+   repeat
+    inc(j)
+   until IsDigit(command[j]) = false;
+   // set the direction according to the SOrder  command[i+k+1]
+   k:= 1;
+   while k < j-i do
+   begin
+    if command[i+k] = '1' then
+    begin
+    (FindComponent('Pump1VoltageFS' + IntToStr(StepCounter))
+     as TFloatSpinEdit).Text:= FloatToStr((StrToInt(Copy(command, i+k+1, 3))) / 999 * 3.3);
+     SOrder[trunc((k-1)/4)]:= '1';
+    end
+    else if command[i+k] = '2' then
+    begin
+    (FindComponent('Pump2VoltageFS' + IntToStr(StepCounter))
+     as TFloatSpinEdit).Text:= FloatToStr((StrToInt(Copy(command, i+k+1, 3))) / 999 * 3.3);
+     SOrder[trunc((k-1)/4)]:= '2';
+    end
+    else if command[i+k] = '3' then
+    begin
+    (FindComponent('Pump3VoltageFS' + IntToStr(StepCounter))
+     as TFloatSpinEdit).Text:= FloatToStr((StrToInt(Copy(command, i+k+1, 3))) / 999 * 3.3);
+     SOrder[trunc((k-1)/4)]:= '3';
+    end
+    else if command[i+k] = '4' then
+    begin
+    (FindComponent('Pump4VoltageFS' + IntToStr(StepCounter))
+     as TFloatSpinEdit).Text:= FloatToStr((StrToInt(Copy(command, i+k+1, 3))) / 999 * 3.3);
+     SOrder[trunc((k-1)/4)]:= '4';
+    end;
+    k:= k + 4;
+   end; // end while
+  end; // end parse 'S'
+
+  // parse step 'D'
+  if command[i] = 'D' then
+  begin
+   // D is always connected to 'S', thus use the same StepCounter
+   // syntax is Dxxxx, with x = [0,1] and there might only be one x
+   // this is also possible: S39991999D11, then the first 1 belongs to pump 3
+
+   // determine the length
+   j:= i;
+   repeat
+    inc(j)
+   until IsDigit(command[j]) = false;
+   // set the direction according to the SOrder
+   for k:= 1 to j-i-1 do
+   begin
+    if command[i+k] = '1' then
+    (FindComponent('Pump' + SOrder[k-1] + 'DirectionRG' + IntToStr(StepCounter))
+     as TRadioGroup).ItemIndex:= 1
+    else
+    (FindComponent('Pump' + SOrder[k-1] + 'DirectionRG' + IntToStr(StepCounter))
+     as TRadioGroup).ItemIndex:= 0;
+   end;
+  end; // end parse 'D'
+
+  // parse step 'M'
+  if command[i] = 'M' then
+  begin
+   // M can occur twice in one step, thus use StepCounter
+   // but only parse the first occurence
+   // syntax is Mxxxx, with x = time in milliseconds
+   inc(MCounter);
+   // determine the length
+   j:= i;
+   repeat
+    inc(j)
+   until IsDigit(command[j]) = false;
+   StepTime:= StrToFloat(Copy(command, i+1, j-i-1)) / 1000;
+   // only output if it is the first occurence ina step
+   if MCounter = 1 then
+   begin
+    if (StepTime >= 1000) and (StepTime < 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime / 60;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBmin')
+      as TRadioButton).Checked:= true;
+     end;
+    if (StepTime > 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime / 3600;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBh')
+      as TRadioButton).Checked:= true;
+    end;
+    if (StepTime < 1000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBs')
+      as TRadioButton).Checked:= true;
+    end;
+    // store the time for a possible duty cycle calculation
+    M1:= StepTime;
+   end
+   else if MCounter = 2 then
+   begin
+    // store the second time for the duty cycle
+    M2:= StepTime;
+    HasDuty:= true;
+   end;
+  end; // end parse 'M'
+
+  // parse step 'I'
+  if command[i] = 'I' then
+  begin
+   // I can occur twice in one step, thus use StepCounter
+   // but only parse the first occurence
+   // syntax is Ixxxx, with x = [0,1] and there might only be one x
+   inc(ICounter);
+   // only output if it is the first occurence in a step
+   if ICounter = 1 then
+   begin
+    // enable the step
+    if StepCounter > 1 then
+     (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
+      as TCheckBox).Checked:= true;
+    if command[i+1] = '1' then
+    (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= true
+    else
+     (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= false;
+    // check for further pumps
+    if (command[i+2] = '0') or (command[i+2] = '1') then
+    begin
+     if command[i+2] = '1' then
+      (FindComponent('Pump2OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= true
+    else
+     (FindComponent('Pump2OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= false;
+    end;
+    if (command[i+3] = '0') or (command[i+3] = '1') then
+    begin
+     if command[i+3] = '1' then
+      (FindComponent('Pump3OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= true
+    else
+     (FindComponent('Pump3OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= false;
+    end;
+    if (command[i+4] = '0') or (command[i+4] = '1') then
+    begin
+     if command[i+4] = '1' then
+      (FindComponent('Pump4OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= true
+    else
+     (FindComponent('Pump4OnOffCB' + IntToStr(StepCounter))
+      as TCheckBox).Checked:= false;
+    end;
+   end;
+  end; // end parse 'I'
+
+  // parse step 'G'
+  if command[i] = 'G' then
+  // the frontend only supports maximal one loop nesting level e.g. ggXGAgXGBGC
+  begin
+   // if there is no digit, it is the overall loop run forever
+   if not isDigit(command[i+1]) then
+    RunEndlessCB.Checked:= true
+   else
+   begin
+    // determine the length
+    j:= i;
+    repeat
+     inc(j)
+    until IsDigit(command[j]) = false;
+    if HasDuty then
+     G1:= StrToInt(Copy(command, i+1, j-i-1))
+    else
+     RepeatSE.Text:= Copy(command, i+1, j-i-1);
+    RunEndlessCB.Checked:= false;
+   end;
+   // if we have 2 'M' statement per step, we know the 'G' is for the duty cycle
+   if HasDuty then
+   begin
+    // calculate duty cycle
+    (FindComponent('DutyCycle' + IntToStr(StepCounter) + 'FSE')
+     as TFloatSpinEdit).Value:= M1 / (M1 + M2) * 100;
+    // calculate step time
+    (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+     as TFloatSpinEdit).Value:= (M1 + M2) * (G1 + 1);
+    HasDuty:= false;
+   end;
+  end; // end parse 'G'
+
+ end; // end parse the command
+
+ result:= true;
+
+end;
+
+// saving ---------------------------------------------------------------------
+
+procedure TMainForm.SaveActionMIClick(Sender: TObject);
+ // writes all values into a text file
+var
+ OutName, command : string;
+ SaveFileStream : TFileStream;
+ CommandResult : Boolean;
+begin
+ // generate command according to current settings
+ CommandResult:= GenerateCommand(command);
+ // if GenerateCommand returns e.g. a too long time do nothing
+ if not CommandResult then
+  exit;
+ CommandM.Text:= command;
+ OutName:= '';
+ OutName:= SaveHandling(InName, false); // opens file dialog
+ if OutName <> '' then
+ begin
+  try
+   if FileExists(OutName) = true then
+    begin
+     SaveFileStream:= TFileStream.Create(OutName, fmOpenReadWrite);
+     // the new command might be shorter, therefore delete its content
+     SaveFileStream.Size:= 0;
+    end
+   else
+    SaveFileStream:= TFileStream.Create(OutName, fmCreate);
+   SaveFileStream.Write(command[1], Length(command));
+  finally
+   SaveFileStream.Free;
+  end; //end finally
+ end; //end if OutName <> ''
+end;
+
+function TMainForm.SaveHandling(InName : string; const Calculation : Boolean):string;
+// handles the save dialog
+var YesNo : integer;
+    OutNameTemp : string;
+begin
+ result:= '';
+ // propose a file name
+ OutNameTemp:= InName;
+ if SaveDialog.Execute = true then
+ begin
+  OutNameTemp:= SaveDialog.FileName;
+  // add file extension '.PDAction' if it is missing
+  if (ExtractFileExt(OutNameTemp) <> '.PDAction') then
+   Insert('.PDAction',OutNameTemp,Length(OutNameTemp) + 1);
+  if FileExists(OutNameTemp) = true then
+  begin
+   with CreateMessageDialog // MessageDlg with mbNo as default
+       ('Do you want to overwrite the existing file'#13#10
+             + ExtractFileName(OutNameTemp) + ' ?',
+             mtWarning,[mbYes]+[mbNo]) do
+   try
+    ActiveControl := FindComponent('NO') as TWinControl;
+    YesNo := ShowModal;
+   finally
+    Free;
+   end;
+   if YesNo = mrNo then // if No
+   begin
+    SaveHandling(InName, Calculation);
+    exit;
+   end
+   else // if Yes
+   begin
+    result:= OutNameTemp;
+    exit;
+   end;
+  end; // end if FileExists
+
+  result:= OutNameTemp;
+ end; // end if TabelleSpeichernDialog.Execute
+
+end;
 
 end.
 
