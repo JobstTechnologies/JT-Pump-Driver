@@ -1105,6 +1105,9 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    // the set time might be smaller than the time necessary for OffTime
+    if RunTime1FSE.Value < XTime / 1000 then
+     RunTime1FSE.Value:= XTime / 1000;
     command:= command + 'M' + IntToStr(OnTime);
     command:= command + 'I0000M' + IntToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
@@ -1276,6 +1279,8 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    if RunTime2FSE.Value < XTime / 1000 then
+     RunTime2FSE.Value:= XTime / 1000;
     command:= command + 'M' + FloatToStr(OnTime);
     command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
@@ -1460,6 +1465,8 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    if RunTime3FSE.Value < XTime / 1000 then
+     RunTime3FSE.Value:= XTime / 1000;
     command:= command + 'M' + FloatToStr(OnTime);
     command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
@@ -1644,6 +1651,8 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    if RunTime4FSE.Value < XTime / 1000 then
+     RunTime4FSE.Value:= XTime / 1000;
     command:= command + 'M' + FloatToStr(OnTime);
     command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
@@ -1828,6 +1837,8 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    if RunTime5FSE.Value < XTime / 1000 then
+     RunTime5FSE.Value:= XTime / 1000;
     command:= command + 'M' + FloatToStr(OnTime);
     command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
@@ -2012,6 +2023,8 @@ begin
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
+    if RunTime6FSE.Value < XTime / 1000 then
+     RunTime6FSE.Value:= XTime / 1000;
     command:= command + 'M' + FloatToStr(OnTime);
     command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);

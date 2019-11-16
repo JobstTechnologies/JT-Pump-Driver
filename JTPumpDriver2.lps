@@ -8,10 +8,9 @@
       <Unit0>
         <Filename Value="JTPumpDriver2.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <CursorPos Y="23"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="32" Y="4"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="jtpumpdrivermain2.pas"/>
@@ -21,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="JTPumpDriverMain2"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="2598"/>
-        <CursorPos X="57" Y="2606"/>
+        <TopLine Value="1087"/>
+        <CursorPos X="18" Y="1093"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -36,7 +35,7 @@
         <UnitName Value="SerialUSBSelection"/>
         <EditorIndex Value="1"/>
         <TopLine Value="8"/>
-        <CursorPos X="41" Y="35"/>
+        <CursorPos X="33" Y="11"/>
         <UsageCount Value="181"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

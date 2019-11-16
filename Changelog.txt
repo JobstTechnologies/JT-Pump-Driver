@@ -1,5 +1,9 @@
 Changes
 
+from version 2.32 to 2.33
+
+- Display correct step time for very small duty cycles
+
 from version 2.31 to 2.32
 
 - Fix enabling/disabling of duty cycle settings for step 2 - 6
