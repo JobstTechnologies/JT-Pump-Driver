@@ -6,11 +6,12 @@ from version 2.33 to 2.40
   Possibility to save the current action settings.
   (the saved *.PDAction files contains the command)
   Possibility to load action settings
+- Action time fixes for very small duty cycles
 
 
 from version 2.32 to 2.33
 
-- Display correct step time for very small duty cycles
+- Display correct action time for very small duty cycles
 
 
 from version 2.31 to 2.32

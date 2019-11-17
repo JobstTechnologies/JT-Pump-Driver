@@ -56,6 +56,7 @@ type
     FileMI: TMenuItem;
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
+    Step1UseCB: TCheckBox;
     StepTimer1: TTimer;
     StepTimer2: TTimer;
     StepTimer3: TTimer;
@@ -983,48 +984,63 @@ end;
 function TMainForm.GenerateCommand(out command: string): boolean;
 // collect data an generate command to be sent
 var
- voltage : string;
+ voltage, jStr : string;
  SOrder : array [0..3] of char;
- timeFactor, DutyRepeats, XTime, OnTime, OffTime : integer;
+ timeFactor, DutyRepeats, XTime, OnTime, OffTime, j : integer;
  timeCalc, timeOut, timeStep : Double;
  HaveS : Boolean = False;
 begin
-  timeFactor:= 1; timeCalc:= 0;
-  command:= ''; voltage:= '';
-  IndicatorPanelP.Color:= clDefault;
-  IndicatorPanelP.Caption:= ''; IndicatorPanelP.Hint:= '';
+ timeFactor:= 1; timeCalc:= 0;
+ command:= ''; voltage:= '';
+ IndicatorPanelP.Color:= clDefault;
+ IndicatorPanelP.Caption:= ''; IndicatorPanelP.Hint:= '';
 
-  // address
-  command:= '/0';
-  // turn on LED
-  command:= command + 'L';
+ // address
+ command:= '/0';
+ // turn on LED
+ command:= command + 'L';
 
-   if (StrToInt(RepeatSE.Text) > 0) or (RunEndlessCB.Checked) then
-    // begin loop flag
-    command:= command + 'g';
+ if (StrToInt(RepeatSE.Text) > 0) or (RunEndlessCB.Checked) then
+  // begin loop flag
+  command:= command + 'g';
 
-   // step 1-------------------------------------------------------------------
-   SOrder:= '0000';
+ // step through all tabs
+ for j:=1 to 6 do
+ begin
+  SOrder:= '0000';
+  jStr:= IntToStr(j);
+  if (FindComponent('Step' + jStr + 'UseCB') as TCheckBox).Checked
+   and (FindComponent('Step' + jStr + 'TS') as TTabSheet).TabVisible then
+  begin
    // speed and direction flag
-   if (Pump1OnOffCB1.Checked) or (Pump2OnOffCB1.Checked)
-      or (Pump3OnOffCB1.Checked) or (Pump4OnOffCB1.Checked) then
+   if (FindComponent('Pump1OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump2OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump3OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump4OnOffCB' + jStr)
+        as TCheckBox).Checked then
+    begin
+     // first check the duty cycle, if it is not 100 we need an on-off loop
+     if (FindComponent('DutyCycle' + jStr + 'FSE')
+         as TFloatSpinEdit).Value < 100 then
+      command:= command + 'g';
+     // syntax ist: Sxyyy, x = pump number, y = speed
+     command:= command + 'S';
+     HaveS:= True;
+    end
+    else
+     HaveS:= False;
+    // voltage, only write if pump is active
+   if (FindComponent('Pump1OnOffCB' + jStr) as TCheckBox).Checked then
    begin
-    // first check the duty cycle, if it is not 100 we need an on-off loop
-    if DutyCycle1FSE.Value < 100 then
-     command:= command + 'g';
-    command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-    haveS:= True;
-   end
-   else
-    haveS:= False;
-   // voltage, only write if pump is active
-   if (Pump1OnOffCB1.Checked) then
-   begin
-    // save the first run pump, will be later used for 'D'
     SOrder[0]:= '1';
     command:= command + '1';
     // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS1.Value / 3.3 * 999));
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump1VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
     // we need to write always 3 characters
     case length(voltage) of
      2 : voltage:= '0' + voltage;
@@ -1032,7 +1048,7 @@ begin
     end;
     command:= command + voltage;
    end;
-   if (Pump2OnOffCB1.Checked) then
+   if (FindComponent('Pump2OnOffCB' + jStr) as TCheckBox).Checked then
    begin
     if SOrder[0] = '0' then
      SOrder[0]:= '2'
@@ -1040,7 +1056,9 @@ begin
      SOrder[1]:= '2';
     command:= command + '2';
     // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS1.Value / 3.3 * 999));
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump2VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
     // we need to write always 3 characters
     case length(voltage) of
      2 : voltage:= '0' + voltage;
@@ -1048,7 +1066,7 @@ begin
     end;
     command:= command + voltage;
    end;
-   if (Pump3OnOffCB1.Checked) then
+   if (FindComponent('Pump3OnOffCB' + jStr) as TCheckBox).Checked then
    begin
     if SOrder[0] = '0' then
      SOrder[0]:= '3'
@@ -1058,7 +1076,9 @@ begin
      SOrder[2]:= '3';
     command:= command + '3';
     // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS1.Value / 3.3 * 999));
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump3VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
     // we need to write always 3 characters
     case length(voltage) of
      2 : voltage:= '0' + voltage;
@@ -1066,7 +1086,7 @@ begin
     end;
     command:= command + voltage;
    end;
-   if (Pump4OnOffCB1.Checked) then
+   if (FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked then
    begin
     if SOrder[0] = '0' then
      SOrder[0]:= '4'
@@ -1078,7 +1098,9 @@ begin
      SOrder[3]:= '4';
     command:= command + '4';
     // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS1.Value / 3.3 * 999));
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump4VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
     // we need to write always 3 characters
     case length(voltage) of
      2 : voltage:= '0' + voltage;
@@ -1087,1030 +1109,170 @@ begin
     command:= command + voltage;
    end;
    // direction
-   // the direction needs to be initialized for all pumps in the first step
-   // direction
    if HaveS then // only if there is any pump running
    begin
     command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG1')
+     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG' + jStr)
       as TRadioGroup).ItemIndex);
     if SOrder[1] <> '0' then
      command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG1')
+      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG' + jStr)
        as TRadioGroup).ItemIndex);
     if SOrder[2] <> '0' then
      command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG1')
+      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG' + jStr)
        as TRadioGroup).ItemIndex);
     if SOrder[3] <> '0' then
      command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG1')
+      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG' + jStr)
        as TRadioGroup).ItemIndex);
    end;
    // action
-   // since it is too compliacated to check what pumps have been activated
-   // in the previous step, we output an action for all pumps
-   command:= command + 'I' + BoolToStr(Pump1OnOffCB1.Checked,'1','0')
-            + BoolToStr(Pump2OnOffCB1.Checked,'1','0')
-            + BoolToStr(Pump3OnOffCB1.Checked,'1','0')
-            + BoolToStr(Pump4OnOffCB1.Checked,'1','0');
+   command:= command + 'I'
+    + BoolToStr((FindComponent('Pump1OnOffCB' + jStr)
+        as TCheckBox).Checked,'1','0')
+    + BoolToStr((FindComponent('Pump2OnOffCB' + jStr)
+        as TCheckBox).Checked,'1','0')
+    + BoolToStr((FindComponent('Pump3OnOffCB' + jStr)
+        as TCheckBox).Checked,'1','0')
+    + BoolToStr((FindComponent('Pump4OnOffCB' + jStr)
+        as TCheckBox).Checked,'1','0');
    //calculate action time in ms
-   if Unit1RBs.Checked then
+   timeStep:= 0;
+   if (FindComponent('Unit' + jStr + 'RBs')
+       as TRadioButton).Checked then
     timeFactor:= 1000
-   else if Unit1RBmin.Checked then
+   else if (FindComponent('Unit' + jStr + 'RBmin')
+            as TRadioButton).Checked then
     timeFactor:= 1000 * 60
-   else if Unit1RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
+   else if (FindComponent('Unit' + jStr + 'RBh')
+            as TRadioButton).Checked then
+    timeFactor:= 1000 * 3600;
 
    // if we have not 100% duty cycle we need 2 steps
-   // the first one is the on time, the secvond one the off time
-   // OnTime = DutyCycle/100*x; OffTime = x seconds - OnTime
-   // these steps are repeated every x second until the action time is reached,
-   // so DutyRepeats = ActionTime in seconds - x
-   if (DutyCycle1FSE.Value < 100) and HaveS then
+   if ((FindComponent('DutyCycle' + jStr + 'FSE')
+      as TFloatSpinEdit).Value < 100) and HaveS then
    begin
-    // At first calculate x: It was found that the on time should not be below
-    // 50 ms. Thus use x = 1s if OnTime > 50 ms, otherwise calculate x so that
-    // OnTime is exactly 50 ms
-    if (DutyCycle1FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle1FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle1FSE.Value / 100 * XTime); // time in ms
+    if ((FindComponent('DutyCycle' + jStr + 'FSE')
+      as TFloatSpinEdit).Value / 100) >= 0.05 then
+     XTime:= 1000 // base time is 1s
+    else // calculate a base time so that the OnTime is 50 ms
+     XTime:= round(0.05 / ((FindComponent('DutyCycle' + jStr + 'FSE')
+      as TFloatSpinEdit).Value / 100) * 1000);
+    OnTime:= round((FindComponent('DutyCycle' + jStr + 'FSE')
+      as TFloatSpinEdit).Value / 100 * XTime); // time in ms
     OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime1FSE.Value * timeFactor / XTime) - 1;
+    DutyRepeats:= round((FindComponent('RunTime' + jStr + 'FSE')
+      as TFloatSpinEdit).Value * timeFactor / XTime) - 1;
     // DutyRepeats can now be -1 if time is smaller than necessary OffTime
     if DutyRepeats < 0 then
      DutyRepeats:= 0;
-    // the set time might be smaller than the time necessary for OffTime
-    if RunTime1FSE.Value < XTime / 1000 then
-     RunTime1FSE.Value:= XTime / 1000;
-    command:= command + 'M' + IntToStr(OnTime);
-    command:= command + 'I0000M' + IntToStr(OffTime);
+    command:= command + 'M' + FloatToStr(OnTime);
+    command:= command + 'I0000M' + FloatToStr(OffTime);
     command:= command + 'G' + IntToStr(DutyRepeats);
-    timeCalc:= timeCalc + (XTime * (DutyRepeats + 1));
+    timeStep:= XTime * (DutyRepeats + 1);
    end
    else // output the time directly
    begin
-    command:= command + 'M' + FloatToStr(RunTime1FSE.Value * timeFactor);
-    timeCalc:= timeCalc + (RunTime1FSE.Value * timeFactor);
+    command:= command + 'M'
+     + FloatToStr((FindComponent('RunTime' + jStr + 'FSE')
+                   as TFloatSpinEdit).Value * timeFactor);
+    timeStep:= (FindComponent('RunTime' + jStr + 'FSE')
+                as TFloatSpinEdit).Value * timeFactor;
    end;
-
+   timeCalc:= timeCalc + timeStep;
    // if the direction changes, wait 1000 ms to protect the pumps
-   if (Pump1OnOffCB1.Checked and Pump1OnOffCB2.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG2.ItemIndex))
-      or (Pump2OnOffCB1.Checked and Pump2OnOffCB2.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG2.ItemIndex))
-      or (Pump3OnOffCB1.Checked and Pump3OnOffCB2.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG2.ItemIndex))
-      or (Pump4OnOffCB1.Checked and Pump4OnOffCB2.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG2.ItemIndex)) then
+   // only if the next step is actually used and we have 100% duty cylce
+   // only necessary if DutyCycle = 100
+   if (FindComponent('DutyCycle' + jStr + 'FSE')
+       as TFloatSpinEdit).Value = 100 then
    begin
-    // only if the next step is actually used and we have 100% duty cylce
-    if (Step2UseCB.checked) and (DutyCycle1FSE.Value = 100) then
+    if (FindComponent('Step' + IntToStr(j+1) + 'UseCB')
+        as TCheckBox).checked and (j < 6) then
     begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeCalc:= timeCalc + 1000;
-    end;
-   end;
+     if ((FindComponent('Pump1OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump1OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump1DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump1DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump2OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump2OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump2DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump2DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump3OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump3OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump3DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump3DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump4OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump4DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump4DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex)) then
+     begin
+      command:= command + 'I0000M1000'; // stop for 1000 ms
+      timeStep:= timeStep + 1000;
+      timeCalc:= timeCalc + 1000;
+     end;
+    end
+    // next step could be step 1
+   else if ((RepeatSE.Value > 0) or (RunEndlessCB.Checked)) and (j > 1) then
+    begin
+     if ((FindComponent('Pump1OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump1OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump1DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump1DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump2OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump2OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump2DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump2DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump3OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump3OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump3DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump3DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump4OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump4DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump4DirectionRG' + jStr) as TRadioGroup).ItemIndex)) then
+     begin
+      // only output if there is no single run
+      if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
+      begin
+       command:= command + 'I0000M1000'; // stop for 1000 ms
+       timeStep:= timeStep + 1000;
+       timeCalc:= timeCalc + 1000;
+      end;
+     end;
+    end; // end if if ((RepeatSE.Value > 0)
+   end; // end if DutyCycle(JStr)FSE.Value = 100
+
    // a timer in Lazarus or can only run for 2^31-1 milliseconds
    // the timer in the Arduino could in principle run the double time, but
    // allowing this is not worth the effort (that under all circumstances
    // unsigned 32bit int is used) and we can expect an action within 24 days
-   if timeCalc > 2147483646 then
-   begin
-    IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 1 too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
-    result:= False;
-    exit;
-   end;
-   // set timer interval
-   StepTimer1.Interval:= trunc(timeCalc);
-   //end step 1
-
-   // step 2-------------------------------------------------------------------
-   SOrder:= '0000';
-   if (Step2UseCB.Checked and Step2TS.TabVisible) then
-   begin
-    // speed and direction flag
-    if (Pump1OnOffCB2.Checked) or (Pump2OnOffCB2.Checked)
-      or (Pump3OnOffCB2.Checked) or (Pump4OnOffCB2.Checked) then
-    begin
-     // first check the duty cycle, if it is not 100 we need an on-off loop
-     if DutyCycle2FSE.Value < 100 then
-      command:= command + 'g';
-     command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-     haveS:= True;
-    end
-    else
-     haveS:= False;
-    // voltage, only write if pump is active
-   if (Pump1OnOffCB2.Checked) then
-   begin
-    SOrder[0]:= '1';
-    command:= command + '1';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS2.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump2OnOffCB2.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '2'
-    else
-     SOrder[1]:= '2';
-    command:= command + '2';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS2.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump3OnOffCB2.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '3'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '3'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '3';
-    command:= command + '3';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS2.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump4OnOffCB2.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '4'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '4'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '4'
-    else if SOrder[3] = '0' then
-     SOrder[3]:= '4';
-    command:= command + '4';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS2.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   // direction
-   if HaveS then // only if there is any pump running
-   begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG2')
-      as TRadioGroup).ItemIndex);
-    if SOrder[1] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG2')
-       as TRadioGroup).ItemIndex);
-    if SOrder[2] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG2')
-       as TRadioGroup).ItemIndex);
-    if SOrder[3] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG2')
-       as TRadioGroup).ItemIndex);
-   end;
-   // action
-   command:= command + 'I'
-    + BoolToStr(Pump1OnOffCB2.Checked,'1','0')
-    + BoolToStr(Pump2OnOffCB2.Checked,'1','0')
-    + BoolToStr(Pump3OnOffCB2.Checked,'1','0')
-    + BoolToStr(Pump4OnOffCB2.Checked,'1','0');
-   //calculate action time in ms
-   timeStep:= 0;
-   if Unit2RBs.Checked then
-    timeFactor:= 1000
-   else if Unit2RBmin.Checked then
-    timeFactor:= 1000 * 60
-   else if Unit2RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
-
-   // if we have not 100% duty cycle we need 2 steps
-   if (DutyCycle2FSE.Value < 100) and HaveS then
-   begin
-    if (DutyCycle2FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle2FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle2FSE.Value / 100 * XTime); // time in ms
-    OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime2FSE.Value * timeFactor / XTime) - 1;
-    // DutyRepeats can now be -1 if time is smaller than necessary OffTime
-    if DutyRepeats < 0 then
-     DutyRepeats:= 0;
-    if RunTime2FSE.Value < XTime / 1000 then
-     RunTime2FSE.Value:= XTime / 1000;
-    command:= command + 'M' + FloatToStr(OnTime);
-    command:= command + 'I0000M' + FloatToStr(OffTime);
-    command:= command + 'G' + IntToStr(DutyRepeats);
-    timeStep:= XTime * (DutyRepeats + 1);
-   end
-   else // output the time directly
-   begin
-    command:= command + 'M' + FloatToStr(RunTime2FSE.Value * timeFactor);
-    timeStep:= RunTime2FSE.Value * timeFactor;
-   end;
-   timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
-   // only if the next step is actually used and we have 100% duty cylce
-    if (Step3UseCB.checked) and (DutyCycle2FSE.Value = 100) then
-   begin
-    if (Pump1OnOffCB2.Checked and Pump1OnOffCB3.Checked and (Pump1DirectionRG2.ItemIndex <> Pump1DirectionRG3.ItemIndex))
-     or (Pump2OnOffCB2.Checked and Pump2OnOffCB3.Checked and (Pump2DirectionRG2.ItemIndex <> Pump2DirectionRG3.ItemIndex))
-     or (Pump3OnOffCB2.Checked and Pump3OnOffCB3.Checked and (Pump3DirectionRG2.ItemIndex <> Pump3DirectionRG3.ItemIndex))
-     or (Pump4OnOffCB2.Checked and Pump4OnOffCB3.Checked and (Pump4DirectionRG2.ItemIndex <> Pump4DirectionRG3.ItemIndex)) then
-    begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeStep:= timeStep + 1000;
-     timeCalc:= timeCalc + 1000;
-    end;
-   end
-   else // next step will be step 1
-   begin
-    if (Pump1OnOffCB1.Checked and Pump1OnOffCB2.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG2.ItemIndex))
-     or (Pump2OnOffCB1.Checked and Pump2OnOffCB2.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG2.ItemIndex))
-     or (Pump3OnOffCB1.Checked and Pump3OnOffCB2.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG2.ItemIndex))
-     or (Pump4OnOffCB1.Checked and Pump4OnOffCB2.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG2.ItemIndex)) then
-    begin
-     // only output if there is no single run
-     if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
-     begin
-      command:= command + 'I0000M1000'; // stop for 1000 ms
-      timeStep:= timeStep + 1000;
-      timeCalc:= timeCalc + 1000;
-     end;
-    end;
-   end;
    if timeStep > 2147483646 then
    begin
     IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 2 too long!';
+    IndicatorPanelP.Caption:= 'Action Time ' + jStr + 'too long!';
     IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
     result:= False;
     exit;
    end;
    // set timer interval
-   StepTimer2.Interval:= trunc(timeStep);
-   end; //end step 2
+   (FindComponent('StepTimer' + jStr) as TTimer).Interval:= trunc(timeStep);
 
-   //step 3--------------------------------------------------------------------
-   SOrder:= '0000';
-   if (Step3UseCB.Checked and Step3TS.TabVisible) then
-   begin
-    // speed and direction flag
-    if (Pump1OnOffCB3.Checked) or (Pump2OnOffCB3.Checked)
-       or (Pump3OnOffCB3.Checked) or (Pump4OnOffCB3.Checked) then
-    begin
-     // first check the duty cycle, if it is not 100 we need an on-off loop
-     if DutyCycle3FSE.Value < 100 then
-      command:= command + 'g';
-     command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-     haveS:= True;
-    end
-    else
-     haveS:= False;
-    // voltage, only write if pump is active
-   if (Pump1OnOffCB3.Checked) then
-   begin
-    SOrder[0]:= '1';
-    command:= command + '1';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS3.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump2OnOffCB3.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '2'
-    else
-     SOrder[1]:= '2';
-    command:= command + '2';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS3.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump3OnOffCB3.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '3'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '3'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '3';
-    command:= command + '3';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS3.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump4OnOffCB3.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '4'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '4'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '4'
-    else if SOrder[3] = '0' then
-     SOrder[3]:= '4';
-    command:= command + '4';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS3.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   // direction
-   if HaveS then // only if there is any pump running
-   begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG3')
-      as TRadioGroup).ItemIndex);
-    if SOrder[1] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG3')
-       as TRadioGroup).ItemIndex);
-    if SOrder[2] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG3')
-       as TRadioGroup).ItemIndex);
-    if SOrder[3] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG3')
-       as TRadioGroup).ItemIndex);
-   end;
-   // action
-   command:= command + 'I'
-    + BoolToStr(Pump1OnOffCB3.Checked,'1','0')
-    + BoolToStr(Pump2OnOffCB3.Checked,'1','0')
-    + BoolToStr(Pump3OnOffCB3.Checked,'1','0')
-    + BoolToStr(Pump4OnOffCB3.Checked,'1','0');
-   //calculate action time in ms
-   timeStep:= 0;
-   if Unit3RBs.Checked then
-    timeFactor:= 1000
-   else if Unit3RBmin.Checked then
-    timeFactor:= 1000 * 60
-   else if Unit3RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
+  end; // end if (FindComponent('Step' + jStr + 'UseCB') as TCheckBox).Checked
+ end; // end for j:=1 to 6
 
-   // if we have not 100% duty cycle we need 2 steps
-   if (DutyCycle3FSE.Value < 100) and HaveS then
-   begin
-    if (DutyCycle3FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle3FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle3FSE.Value / 100 * XTime); // time in ms
-    OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime3FSE.Value * timeFactor / XTime) - 1;
-    // DutyRepeats can now be -1 if time is smaller than necessary OffTime
-    if DutyRepeats < 0 then
-     DutyRepeats:= 0;
-    if RunTime3FSE.Value < XTime / 1000 then
-     RunTime3FSE.Value:= XTime / 1000;
-    command:= command + 'M' + FloatToStr(OnTime);
-    command:= command + 'I0000M' + FloatToStr(OffTime);
-    command:= command + 'G' + IntToStr(DutyRepeats);
-    timeStep:= XTime * (DutyRepeats + 1);
-   end
-   else // output the time directly
-   begin
-    command:= command + 'M' + FloatToStr(RunTime3FSE.Value * timeFactor);
-    timeStep:= RunTime3FSE.Value * timeFactor;
-   end;
-   timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
-   // only if the next step is actually used and we have 100% duty cylce
-   if (Step4UseCB.checked) and (DutyCycle3FSE.Value = 100) then
-   begin
-    if (Pump1OnOffCB3.Checked and Pump1OnOffCB4.Checked and (Pump1DirectionRG3.ItemIndex <> Pump1DirectionRG4.ItemIndex))
-     or (Pump2OnOffCB3.Checked and Pump2OnOffCB4.Checked and (Pump2DirectionRG3.ItemIndex <> Pump2DirectionRG4.ItemIndex))
-     or (Pump3OnOffCB3.Checked and Pump3OnOffCB4.Checked and (Pump3DirectionRG3.ItemIndex <> Pump3DirectionRG4.ItemIndex))
-     or (Pump4OnOffCB3.Checked and Pump4OnOffCB4.Checked and (Pump4DirectionRG3.ItemIndex <> Pump4DirectionRG4.ItemIndex)) then
-    begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeStep:= timeStep + 1000;
-     timeCalc:= timeCalc + 1000;
-    end;
-   end
-   else // next step will be step 1
-   begin
-    if (Pump1OnOffCB1.Checked and Pump1OnOffCB3.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG3.ItemIndex))
-     or (Pump2OnOffCB1.Checked and Pump2OnOffCB3.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG3.ItemIndex))
-     or (Pump3OnOffCB1.Checked and Pump3OnOffCB3.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG3.ItemIndex))
-     or (Pump4OnOffCB1.Checked and Pump4OnOffCB3.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG3.ItemIndex)) then
-    begin
-     // only output if there is no single run
-     if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
-     begin
-      command:= command + 'I0000M1000'; // stop for 1000 ms
-      timeStep:= timeStep + 1000;
-      timeCalc:= timeCalc + 1000;
-     end;
-    end;
-   end;
-   if timeStep > 2147483646 then
-   begin
-    IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 3 too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
-    result:= False;
-    exit;
-   end;
-   // set timer interval
-   StepTimer3.Interval:= trunc(timeStep);
-   end; //end step 3
-
-   // step 4-------------------------------------------------------------------
-   SOrder:= '0000';
-   if (Step4UseCB.Checked and Step4TS.TabVisible) then
-   begin
-    // speed and direction flag
-    if (Pump1OnOffCB4.Checked) or (Pump2OnOffCB4.Checked)
-       or (Pump3OnOffCB4.Checked) or (Pump4OnOffCB4.Checked) then
-    begin
-     // first check the duty cycle, if it is not 100 we need an on-off loop
-     if DutyCycle4FSE.Value < 100 then
-      command:= command + 'g';
-     command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-     haveS:= True;
-    end
-    else
-     haveS:= False;
-    // voltage, only write if pump is active
-   if (Pump1OnOffCB4.Checked) then
-   begin
-    SOrder[0]:= '1';
-    command:= command + '1';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS4.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump2OnOffCB4.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '2'
-    else
-     SOrder[1]:= '2';
-    command:= command + '2';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS4.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump3OnOffCB4.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '3'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '3'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '3';
-    command:= command + '3';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS4.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump4OnOffCB4.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '4'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '4'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '4'
-    else if SOrder[3] = '0' then
-     SOrder[3]:= '4';
-    command:= command + '4';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS4.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   // direction
-   if HaveS then // only if there is any pump running
-   begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG4')
-      as TRadioGroup).ItemIndex);
-    if SOrder[1] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG4')
-       as TRadioGroup).ItemIndex);
-    if SOrder[2] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG4')
-       as TRadioGroup).ItemIndex);
-    if SOrder[3] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG4')
-       as TRadioGroup).ItemIndex);
-   end;
-   // action
-   command:= command + 'I'
-    + BoolToStr(Pump1OnOffCB4.Checked,'1','0')
-    + BoolToStr(Pump2OnOffCB4.Checked,'1','0')
-    + BoolToStr(Pump3OnOffCB4.Checked,'1','0')
-    + BoolToStr(Pump4OnOffCB4.Checked,'1','0');
-   //calculate action time in ms
-   timeStep:= 0;
-   if Unit4RBs.Checked then
-    timeFactor:= 1000
-   else if Unit4RBmin.Checked then
-    timeFactor:= 1000 * 60
-   else if Unit4RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
-
-   // if we have not 100% duty cycle we need 2 steps
-   if (DutyCycle4FSE.Value < 100) and HaveS then
-   begin
-    if (DutyCycle4FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle4FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle4FSE.Value / 100 * XTime); // time in ms
-    OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime4FSE.Value * timeFactor / XTime) - 1;
-    // DutyRepeats can now be -1 if time is smaller than necessary OffTime
-    if DutyRepeats < 0 then
-     DutyRepeats:= 0;
-    if RunTime4FSE.Value < XTime / 1000 then
-     RunTime4FSE.Value:= XTime / 1000;
-    command:= command + 'M' + FloatToStr(OnTime);
-    command:= command + 'I0000M' + FloatToStr(OffTime);
-    command:= command + 'G' + IntToStr(DutyRepeats);
-    timeStep:= XTime * (DutyRepeats + 1);
-   end
-   else // output the time directly
-   begin
-    command:= command + 'M' + FloatToStr(RunTime4FSE.Value * timeFactor);
-    timeStep:= RunTime4FSE.Value * timeFactor;
-   end;
-   timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
-   // only if the next step is actually used and we have 100% duty cylce
-   if (Step5UseCB.checked) and (DutyCycle4FSE.Value = 100) then
-   begin
-    if (Pump1OnOffCB4.Checked and Pump1OnOffCB5.Checked and (Pump1DirectionRG4.ItemIndex <> Pump1DirectionRG5.ItemIndex))
-     or (Pump2OnOffCB4.Checked and Pump2OnOffCB5.Checked and (Pump2DirectionRG4.ItemIndex <> Pump2DirectionRG5.ItemIndex))
-     or (Pump3OnOffCB4.Checked and Pump3OnOffCB5.Checked and (Pump3DirectionRG4.ItemIndex <> Pump3DirectionRG5.ItemIndex))
-     or (Pump4OnOffCB4.Checked and Pump4OnOffCB5.Checked and (Pump4DirectionRG4.ItemIndex <> Pump4DirectionRG5.ItemIndex)) then
-    begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeStep:= timeStep + 1000;
-     timeCalc:= timeCalc + 1000;
-    end;
-   end
-   else // next step will be step 1
-   begin
-    if (Pump1OnOffCB1.Checked and Pump1OnOffCB4.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG4.ItemIndex))
-     or (Pump2OnOffCB1.Checked and Pump2OnOffCB4.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG4.ItemIndex))
-     or (Pump3OnOffCB1.Checked and Pump3OnOffCB4.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG4.ItemIndex))
-     or (Pump4OnOffCB1.Checked and Pump4OnOffCB4.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG4.ItemIndex)) then
-    begin
-     // only output if there is no single run
-     if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
-     begin
-      command:= command + 'I0000M1000'; // stop for 1000 ms
-      timeStep:= timeStep + 1000;
-      timeCalc:= timeCalc + 1000;
-     end;
-    end;
-   end;
-   if timeStep > 2147483646 then
-   begin
-    IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 4 too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
-    result:= False;
-    exit;
-   end;
-   // set timer interval
-   StepTimer4.Interval:= trunc(timeStep);
-   end; //end step 4
-
-   // step 5-------------------------------------------------------------------
-   SOrder:= '0000';
-   if (Step5UseCB.Checked and Step5TS.TabVisible) then
-   begin
-    // speed and direction flag
-    if (Pump1OnOffCB5.Checked) or (Pump2OnOffCB5.Checked)
-       or (Pump3OnOffCB5.Checked) or (Pump4OnOffCB5.Checked) then
-    begin
-     // first check the duty cycle, if it is not 100 we need an on-off loop
-     if DutyCycle5FSE.Value < 100 then
-      command:= command + 'g';
-     command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-     haveS:= True;
-    end
-    else
-     haveS:= False;
-    // voltage, only write if pump is active
-   if (Pump1OnOffCB5.Checked) then
-   begin
-    SOrder[0]:= '1';
-    command:= command + '1';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS5.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump2OnOffCB5.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '2'
-    else
-     SOrder[1]:= '2';
-    command:= command + '2';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS5.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump3OnOffCB5.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '3'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '3'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '3';
-    command:= command + '3';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS5.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump4OnOffCB5.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '4'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '4'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '4'
-    else if SOrder[3] = '0' then
-     SOrder[3]:= '4';
-    command:= command + '4';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS5.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   // direction
-   if HaveS then // only if there is any pump running
-   begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG5')
-      as TRadioGroup).ItemIndex);
-    if SOrder[1] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG5')
-       as TRadioGroup).ItemIndex);
-    if SOrder[2] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG5')
-       as TRadioGroup).ItemIndex);
-    if SOrder[3] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG5')
-       as TRadioGroup).ItemIndex);
-   end;
-   // action
-   command:= command + 'I'
-    + BoolToStr(Pump1OnOffCB5.Checked,'1','0')
-    + BoolToStr(Pump2OnOffCB5.Checked,'1','0')
-    + BoolToStr(Pump3OnOffCB5.Checked,'1','0')
-    + BoolToStr(Pump4OnOffCB5.Checked,'1','0');
-   //calculate action time in ms
-   timeStep:= 0;
-   if Unit5RBs.Checked then
-    timeFactor:= 1000
-   else if Unit5RBmin.Checked then
-    timeFactor:= 1000 * 60
-   else if Unit5RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
-
-   // if we have not 100% duty cycle we need 2 steps
-   if (DutyCycle5FSE.Value < 100) and HaveS then
-   begin
-    if (DutyCycle5FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle5FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle5FSE.Value / 100 * XTime); // time in ms
-    OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime5FSE.Value * timeFactor / XTime) - 1;
-    // DutyRepeats can now be -1 if time is smaller than necessary OffTime
-    if DutyRepeats < 0 then
-     DutyRepeats:= 0;
-    if RunTime5FSE.Value < XTime / 1000 then
-     RunTime5FSE.Value:= XTime / 1000;
-    command:= command + 'M' + FloatToStr(OnTime);
-    command:= command + 'I0000M' + FloatToStr(OffTime);
-    command:= command + 'G' + IntToStr(DutyRepeats);
-    timeStep:= XTime * (DutyRepeats + 1);
-   end
-   else // output the time directly
-   begin
-    command:= command + 'M' + FloatToStr(RunTime5FSE.Value * timeFactor);
-    timeStep:= RunTime5FSE.Value * timeFactor;
-   end;
-   timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
-   // only if the next step is actually used and we have 100% duty cylce
-   if (Step6UseCB.checked) and (DutyCycle5FSE.Value = 100) then
-   begin
-    if (Pump1OnOffCB5.Checked and Pump1OnOffCB6.Checked and (Pump1DirectionRG5.ItemIndex <> Pump1DirectionRG6.ItemIndex))
-     or (Pump2OnOffCB5.Checked and Pump2OnOffCB6.Checked and (Pump2DirectionRG5.ItemIndex <> Pump2DirectionRG6.ItemIndex))
-     or (Pump3OnOffCB5.Checked and Pump3OnOffCB6.Checked and (Pump3DirectionRG5.ItemIndex <> Pump3DirectionRG6.ItemIndex))
-     or (Pump4OnOffCB5.Checked and Pump4OnOffCB6.Checked and (Pump4DirectionRG5.ItemIndex <> Pump4DirectionRG6.ItemIndex)) then
-    begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeStep:= timeStep + 1000;
-     timeCalc:= timeCalc + 1000;
-    end;
-   end
-   else // next step will be step 1
-   begin
-    if (Pump1OnOffCB1.Checked and Pump1OnOffCB5.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG5.ItemIndex))
-     or (Pump2OnOffCB1.Checked and Pump2OnOffCB5.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG5.ItemIndex))
-     or (Pump3OnOffCB1.Checked and Pump3OnOffCB5.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG5.ItemIndex))
-     or (Pump4OnOffCB1.Checked and Pump4OnOffCB5.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG5.ItemIndex)) then
-    begin
-     // only output if there is no single run
-     if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
-     begin
-      command:= command + 'I0000M1000'; // stop for 1000 ms
-      timeStep:= timeStep + 1000;
-      timeCalc:= timeCalc + 1000;
-     end;
-    end;
-   end;
-   if timeStep > 2147483646 then
-   begin
-    IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 5 too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
-    result:= False;
-    exit;
-   end;
-   // set timer interval
-   StepTimer5.Interval:= trunc(timeStep);
-   end; //end step 5
-
-   // step 6 ------------------------------------------------------------------
-   SOrder:= '0000';
-   if (Step6UseCB.Checked and Step6TS.TabVisible) then
-   begin
-    // speed and direction flag
-    if (Pump1OnOffCB6.Checked) or (Pump2OnOffCB6.Checked)
-       or (Pump3OnOffCB6.Checked) or (Pump4OnOffCB6.Checked) then
-    begin
-     // first check the duty cycle, if it is not 100 we need an on-off loop
-     if DutyCycle6FSE.Value < 100 then
-      command:= command + 'g';
-     command:= command + 'S'; // Sxyyy, x = pump number, y= speed
-     haveS:= True;
-    end
-    else
-     haveS:= False;
-    // voltage, only write if pump is active
-   if (Pump1OnOffCB6.Checked) then
-   begin
-    SOrder[0]:= '1';
-    command:= command + '1';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump1VoltageFS6.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump2OnOffCB6.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '2'
-    else
-     SOrder[1]:= '2';
-    command:= command + '2';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump2VoltageFS6.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump3OnOffCB6.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '3'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '3'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '3';
-    command:= command + '3';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump3VoltageFS6.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   if (Pump4OnOffCB6.Checked) then
-   begin
-    if SOrder[0] = '0' then
-     SOrder[0]:= '4'
-    else if SOrder[1] = '0' then
-     SOrder[1]:= '4'
-    else if SOrder[2] = '0' then
-     SOrder[2]:= '4'
-    else if SOrder[3] = '0' then
-     SOrder[3]:= '4';
-    command:= command + '4';
-    // 3.3 V is the maximum
-    voltage:= FloatToStr(ceil(Pump4VoltageFS6.Value / 3.3 * 999));
-    // we need to write always 3 characters
-    case length(voltage) of
-     2 : voltage:= '0' + voltage;
-     1 : voltage:= '00' + voltage;
-    end;
-    command:= command + voltage;
-   end;
-   // direction
-   if HaveS then // only if there is any pump running
-   begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG6')
-      as TRadioGroup).ItemIndex);
-    if SOrder[1] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[1] + 'DirectionRG6')
-       as TRadioGroup).ItemIndex);
-    if SOrder[2] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[2] + 'DirectionRG6')
-       as TRadioGroup).ItemIndex);
-    if SOrder[3] <> '0' then
-     command:= command +
-      IntToStr((FindComponent('Pump' + SOrder[3] + 'DirectionRG6')
-       as TRadioGroup).ItemIndex);
-   end;
-   // action
-   command:= command + 'I'
-    + BoolToStr(Pump1OnOffCB6.Checked,'1','0')
-    + BoolToStr(Pump2OnOffCB6.Checked,'1','0')
-    + BoolToStr(Pump3OnOffCB6.Checked,'1','0')
-    + BoolToStr(Pump4OnOffCB6.Checked,'1','0');
-   //calculate action time in ms
-   timeStep:= 0;
-   if Unit6RBs.Checked then
-    timeFactor:= 1000
-   else if Unit6RBmin.Checked then
-    timeFactor:= 1000 * 60
-   else if Unit6RBh.Checked then
-    timeFactor:= 1000 * 60 * 60;
-
-   // if we have not 100% duty cycle we need 2 steps
-   if (DutyCycle6FSE.Value < 100) and HaveS then
-   begin
-    if (DutyCycle6FSE.Value / 100) >= 0.05 then
-     XTime:= 1000
-    else
-     XTime:= round(0.05 / (DutyCycle6FSE.Value / 100) * 1000);
-    OnTime:= round(DutyCycle6FSE.Value / 100 * XTime); // time in ms
-    OffTime:= XTime - OnTime;
-    DutyRepeats:= round(RunTime6FSE.Value * timeFactor / XTime) - 1;
-    // DutyRepeats can now be -1 if time is smaller than necessary OffTime
-    if DutyRepeats < 0 then
-     DutyRepeats:= 0;
-    if RunTime6FSE.Value < XTime / 1000 then
-     RunTime6FSE.Value:= XTime / 1000;
-    command:= command + 'M' + FloatToStr(OnTime);
-    command:= command + 'I0000M' + FloatToStr(OffTime);
-    command:= command + 'G' + IntToStr(DutyRepeats);
-    timeStep:= XTime * (DutyRepeats + 1);
-   end
-   else // output the time directly
-   begin
-    command:= command + 'M' + FloatToStr(RunTime6FSE.Value * timeFactor);
-    timeStep:= RunTime6FSE.Value * timeFactor;
-   end;
-   timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
-   if (Pump1OnOffCB1.Checked and Pump1OnOffCB6.Checked and (Pump1DirectionRG1.ItemIndex <> Pump1DirectionRG6.ItemIndex))
-    or (Pump2OnOffCB1.Checked and Pump2OnOffCB6.Checked and (Pump2DirectionRG1.ItemIndex <> Pump2DirectionRG6.ItemIndex))
-    or (Pump3OnOffCB1.Checked and Pump3OnOffCB6.Checked and (Pump3DirectionRG1.ItemIndex <> Pump3DirectionRG6.ItemIndex))
-    or (Pump4OnOffCB1.Checked and Pump4OnOffCB6.Checked and (Pump4DirectionRG1.ItemIndex <> Pump4DirectionRG6.ItemIndex)) then
-   begin
-    // only output if there is no single run
-    if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
-    begin
-     command:= command + 'I0000M1000'; // stop for 1000 ms
-     timeStep:= timeStep + 1000;
-     timeCalc:= timeCalc + 1000;
-    end;
-   end;
-   if timeStep > 2147483646 then
-   begin
-    IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time 6 too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
-    result:= False;
-    exit;
-   end;
-   // set timer interval
-   StepTimer6.Interval:= trunc(timeStep);
-   end; //end step 6
-
-   // end loop flag
-   if RunEndlessCB.Checked then
-   begin
-    command:= command + 'G';
-    timeCalc:= MAXINT; // set maximal possible int for infinite repeats
-   end;
-   // if repeated run
-   if (StrToInt(RepeatSE.Text) > 0) and (not RunEndlessCB.Checked) then
-   begin
-    command:= command + 'G' + IntToStr(RepeatSE.Value);
-    timeCalc:= timeCalc * (RepeatSE.Value + 1);
-   end;
+ // end loop flag
+ if RunEndlessCB.Checked then
+ begin
+  command:= command + 'G';
+  timeCalc:= MAXINT; // set maximal possible int for infinite repeats
+ end;
+ // if repeated run
+ if (StrToInt(RepeatSE.Text) > 0) and (not RunEndlessCB.Checked) then
+ begin
+  command:= command + 'G' + IntToStr(RepeatSE.Value);
+  timeCalc:= timeCalc * (RepeatSE.Value + 1);
+ end;
 
   // explicitly turn off all pumps, turn off LED and execute flag
   // the explicite turn off is important because the Arduino command
@@ -2118,6 +1280,7 @@ begin
   // the loop will end immediately
   command:= command + 'I0000lR';
 
+  // calculate the total time
   if not RunEndlessCB.Checked then
   begin
    // output time in sensible unit
@@ -2771,6 +1934,7 @@ end;
 procedure TMainForm.DutyCycle1FSEChange(Sender: TObject);
 var
 j : integer;
+DutyTime : Double;
 begin
  // if the duty cycle is not 100% we must require 1.1 V for the pumps
  // otherwise the voltage would be to low to start a short movement
@@ -2782,11 +1946,23 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS1')
       as TFloatSpinEdit).MinValue:= 0;
+ // calculate necessary time increment
+ if (DutyCycle1FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1 // base time is 1s
+ else // calculate a base time so that the OnTime is 50 ms
+  DutyTime:= 0.05 / (DutyCycle1FSE.Value / 100);
+ RunTime1FSE.Increment:= round(DutyTime);
+ // the set time might be smaller than necessary
+ if RunTime1FSE.Value < DutyTime then
+  RunTime1FSE.Value:= DutyTime;
+ // also set the minimal value
+ RunTime1FSE.MinValue:= DutyTime;
 end;
 
 procedure TMainForm.DutyCycle2FSEChange(Sender: TObject);
 var
  j : integer;
+ DutyTime : Double;
 begin
  if (DutyCycle2FSE.Value < 100) then
   for j:= 1 to 4 do
@@ -2796,11 +1972,20 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS2')
      as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle2FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle2FSE.Value / 100);
+ RunTime2FSE.Increment:= round(DutyTime);
+ if RunTime2FSE.Value < DutyTime then
+  RunTime2FSE.Value:= DutyTime;
+ RunTime2FSE.MinValue:= DutyTime;
 end;
 
 procedure TMainForm.DutyCycle3FSEChange(Sender: TObject);
 var
  j : integer;
+ DutyTime : Double;
 begin
  if (DutyCycle3FSE.Value < 100) then
   for j:= 1 to 4 do
@@ -2810,11 +1995,20 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS3')
      as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle3FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle3FSE.Value / 100);
+ RunTime3FSE.Increment:= round(DutyTime);
+ if RunTime3FSE.Value < DutyTime then
+  RunTime3FSE.Value:= DutyTime;
+ RunTime3FSE.MinValue:= DutyTime;
 end;
 
 procedure TMainForm.DutyCycle4FSEChange(Sender: TObject);
 var
  j : integer;
+ DutyTime : Double;
 begin
  if (DutyCycle4FSE.Value < 100) then
   for j:= 1 to 4 do
@@ -2824,11 +2018,20 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS4')
      as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle4FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle4FSE.Value / 100);
+ RunTime4FSE.Increment:= round(DutyTime);
+ if RunTime4FSE.Value < DutyTime then
+  RunTime4FSE.Value:= DutyTime;
+ RunTime4FSE.MinValue:= DutyTime;
 end;
 
 procedure TMainForm.DutyCycle5FSEChange(Sender: TObject);
 var
  j : integer;
+ DutyTime : Double;
 begin
  if (DutyCycle5FSE.Value < 100) then
   for j:= 1 to 4 do
@@ -2838,11 +2041,20 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS5')
      as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle5FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle5FSE.Value / 100);
+ RunTime5FSE.Increment:= round(DutyTime);
+ if RunTime5FSE.Value < DutyTime then
+  RunTime5FSE.Value:= DutyTime;
+ RunTime5FSE.MinValue:= DutyTime;
 end;
 
 procedure TMainForm.DutyCycle6FSEChange(Sender: TObject);
 var
  j : integer;
+ DutyTime : Double;
 begin
  if (DutyCycle6FSE.Value < 100) then
   for j:= 1 to 4 do
@@ -2852,6 +2064,14 @@ begin
   for j:= 1 to 4 do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
      as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle6FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle6FSE.Value / 100);
+ RunTime6FSE.Increment:= round(DutyTime);
+ if RunTime6FSE.Value < DutyTime then
+  RunTime6FSE.Value:= DutyTime;
+ RunTime6FSE.MinValue:= DutyTime;
 end;
 
 // opening --------------------------------------------------------------------
@@ -2937,13 +2157,13 @@ var
  SOrder : array [0..3] of char;
  StepCounter, MCounter, ICounter, i, j, k, G1 : integer;
  MousePointer : TPoint;
- StepTime, M1, M2 : Double;
- HasDuty : Boolean;
+ StepTime, M1, M2, DutyStepTime : Double;
+ Have2M : Boolean;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  StepCounter:= 0; MCounter:= 0; ICounter:= 0;
  SOrder:= '0000'; M1:= 0; M2:= 0; G1:= 0;
- result:= false; HasDuty:= false;
+ result:= false; Have2M:= false;
 
  // first check address
  address:= Copy(command, 0, 2);
@@ -3086,7 +2306,7 @@ begin
    begin
     // store the second time for the duty cycle
     M2:= StepTime;
-    HasDuty:= true;
+    Have2M:= true;
    end;
   end; // end parse 'M'
 
@@ -3097,6 +2317,9 @@ begin
    // but only parse the first occurence
    // syntax is Ixxxx, with x = [0,1] and there might only be one x
    inc(ICounter);
+   // the first step might not have any 'S', therefore set the step here
+   if StepCounter  = 0 then
+    inc(StepCounter);
    // only output if it is the first occurence in a step
    if ICounter = 1 then
    begin
@@ -3145,6 +2368,7 @@ begin
   if command[i] = 'G' then
   // the frontend only supports maximal one loop nesting level e.g. ggXGAgXGBGC
   begin
+   // if we have 2 'M' statements and M1 < 1, then 'G' is for the duty cycle
    // if there is no digit, it is the overall loop run forever
    if not isDigit(command[i+1]) then
     RunEndlessCB.Checked:= true
@@ -3155,22 +2379,41 @@ begin
     repeat
      inc(j)
     until IsDigit(command[j]) = false;
-    if HasDuty then
+    if Have2M and (M1 < 1) then
      G1:= StrToInt(Copy(command, i+1, j-i-1))
     else
      RepeatSE.Text:= Copy(command, i+1, j-i-1);
     RunEndlessCB.Checked:= false;
    end;
-   // if we have 2 'M' statement per step, we know the 'G' is for the duty cycle
-   if HasDuty then
+   if Have2M and (M1 < 1) then
    begin
     // calculate duty cycle
     (FindComponent('DutyCycle' + IntToStr(StepCounter) + 'FSE')
      as TFloatSpinEdit).Value:= M1 / (M1 + M2) * 100;
     // calculate step time
-    (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
-     as TFloatSpinEdit).Value:= (M1 + M2) * (G1 + 1);
-    HasDuty:= false;
+    DutyStepTime:= (M1 + M2) * (G1 + 1);
+    if (DutyStepTime >= 1000) and (DutyStepTime < 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= DutyStepTime / 60;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBmin')
+      as TRadioButton).Checked:= true;
+     end;
+    if (DutyStepTime > 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= DutyStepTime / 3600;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBh')
+      as TRadioButton).Checked:= true;
+    end;
+    if (DutyStepTime < 1000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= DutyStepTime;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBs')
+      as TRadioButton).Checked:= true;
+    end;
+    Have2M:= false;
    end;
   end; // end parse 'G'
 

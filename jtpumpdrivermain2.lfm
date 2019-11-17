@@ -406,6 +406,20 @@ object MainForm: TMainForm
           Value = 100
         end
       end
+      object Step1UseCB: TCheckBox
+        Left = 8
+        Height = 19
+        Top = 20
+        Width = 39
+        Caption = 'Use'
+        Checked = True
+        OnChange = Step2UseCBChange
+        ParentFont = False
+        ParentShowHint = False
+        State = cbChecked
+        TabOrder = 6
+        Visible = False
+      end
     end
     object Step2TS: TTabSheet
       Caption = 'Step 2'
@@ -790,7 +804,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
-          MinValue = 1
+          MinValue = 0.1
           OnChange = DutyCycle2FSEChange
           ParentShowHint = False
           ShowHint = True
@@ -1183,7 +1197,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
-          MinValue = 1
+          MinValue = 0.1
           OnChange = DutyCycle3FSEChange
           ParentShowHint = False
           ShowHint = True
@@ -1576,7 +1590,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
-          MinValue = 1
+          MinValue = 0.1
           OnChange = DutyCycle4FSEChange
           ParentShowHint = False
           ShowHint = True
@@ -1969,7 +1983,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
-          MinValue = 1
+          MinValue = 0.1
           OnChange = DutyCycle5FSEChange
           ParentShowHint = False
           ShowHint = True
@@ -2359,7 +2373,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
-          MinValue = 1
+          MinValue = 0.1
           OnChange = DutyCycle6FSEChange
           ParentShowHint = False
           ShowHint = True
