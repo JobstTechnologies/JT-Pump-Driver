@@ -2092,13 +2092,14 @@ begin
  if OpenDialog.Execute then
   FileSuccess:= OpenFile(OpenDialog.FileName)
  else
-  exit; // user aboorted the loading
+  exit; // user aborted the loading
  if not FileSuccess then
   MessageDlgPos('Error while attempting to open file',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
  else
  begin
   InName:= OpenDialog.FileName;
+  SaveDialog.FileName:= ''; // will be re-set in TMainForm.SaveHandling
   // display file name without suffix
   DummyString:= ExtractFileName(InName);
   SetLength(DummyString, Length(DummyString) - 9);
@@ -2463,7 +2464,10 @@ var YesNo : integer;
 begin
  result:= '';
  // propose a file name
- OutNameTemp:= InName;
+ if (InName <> '') and (SaveDialog.FileName = '') then
+  SaveDialog.FileName:= ExtractFileName(InName);
+ if SaveDialog.FileName <> '' then
+  SaveDialog.FileName:= ExtractFileName(SaveDialog.FileName);
  if SaveDialog.Execute = true then
  begin
   OutNameTemp:= SaveDialog.FileName;
@@ -2490,11 +2494,15 @@ begin
    else // if Yes
    begin
     result:= OutNameTemp;
+    // store last used name
+    SaveDialog.FileName:= ExtractFileName(OutNameTemp);
     exit;
    end;
   end; // end if FileExists
 
   result:= OutNameTemp;
+  // store last used name
+  SaveDialog.FileName:= ExtractFileName(OutNameTemp);
  end; // end if TabelleSpeichernDialog.Execute
 
 end;
