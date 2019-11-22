@@ -1541,17 +1541,17 @@ begin
      as TTimer).Enabled:= False;
  end;
  // view tab after last used step
-  for j:= 2 to 5 do
-  begin
-   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-       as TCheckBox).Checked = True then
-    (FindComponent('Step' + IntToStr(j+1) + 'TS')
-     as TTabSheet).TabVisible:= True
-   else
-    break;
-  end;
-  // tab must always be visible
-  Step2TS.TabVisible:= True;
+ for j:= 2 to 5 do
+ begin
+  if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+      as TCheckBox).Checked = True then
+   (FindComponent('Step' + IntToStr(j+1) + 'TS')
+    as TTabSheet).TabVisible:= True
+  else
+   break;
+ end;
+ // tab 2 must always be visible
+ Step2TS.TabVisible:= True;
 
 end;
 
@@ -1717,17 +1717,17 @@ begin
      as TTimer).Enabled:= False;
   end;
   // view tab after last used step
-  for j:= 5 downto 2 do
+  // view tab after last used step
+  for j:= 2 to 5 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-     as TCheckBox).Checked = True then
-    begin
-     (FindComponent('Step' + IntToStr(j+1) + 'TS')
-      as TTabSheet).TabVisible:= True;
-     break;
-    end;
+       as TCheckBox).Checked = True then
+    (FindComponent('Step' + IntToStr(j+1) + 'TS')
+     as TTabSheet).TabVisible:= True
+   else
+    break;
   end;
-  // tab must always be visible
+  // tab 2 must always be visible
   Step2TS.TabVisible:= True;
 end;
 
