@@ -1,5 +1,10 @@
 Changes
 
+from version 2.40 to 2.41
+
+- fix bug that action could not be saved if step 6 is used
+
+
 from version 2.33 to 2.40
 
 - Main new feature:

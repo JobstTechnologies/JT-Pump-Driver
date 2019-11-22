@@ -292,7 +292,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.40';
+  Version : string = '2.41';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -962,17 +962,16 @@ begin
   (FindComponent('Step' + IntToStr(j) + 'TS')
    as TTabSheet).Enabled:= True;
  // view tab after last used step
- for j:= 5 downto 2 do
+ for j:= 2 to 5 do
  begin
   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-    as TCheckBox).Checked = True then
-   begin
-    (FindComponent('Step' + IntToStr(j+1) + 'TS')
-     as TTabSheet).TabVisible:= True;
-    break;
-   end;
+      as TCheckBox).Checked = True then
+   (FindComponent('Step' + IntToStr(j+1) + 'TS')
+    as TTabSheet).TabVisible:= True
+  else
+   break;
  end;
- // tab must always be visible
+ // tab 2 must always be visible
  Step2TS.TabVisible:= True;
  // loaded settings are no longer valid
  LoadedActionFileM.Text:= 'None';
@@ -1187,8 +1186,8 @@ begin
    if (FindComponent('DutyCycle' + jStr + 'FSE')
        as TFloatSpinEdit).Value = 100 then
    begin
-    if (FindComponent('Step' + IntToStr(j+1) + 'UseCB')
-        as TCheckBox).checked and (j < 6) then
+    if (j < 6) and (FindComponent('Step' + IntToStr(j+1) + 'UseCB')
+        as TCheckBox).checked then
     begin
      if ((FindComponent('Pump1OnOffCB' + jStr) as TCheckBox).Checked
        and (FindComponent('Pump1OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
@@ -1542,15 +1541,14 @@ begin
      as TTimer).Enabled:= False;
  end;
  // view tab after last used step
-  for j:= 5 downto 2 do
+  for j:= 2 to 5 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-     as TCheckBox).Checked = True then
-    begin
-     (FindComponent('Step' + IntToStr(j+1) + 'TS')
-      as TTabSheet).TabVisible:= True;
-     break;
-    end;
+       as TCheckBox).Checked = True then
+    (FindComponent('Step' + IntToStr(j+1) + 'TS')
+     as TTabSheet).TabVisible:= True
+   else
+    break;
   end;
   // tab must always be visible
   Step2TS.TabVisible:= True;

@@ -96,7 +96,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -168,7 +168,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -241,7 +241,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -313,7 +313,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
