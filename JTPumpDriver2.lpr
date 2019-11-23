@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, LazSerialPort, JTPumpDriverMain2, SerialUSBSelection
+  Forms, LazSerialPort, JTPumpDriverMain2, SerialUSBSelection, PumpNameSetting
   { you can add units after this };
 
 {$R *.res}
@@ -19,6 +19,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TSerialUSBSelectionF, SerialUSBSelectionF);
+  Application.CreateForm(TPumpNameSettingF, PumpNameSettingF);
   Application.Run;
 end.
 

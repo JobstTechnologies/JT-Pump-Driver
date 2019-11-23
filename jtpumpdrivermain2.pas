@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, EditBtn, Buttons, LCLType, Registry, Process,
-  {Serial,} SynaSer, LazSerial, Crt, SerialUSBSelection, StrUtils,
-  PopupNotifier, Character;
+  SynaSer, LazSerial, Crt, SerialUSBSelection, PumpNameSetting, StrUtils,
+  PopupNotifier, Character, UITypes, Streamex;
 
 type
 
@@ -16,35 +16,43 @@ type
 
   TMainForm = class(TForm)
     DutyCycle1FSE: TFloatSpinEdit;
-    ActionTime2GB: TGroupBox;
+    DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle3FSE: TFloatSpinEdit;
     DutyCycle4FSE: TFloatSpinEdit;
     DutyCycle5FSE: TFloatSpinEdit;
     DutyCycle6FSE: TFloatSpinEdit;
-    DutyCycle2GB: TGroupBox;
+    DutyCycle7FSE: TFloatSpinEdit;
+    ActionTime1GB: TGroupBox;
+    ActionTime2GB: TGroupBox;
     ActionTime3GB: TGroupBox;
     ActionTime4GB: TGroupBox;
     ActionTime5GB: TGroupBox;
     ActionTime6GB: TGroupBox;
+    ActionTime7GB: TGroupBox;
     COMConnect: TLazSerial;
-    DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle1GB: TGroupBox;
+    DutyCycle2GB: TGroupBox;
     DutyCycle3GB: TGroupBox;
     DutyCycle4GB: TGroupBox;
     DutyCycle5GB: TGroupBox;
     DutyCycle6GB: TGroupBox;
+    DutyCycle7GB: TGroupBox;
     GenerateCommandBB: TBitBtn;
     ActionsGB: TGroupBox;
     CommandL: TLabel;
     CommandM: TMemo;
-    ActionTime1GB: TGroupBox;
     FirmwareUpdateMI: TMenuItem;
     AboutMI: TMenuItem;
     FirmwareFileDialog: TOpenDialog;
     FirmwareNote: TPopupNotifier;
     Label1: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label18: TLabel;
     Label2: TLabel;
     GetFirmwareVersionMI: TMenuItem;
+    Label23: TLabel;
+    Label28: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -56,34 +64,26 @@ type
     FileMI: TMenuItem;
     OpenDialog: TOpenDialog;
     SaveDialog: TSaveDialog;
-    Step1UseCB: TCheckBox;
     StepTimer1: TTimer;
     StepTimer2: TTimer;
     StepTimer3: TTimer;
     StepTimer4: TTimer;
     StepTimer5: TTimer;
     StepTimer6: TTimer;
+    StepTimer7: TTimer;
     StopTimer: TTimer;
     StartTimeLE: TLabeledEdit;
     FinishTimeLE: TLabeledEdit;
     TotalTimeLE: TLabeledEdit;
     Panel1: TPanel;
     Panel2: TPanel;
+    RunTime1FSE: TFloatSpinEdit;
     RunTime2FSE: TFloatSpinEdit;
     RunTime3FSE: TFloatSpinEdit;
     RunTime4FSE: TFloatSpinEdit;
     RunTime5FSE: TFloatSpinEdit;
     RunTime6FSE: TFloatSpinEdit;
-    TimeEdit1: TTimeEdit;
-    Unit2RBh: TRadioButton;
-    Unit3RBh: TRadioButton;
-    Unit4RBh: TRadioButton;
-    Unit5RBh: TRadioButton;
-    Unit6RBh: TRadioButton;
-    Unit2RBmin: TRadioButton;
-    Unit1RBs: TRadioButton;
-    Unit1RBmin: TRadioButton;
-    Unit1RBh: TRadioButton;
+    RunTime7FSE: TFloatSpinEdit;
     RunSettingsGB: TGroupBox;
     StatusGB: TGroupBox;
     IndicatorPanelP: TPanel;
@@ -117,96 +117,112 @@ type
     Pump1DirectionRG4: TRadioGroup;
     Pump1DirectionRG5: TRadioGroup;
     Pump1DirectionRG6: TRadioGroup;
+    Pump1DirectionRG7: TRadioGroup;
     Pump1GB1: TGroupBox;
     Pump1GB2: TGroupBox;
     Pump1GB3: TGroupBox;
     Pump1GB4: TGroupBox;
     Pump1GB5: TGroupBox;
     Pump1GB6: TGroupBox;
+    Pump1GB7: TGroupBox;
     Pump1OnOffCB1: TCheckBox;
     Pump1OnOffCB2: TCheckBox;
     Pump1OnOffCB3: TCheckBox;
     Pump1OnOffCB4: TCheckBox;
     Pump1OnOffCB5: TCheckBox;
     Pump1OnOffCB6: TCheckBox;
+    Pump1OnOffCB7: TCheckBox;
     Pump1VoltageFS1: TFloatSpinEdit;
     Pump1VoltageFS2: TFloatSpinEdit;
     Pump1VoltageFS3: TFloatSpinEdit;
     Pump1VoltageFS4: TFloatSpinEdit;
     Pump1VoltageFS5: TFloatSpinEdit;
     Pump1VoltageFS6: TFloatSpinEdit;
+    Pump1VoltageFS7: TFloatSpinEdit;
     Pump2DirectionRG1: TRadioGroup;
     Pump2DirectionRG2: TRadioGroup;
     Pump2DirectionRG3: TRadioGroup;
     Pump2DirectionRG4: TRadioGroup;
     Pump2DirectionRG5: TRadioGroup;
     Pump2DirectionRG6: TRadioGroup;
+    Pump2DirectionRG7: TRadioGroup;
     Pump2GB1: TGroupBox;
     Pump2GB2: TGroupBox;
     Pump2GB3: TGroupBox;
     Pump2GB4: TGroupBox;
     Pump2GB5: TGroupBox;
     Pump2GB6: TGroupBox;
+    Pump2GB7: TGroupBox;
     Pump2OnOffCB1: TCheckBox;
     Pump2OnOffCB2: TCheckBox;
     Pump2OnOffCB3: TCheckBox;
     Pump2OnOffCB4: TCheckBox;
     Pump2OnOffCB5: TCheckBox;
     Pump2OnOffCB6: TCheckBox;
+    Pump2OnOffCB7: TCheckBox;
     Pump2VoltageFS1: TFloatSpinEdit;
     Pump2VoltageFS2: TFloatSpinEdit;
     Pump2VoltageFS3: TFloatSpinEdit;
     Pump2VoltageFS4: TFloatSpinEdit;
     Pump2VoltageFS5: TFloatSpinEdit;
     Pump2VoltageFS6: TFloatSpinEdit;
+    Pump2VoltageFS7: TFloatSpinEdit;
     Pump3DirectionRG1: TRadioGroup;
     Pump3DirectionRG2: TRadioGroup;
     Pump3DirectionRG3: TRadioGroup;
     Pump3DirectionRG4: TRadioGroup;
     Pump3DirectionRG5: TRadioGroup;
     Pump3DirectionRG6: TRadioGroup;
+    Pump3DirectionRG7: TRadioGroup;
     Pump3GB1: TGroupBox;
     Pump3GB2: TGroupBox;
     Pump3GB3: TGroupBox;
     Pump3GB4: TGroupBox;
     Pump3GB5: TGroupBox;
     Pump3GB6: TGroupBox;
+    Pump3GB7: TGroupBox;
     Pump3OnOffCB1: TCheckBox;
     Pump3OnOffCB2: TCheckBox;
     Pump3OnOffCB3: TCheckBox;
     Pump3OnOffCB4: TCheckBox;
     Pump3OnOffCB5: TCheckBox;
     Pump3OnOffCB6: TCheckBox;
+    Pump3OnOffCB7: TCheckBox;
     Pump3VoltageFS1: TFloatSpinEdit;
     Pump3VoltageFS2: TFloatSpinEdit;
     Pump3VoltageFS3: TFloatSpinEdit;
     Pump3VoltageFS4: TFloatSpinEdit;
     Pump3VoltageFS5: TFloatSpinEdit;
     Pump3VoltageFS6: TFloatSpinEdit;
+    Pump3VoltageFS7: TFloatSpinEdit;
     Pump4DirectionRG1: TRadioGroup;
     Pump4DirectionRG2: TRadioGroup;
     Pump4DirectionRG3: TRadioGroup;
     Pump4DirectionRG4: TRadioGroup;
     Pump4DirectionRG5: TRadioGroup;
     Pump4DirectionRG6: TRadioGroup;
+    Pump4DirectionRG7: TRadioGroup;
     Pump4GB1: TGroupBox;
     Pump4GB2: TGroupBox;
     Pump4GB3: TGroupBox;
     Pump4GB4: TGroupBox;
     Pump4GB5: TGroupBox;
     Pump4GB6: TGroupBox;
+    Pump4GB7: TGroupBox;
     Pump4OnOffCB1: TCheckBox;
     Pump4OnOffCB2: TCheckBox;
     Pump4OnOffCB3: TCheckBox;
     Pump4OnOffCB4: TCheckBox;
     Pump4OnOffCB5: TCheckBox;
     Pump4OnOffCB6: TCheckBox;
+    Pump4OnOffCB7: TCheckBox;
     Pump4VoltageFS1: TFloatSpinEdit;
     Pump4VoltageFS2: TFloatSpinEdit;
     Pump4VoltageFS3: TFloatSpinEdit;
     Pump4VoltageFS4: TFloatSpinEdit;
     Pump4VoltageFS5: TFloatSpinEdit;
     Pump4VoltageFS6: TFloatSpinEdit;
+    Pump4VoltageFS7: TFloatSpinEdit;
     RepeatL: TLabel;
     RepeatOutputLE: TLabeledEdit;
     RepeatPC: TPageControl;
@@ -214,8 +230,8 @@ type
     RunBB: TBitBtn;
     RunEndlessCB: TCheckBox;
     RunFreeBB: TBitBtn;
-    RunTime1FSE: TFloatSpinEdit;
     Step1TS: TTabSheet;
+    Step1UseCB: TCheckBox;
     Step2TS: TTabSheet;
     Step2UseCB: TCheckBox;
     Step3TS: TTabSheet;
@@ -226,6 +242,8 @@ type
     Step5UseCB: TCheckBox;
     Step6TS: TTabSheet;
     Step6UseCB: TCheckBox;
+    Step7TS: TTabSheet;
+    Step7UseCB: TCheckBox;
     StopBB: TBitBtn;
     ConnectionMI: TMenuItem;
     MiscellaneousMI: TMenuItem;
@@ -233,15 +251,27 @@ type
     MainMenu: TMainMenu;
     OverallTimer: TTimer;
     RepeatTimer: TTimer;
+    Unit1RBh: TRadioButton;
+    Unit2RBh: TRadioButton;
+    Unit3RBh: TRadioButton;
+    Unit4RBh: TRadioButton;
+    Unit5RBh: TRadioButton;
+    Unit6RBh: TRadioButton;
+    Unit7RBh: TRadioButton;
+    Unit1RBmin: TRadioButton;
+    Unit2RBmin: TRadioButton;
     Unit3RBmin: TRadioButton;
     Unit4RBmin: TRadioButton;
     Unit5RBmin: TRadioButton;
     Unit6RBmin: TRadioButton;
+    Unit7RBmin: TRadioButton;
+    Unit1RBs: TRadioButton;
     Unit2RBs: TRadioButton;
     Unit3RBs: TRadioButton;
     Unit4RBs: TRadioButton;
     Unit5RBs: TRadioButton;
     Unit6RBs: TRadioButton;
+    Unit7RBs: TRadioButton;
     procedure AboutMIClick(Sender: TObject);
     procedure ConnectionMIClick(Sender: TObject);
     procedure DutyCycle1FSEChange(Sender: TObject);
@@ -250,12 +280,17 @@ type
     procedure DutyCycle4FSEChange(Sender: TObject);
     procedure DutyCycle5FSEChange(Sender: TObject);
     procedure DutyCycle6FSEChange(Sender: TObject);
+    procedure DutyCycle7FSEChange(Sender: TObject);
     procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure GenerateCommandBBClick(Sender: TObject);
     procedure GetFirmwareVersionMIClick(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
+    procedure Pump1GBDblClick(Sender: TObject);
+    procedure Pump2GBDblClick(Sender: TObject);
+    procedure Pump3GBDblClick(Sender: TObject);
+    procedure Pump4GBDblClick(Sender: TObject);
     procedure PumpOnOffCBSingleChange(Sender: TObject);
     procedure PumpOnOffCBLoopChange(Sender: TObject);
     procedure RepeatPCChange(Sender: TObject);
@@ -268,12 +303,14 @@ type
     procedure Step4UseCBChange(Sender: TObject);
     procedure Step5UseCBChange(Sender: TObject);
     procedure Step6UseCBChange(Sender: TObject);
+    procedure Step7UseCBChange(Sender: TObject);
     procedure StepTimer1Finished(Sender: TObject);
     procedure StepTimer2Finished(Sender: TObject);
     procedure StepTimer3Finished(Sender: TObject);
     procedure StepTimer4Finished(Sender: TObject);
     procedure StepTimer5Finished(Sender: TObject);
     procedure StepTimer6Finished(Sender: TObject);
+    procedure StepTimer7Finished(Sender: TObject);
     procedure StopBBClick(Sender: TObject);
     procedure StopTimerFinished;
     procedure OverallTimerFinished;
@@ -284,7 +321,7 @@ type
     function GenerateCommand(out command: string): Boolean;
     function ParseCommand(command: string): Boolean;
     function DialogWithPos(const Message: string; DialogType: TMsgDlgType;
-               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
+              Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
     function OpenFile(InputName: string): Boolean;
     function SaveHandling(InName: string; const Calculation: Boolean): string;
 
@@ -292,7 +329,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.41';
+  Version : string = '2.50';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -958,11 +995,11 @@ begin
  // the button re-enables editing after an action file was loaded
  // enable all setting possibilities
  RunSettingsGB.Enabled:= True;
- for j:= 1 to 6 do
+ for j:= 1 to 7 do
   (FindComponent('Step' + IntToStr(j) + 'TS')
    as TTabSheet).Enabled:= True;
  // view tab after last used step
- for j:= 2 to 5 do
+ for j:= 2 to 6 do
  begin
   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
       as TCheckBox).Checked = True then
@@ -1004,7 +1041,7 @@ begin
   command:= command + 'g';
 
  // step through all tabs
- for j:=1 to 6 do
+ for j:=1 to 7 do
  begin
   SOrder:= '0000';
   jStr:= IntToStr(j);
@@ -1258,7 +1295,7 @@ begin
    (FindComponent('StepTimer' + jStr) as TTimer).Interval:= trunc(timeStep);
 
   end; // end if (FindComponent('Step' + jStr + 'UseCB') as TCheckBox).Checked
- end; // end for j:=1 to 6
+ end; // end for j:=1 to 7
 
  // end loop flag
  if RunEndlessCB.Checked then
@@ -1328,7 +1365,7 @@ procedure TMainForm.PumpOnOffCBLoopChange(Sender: TObject);
 var
   i, step : integer;
 begin
-for step:= 1 to 6 do
+for step:= 1 to 7 do
   for i:= 1 to 4 do
   begin
    (FindComponent('Pump' + IntToStr(i) + 'DirectionRG' + IntToStr(step))
@@ -1345,12 +1382,12 @@ procedure TMainForm.RepeatPCChange(Sender: TObject);
 var
   i : integer;
 begin
-  for i:= 2 to 5 do
+  for i:= 2 to 6 do
    if (FindComponent('Step' + IntToStr(i) + 'TS')
       as TTabSheet).TabVisible = False then
     (FindComponent('Step' + IntToStr(i+1) + 'TS')
       as TTabSheet).TabVisible:= False;
-  for i:= 2 to 5 do
+  for i:= 2 to 6 do
    if ((FindComponent('Step' + IntToStr(i) + 'UseCB')
       as TCheckBox).Checked and
       (FindComponent('Step' + IntToStr(i) + 'TS')
@@ -1463,7 +1500,7 @@ begin
   RepeatPC.ActivePage:= Step1TS;
   StepTimer1.Enabled:= true;
   // do not show unused steps
-  for j:= 2 to 6 do
+  for j:= 2 to 7 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
      as TCheckBox).Checked = False then
@@ -1532,7 +1569,7 @@ begin
  RepeatOutputLE.Visible:= False;
  // enable all setting possibilities
  RunSettingsGB.Enabled:= True;
- for j:= 1 to 6 do
+ for j:= 1 to 7 do
  begin
   (FindComponent('Step' + IntToStr(j) + 'TS')
      as TTabSheet).Enabled:= True;
@@ -1541,7 +1578,7 @@ begin
      as TTimer).Enabled:= False;
  end;
  // view tab after last used step
- for j:= 2 to 5 do
+ for j:= 2 to 6 do
  begin
   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
       as TCheckBox).Checked = True then
@@ -1642,6 +1679,24 @@ end;
 procedure TMainForm.StepTimer6Finished(Sender: TObject);
 begin
  StepTimer6.Enabled:= False;
+ // if there is a step 7, start its timer and show its tab
+ if Step7UseCB.checked then
+ begin
+  // the interval is calculated in TMainForm.GenerateCommand
+  StepTimer7.Enabled:= True;
+  RepeatPC.ActivePage:= Step7TS;
+ end
+ else // there might be a repeat
+ begin
+  // switch to step 1
+  StepTimer1.Enabled:= True;
+  RepeatPC.ActivePage:= Step1TS;
+ end;
+end;
+
+procedure TMainForm.StepTimer7Finished(Sender: TObject);
+begin
+ StepTimer7.Enabled:= False;
  // switch to step 1
  StepTimer1.Enabled:= True;
  RepeatPC.ActivePage:= Step1TS;
@@ -1708,7 +1763,7 @@ begin
   GenerateCommandBB.Enabled:= True;
   // enable all setting possibilities
   RunSettingsGB.Enabled:= True;
-  for j:= 1 to 6 do
+  for j:= 1 to 7 do
   begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
      as TTabSheet).Enabled:= True;
@@ -1717,8 +1772,7 @@ begin
      as TTimer).Enabled:= False;
   end;
   // view tab after last used step
-  // view tab after last used step
-  for j:= 2 to 5 do
+  for j:= 2 to 6 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
        as TCheckBox).Checked = True then
@@ -1911,6 +1965,7 @@ procedure TMainForm.Step6UseCBChange(Sender: TObject);
 begin
  if Step6UseCB.Checked then
   begin
+   Step7TS.TabVisible:= True;
    ActionTime6GB.Enabled:= True;
    DutyCycle6GB.Enabled:= True;
    Pump1GB6.Enabled:= True;
@@ -1920,12 +1975,35 @@ begin
   end
   else
   begin
+   Step7TS.TabVisible:= False;
    ActionTime6GB.Enabled:= False;
    DutyCycle6GB.Enabled:= False;
    Pump1GB6.Enabled:= False;
    Pump2GB6.Enabled:= False;
    Pump3GB6.Enabled:= False;
    Pump4GB6.Enabled:= False;
+  end;
+end;
+
+procedure TMainForm.Step7UseCBChange(Sender: TObject);
+begin
+ if Step7UseCB.Checked then
+  begin
+   ActionTime7GB.Enabled:= True;
+   DutyCycle7GB.Enabled:= True;
+   Pump1GB7.Enabled:= True;
+   Pump2GB7.Enabled:= True;
+   Pump3GB7.Enabled:= True;
+   Pump4GB7.Enabled:= True;
+  end
+  else
+  begin
+   ActionTime7GB.Enabled:= False;
+   DutyCycle7GB.Enabled:= False;
+   Pump1GB7.Enabled:= False;
+   Pump2GB7.Enabled:= False;
+   Pump3GB7.Enabled:= False;
+   Pump4GB7.Enabled:= False;
   end;
 end;
 
@@ -2072,6 +2150,97 @@ begin
  RunTime6FSE.MinValue:= DutyTime;
 end;
 
+procedure TMainForm.DutyCycle7FSEChange(Sender: TObject);
+var
+ j : integer;
+ DutyTime : Double;
+begin
+ if (DutyCycle7FSE.Value < 100) then
+  for j:= 1 to 4 do
+   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
+     as TFloatSpinEdit).MinValue:= 1.1
+ else
+  for j:= 1 to 4 do
+   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
+     as TFloatSpinEdit).MinValue:= 0;
+ if (DutyCycle7FSE.Value / 100) >= 0.05 then
+  DutyTime:= 1
+ else
+  DutyTime:= 0.05 / (DutyCycle6FSE.Value / 100);
+ RunTime7FSE.Increment:= round(DutyTime);
+ if RunTime7FSE.Value < DutyTime then
+  RunTime7FSE.Value:= DutyTime;
+ RunTime7FSE.MinValue:= DutyTime;
+end;
+
+procedure TMainForm.Pump1GBDblClick(Sender: TObject);
+var
+ j : integer;
+begin
+ PumpNameSettingF.PumpNameE.Text:= Pump1GB1.Caption;
+ // open connection dialog
+ PumpNameSettingF.ShowModal;
+ if (PumpName = 'Ignore') then // user pressed Disconnect
+  exit
+ else
+  for j:= 1 to 7 do
+  begin
+   (FindComponent('Pump1GB' + IntToStr(j))
+    as TGroupBox).Caption:= PumpName;
+  end;
+end;
+
+procedure TMainForm.Pump2GBDblClick(Sender: TObject);
+var
+ j : integer;
+begin
+ PumpNameSettingF.PumpNameE.Text:= Pump2GB1.Caption;
+ // open connection dialog
+ PumpNameSettingF.ShowModal;
+ if (PumpName = 'Ignore') then // user pressed Disconnect
+  exit
+ else
+  for j:= 1 to 7 do
+  begin
+   (FindComponent('Pump2GB' + IntToStr(j))
+    as TGroupBox).Caption:= PumpName;
+  end;
+end;
+
+procedure TMainForm.Pump3GBDblClick(Sender: TObject);
+var
+ j : integer;
+begin
+ PumpNameSettingF.PumpNameE.Text:= Pump3GB1.Caption;
+ // open connection dialog
+ PumpNameSettingF.ShowModal;
+ if (PumpName = 'Ignore') then // user pressed Disconnect
+  exit
+ else
+  for j:= 1 to 7 do
+  begin
+   (FindComponent('Pump3GB' + IntToStr(j))
+    as TGroupBox).Caption:= PumpName;
+  end;
+end;
+
+procedure TMainForm.Pump4GBDblClick(Sender: TObject);
+var
+ j : integer;
+begin
+ PumpNameSettingF.PumpNameE.Text:= Pump4GB1.Caption;
+ // open connection dialog
+ PumpNameSettingF.ShowModal;
+ if (PumpName = 'Ignore') then // user pressed Disconnect
+  exit
+ else
+  for j:= 1 to 7 do
+  begin
+   (FindComponent('Pump4GB' + IntToStr(j))
+    as TGroupBox).Caption:= PumpName;
+  end;
+end;
+
 // opening --------------------------------------------------------------------
 
 procedure TMainForm.LoadActionMIClick(Sender: TObject);
@@ -2084,7 +2253,7 @@ var
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  // make all steps visible because they might be invisible due to a prior loading
-  for j:= 2 to 6 do
+  for j:= 2 to 7 do
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).TabVisible:= True;
  OpenDialog.InitialDir:= '';
@@ -2112,12 +2281,12 @@ begin
    GenerateCommand(command);
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
-  for j:= 1 to 6 do
+  for j:= 1 to 7 do
    (FindComponent('Step' + IntToStr(j) + 'TS')
       as TTabSheet).Enabled:= False;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps
-  for j:= 2 to 6 do
+  for j:= 2 to 7 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
      as TCheckBox).Checked = False then
@@ -2132,19 +2301,32 @@ end;
 function TMainForm.OpenFile(InputName: string): Boolean;
 // read file content
 var
- FileData : string;
  OpenFileStream : TFileStream;
- FileSize : longint;
+ LineReader : TStreamReader;
+ ReadLine : string = '';
 begin
  result:= False;
  try
   OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  FileSize:= OpenFileStream.Size;
-  SetLength(FileData, FileSize);
-  OpenFileStream.Read(FileData[1], FileSize);
-  CommandM.Text:= FileData;
+  LineReader:= TStreamReader.Create(OpenFileStream);
+  // read the command
+  LineReader.ReadLine(ReadLine);
+  CommandM.Text:= ReadLine;
+  // read the pump names
+  LineReader.ReadLine(ReadLine);
+  if ReadLine <> '' then // old files only stored the command
+  begin
+   Pump1GB1.Caption:= ReadLine;
+   LineReader.ReadLine(ReadLine);
+   Pump2GB1.Caption:= ReadLine;
+   LineReader.ReadLine(ReadLine);
+   Pump3GB1.Caption:= ReadLine;
+   LineReader.ReadLine(ReadLine);
+   Pump4GB1.Caption:= ReadLine;
+  end;
   result:= True;
  finally
+  LineReader.Free;
   OpenFileStream.Free;
  end;
 end;
@@ -2425,7 +2607,7 @@ end;
 // saving ---------------------------------------------------------------------
 
 procedure TMainForm.SaveActionMIClick(Sender: TObject);
- // writes all values into a text file
+ // writes serial command and pump names into a text file
 var
  OutName, command : string;
  SaveFileStream : TFileStream;
@@ -2450,7 +2632,18 @@ begin
     end
    else
     SaveFileStream:= TFileStream.Create(OutName, fmCreate);
+   // write the command
    SaveFileStream.Write(command[1], Length(command));
+   SaveFileStream.Write(#13#10, 2); // line break
+   // write the pump names
+   SaveFileStream.Write(Pump1GB1.Caption[1], Length(Pump1GB1.Caption));
+   SaveFileStream.Write(#13#10, 2);
+   SaveFileStream.Write(Pump2GB1.Caption[1], Length(Pump2GB1.Caption));
+   SaveFileStream.Write(#13#10, 2);
+   SaveFileStream.Write(Pump3GB1.Caption[1], Length(Pump3GB1.Caption));
+   SaveFileStream.Write(#13#10, 2);
+   SaveFileStream.Write(Pump4GB1.Caption[1], Length(Pump4GB1.Caption));
+   SaveFileStream.Write(#13#10, 2);
   finally
    SaveFileStream.Free;
   end; //end finally

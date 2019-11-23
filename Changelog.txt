@@ -1,5 +1,15 @@
 Changes
 
+from version 2.41 to 2.50
+
+new features:
+- the pump name can be changed by double-clicking on a pump name in step 1
+- one can now set a 7th step
+
+bugfix:
+- steps where no pump is run can now correctly be saved and read
+
+
 from version 2.40 to 2.41
 
 - fix bug that action could not be saved if step 6 is used

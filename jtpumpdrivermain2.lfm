@@ -30,14 +30,18 @@ object MainForm: TMainForm
       object Pump1GB1: TGroupBox
         Left = 14
         Height = 200
+        Hint = 'Double-click to change the pump name'
         Top = 56
         Width = 156
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 152
         ParentColor = False
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB1: TCheckBox
           Left = 8
           Height = 19
@@ -103,13 +107,17 @@ object MainForm: TMainForm
       object Pump4GB1: TGroupBox
         Left = 190
         Height = 200
+        Hint = 'Double-click to change the pump name'
         Top = 264
         Width = 156
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 152
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 4
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB1: TCheckBox
           Left = 8
           Height = 19
@@ -175,14 +183,17 @@ object MainForm: TMainForm
       object Pump2GB1: TGroupBox
         Left = 190
         Height = 200
-        Hint = 'The higher the voltage the higher the'
+        Hint = 'Double-click to change the pump name'
         Top = 56
         Width = 156
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 152
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 2
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB1: TCheckBox
           Left = 8
           Height = 19
@@ -248,13 +259,17 @@ object MainForm: TMainForm
       object Pump3GB1: TGroupBox
         Left = 14
         Height = 200
+        Hint = 'Double-click to change the pump name'
         Top = 264
         Width = 156
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 152
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 3
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB1: TCheckBox
           Left = 8
           Height = 19
@@ -442,7 +457,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 156
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 152
         Enabled = False
@@ -513,7 +528,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 156
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 152
         Enabled = False
@@ -584,7 +599,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 156
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 152
         Enabled = False
@@ -655,7 +670,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 156
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 152
         Enabled = False
@@ -835,7 +850,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -902,11 +917,11 @@ object MainForm: TMainForm
         end
       end
       object Pump2GB3: TGroupBox
-        Left = 190
+        Left = 191
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -977,7 +992,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1048,7 +1063,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1228,7 +1243,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1299,7 +1314,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1370,7 +1385,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1441,7 +1456,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1621,7 +1636,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1692,7 +1707,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1763,7 +1778,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -1834,7 +1849,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -2014,7 +2029,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 3 Settings '
+        Caption = 'Pump 3'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -2085,7 +2100,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 2 Settings '
+        Caption = 'Pump 2'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -2156,7 +2171,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 264
         Width = 155
-        Caption = 'Pump 4 Settings '
+        Caption = 'Pump 4'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -2227,7 +2242,7 @@ object MainForm: TMainForm
         Height = 200
         Top = 56
         Width = 155
-        Caption = 'Pump 1 Settings '
+        Caption = 'Pump 1'
         ClientHeight = 180
         ClientWidth = 151
         Enabled = False
@@ -2380,6 +2395,406 @@ object MainForm: TMainForm
           ShowHint = True
           TabOrder = 0
           Value = 100
+        end
+      end
+    end
+    object Step7TS: TTabSheet
+      Caption = 'Step7'
+      ClientHeight = 468
+      ClientWidth = 360
+      TabVisible = False
+      object DutyCycle7GB: TGroupBox
+        Left = 258
+        Height = 49
+        Top = 4
+        Width = 88
+        Caption = 'Duty Cycle'
+        ClientHeight = 29
+        ClientWidth = 84
+        ParentFont = False
+        TabOrder = 0
+        object Label12: TLabel
+          Left = 64
+          Height = 15
+          Top = 4
+          Width = 10
+          Caption = '%'
+          ParentColor = False
+        end
+        object DutyCycle7FSE: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'Duty cycle of the pump within the action time'#13#10'If not 100%, minimal possible voltage is 1.1 V'
+          Top = 0
+          Width = 50
+          DecimalPlaces = 1
+          MinValue = 0.1
+          OnChange = DutyCycle7FSEChange
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          Value = 100
+        end
+      end
+      object ActionTime7GB: TGroupBox
+        Left = 54
+        Height = 49
+        Top = 4
+        Width = 192
+        Caption = 'Action Time'
+        ClientHeight = 29
+        ClientWidth = 188
+        ParentFont = False
+        TabOrder = 1
+        object Unit7RBs: TRadioButton
+          Left = 88
+          Height = 19
+          Top = 2
+          Width = 25
+          Caption = 's'
+          Checked = True
+          ParentFont = False
+          TabOrder = 1
+          TabStop = True
+        end
+        object Unit7RBmin: TRadioButton
+          Left = 116
+          Height = 19
+          Top = 2
+          Width = 41
+          Caption = 'min'
+          ParentFont = False
+          TabOrder = 2
+        end
+        object RunTime7FSE: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'Time for the step in seconds, minutes or hours'
+          Top = 0
+          Width = 72
+          MaxValue = 9999
+          MinValue = 1
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          Value = 10
+        end
+        object Unit7RBh: TRadioButton
+          Left = 160
+          Height = 19
+          Top = 2
+          Width = 27
+          Caption = 'h'
+          ParentFont = False
+          TabOrder = 3
+        end
+      end
+      object Step7UseCB: TCheckBox
+        Left = 8
+        Height = 19
+        Hint = 'Use step 7'
+        Top = 20
+        Width = 39
+        Caption = 'Use'
+        OnChange = Step7UseCBChange
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
+      end
+      object Pump1GB7: TGroupBox
+        Left = 14
+        Height = 200
+        Top = 56
+        Width = 156
+        Caption = 'Pump 1'
+        ClientHeight = 180
+        ClientWidth = 152
+        Enabled = False
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 3
+        object Pump1OnOffCB7: TCheckBox
+          Left = 8
+          Height = 19
+          Top = 8
+          Width = 36
+          Caption = 'On'
+          Checked = True
+          OnChange = PumpOnOffCBLoopChange
+          ParentFont = False
+          State = cbChecked
+          TabOrder = 0
+        end
+        object Pump1DirectionRG7: TRadioGroup
+          Left = 8
+          Height = 72
+          Top = 40
+          Width = 128
+          AutoFill = True
+          Caption = 'Pump Direction'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 52
+          ClientWidth = 124
+          ItemIndex = 0
+          Items.Strings = (
+            'Clockwise'
+            'Counterclockwise'
+          )
+          ParentFont = False
+          ParentShowHint = False
+          TabOrder = 1
+        end
+        object Pump1VoltageFS7: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
+          Top = 144
+          Width = 103
+          Increment = 0.1
+          MaxValue = 3.3
+          MinValue = 0
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          Value = 3.3
+        end
+        object Label13: TLabel
+          Left = 8
+          Height = 15
+          Top = 123
+          Width = 40
+          Caption = 'Voltage'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Pump2GB7: TGroupBox
+        Left = 190
+        Height = 200
+        Hint = 'The higher the voltage the higher the'
+        Top = 56
+        Width = 156
+        Caption = 'Pump 2'
+        ClientHeight = 180
+        ClientWidth = 152
+        Enabled = False
+        ParentFont = False
+        TabOrder = 4
+        object Pump2OnOffCB7: TCheckBox
+          Left = 8
+          Height = 19
+          Top = 8
+          Width = 36
+          Caption = 'On'
+          OnChange = PumpOnOffCBLoopChange
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Pump2DirectionRG7: TRadioGroup
+          Left = 8
+          Height = 72
+          Top = 40
+          Width = 128
+          AutoFill = True
+          Caption = 'Pump Direction'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 52
+          ClientWidth = 124
+          Enabled = False
+          ItemIndex = 0
+          Items.Strings = (
+            'Clockwise'
+            'Counterclockwise'
+          )
+          ParentFont = False
+          ParentShowHint = False
+          TabOrder = 1
+        end
+        object Pump2VoltageFS7: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
+          Top = 144
+          Width = 103
+          Enabled = False
+          Increment = 0.1
+          MaxValue = 3.3
+          MinValue = 0
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          Value = 3.3
+        end
+        object Label18: TLabel
+          Left = 8
+          Height = 15
+          Top = 123
+          Width = 40
+          Caption = 'Voltage'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Pump4GB7: TGroupBox
+        Left = 190
+        Height = 200
+        Top = 264
+        Width = 156
+        Caption = 'Pump 4'
+        ClientHeight = 180
+        ClientWidth = 152
+        Enabled = False
+        ParentFont = False
+        TabOrder = 5
+        object Pump4OnOffCB7: TCheckBox
+          Left = 8
+          Height = 19
+          Top = 8
+          Width = 36
+          Caption = 'On'
+          OnChange = PumpOnOffCBLoopChange
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Pump4DirectionRG7: TRadioGroup
+          Left = 8
+          Height = 72
+          Top = 40
+          Width = 128
+          AutoFill = True
+          Caption = 'Pump Direction'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 52
+          ClientWidth = 124
+          Enabled = False
+          ItemIndex = 0
+          Items.Strings = (
+            'Clockwise'
+            'Counterclockwise'
+          )
+          ParentFont = False
+          ParentShowHint = False
+          TabOrder = 1
+        end
+        object Pump4VoltageFS7: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
+          Top = 144
+          Width = 103
+          Enabled = False
+          Increment = 0.1
+          MaxValue = 3.3
+          MinValue = 0
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          Value = 3.3
+        end
+        object Label23: TLabel
+          Left = 8
+          Height = 15
+          Top = 123
+          Width = 40
+          Caption = 'Voltage'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Pump3GB7: TGroupBox
+        Left = 14
+        Height = 200
+        Top = 264
+        Width = 156
+        Caption = 'Pump 3'
+        ClientHeight = 180
+        ClientWidth = 152
+        Enabled = False
+        ParentFont = False
+        TabOrder = 6
+        object Pump3OnOffCB7: TCheckBox
+          Left = 8
+          Height = 19
+          Top = 8
+          Width = 36
+          Caption = 'On'
+          OnChange = PumpOnOffCBLoopChange
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Pump3DirectionRG7: TRadioGroup
+          Left = 8
+          Height = 72
+          Top = 40
+          Width = 128
+          AutoFill = True
+          Caption = 'Pump Direction'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 52
+          ClientWidth = 124
+          Enabled = False
+          ItemIndex = 0
+          Items.Strings = (
+            'Clockwise'
+            'Counterclockwise'
+          )
+          ParentFont = False
+          ParentShowHint = False
+          TabOrder = 1
+        end
+        object Pump3VoltageFS7: TFloatSpinEdit
+          Left = 8
+          Height = 23
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
+          Top = 144
+          Width = 103
+          Enabled = False
+          Increment = 0.1
+          MaxValue = 3.3
+          MinValue = 0
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
+          Value = 3.3
+        end
+        object Label28: TLabel
+          Left = 8
+          Height = 15
+          Top = 123
+          Width = 40
+          Caption = 'Voltage'
+          ParentColor = False
+          ParentFont = False
         end
       end
     end
@@ -2835,5 +3250,12 @@ object MainForm: TMainForm
     Filter = 'Pump Driver Actions|*.PDAction'
     left = 24
     top = 592
+  end
+  object StepTimer7: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = StepTimer7Finished
+    left = 352
+    top = 152
   end
 end

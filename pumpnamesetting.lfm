@@ -1,0 +1,26 @@
+inherited PumpNameSettingF: TPumpNameSettingF
+  Caption = 'Pump name selection'
+  inherited SerialUSBPortL: TLabel
+    Left = 8
+    Width = 70
+    Caption = 'Pump Name:'
+  end
+  inherited SerialUSBPortCB: TComboBox
+    Visible = False
+  end
+  inherited OKButtonB: TButton
+    Caption = 'OK'
+    OnClick = OKButtonBClick
+  end
+  inherited CancelButtonB: TButton
+    Caption = 'Cancel'
+    OnClick = CancelButtonBClick
+  end
+  object PumpNameE: TEdit[4]
+    Left = 88
+    Height = 23
+    Top = 16
+    Width = 159
+    TabOrder = 3
+  end
+end
