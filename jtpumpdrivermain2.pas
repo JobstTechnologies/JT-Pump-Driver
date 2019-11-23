@@ -281,12 +281,12 @@ type
   private
 
   public
-    function GenerateCommand({out time: Double;} out command: string): boolean;
-    function ParseCommand(command: string): boolean;
-    function  DialogWithPos(const Message: string; DialogType: TMsgDlgType;
+    function GenerateCommand(out command: string): Boolean;
+    function ParseCommand(command: string): Boolean;
+    function DialogWithPos(const Message: string; DialogType: TMsgDlgType;
                Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
-    function OpenFile(InputName : string): Boolean;
-    function SaveHandling(InName : string; const Calculation : Boolean):string;
+    function OpenFile(InputName: string): Boolean;
+    function SaveHandling(InName: string; const Calculation: Boolean): string;
 
   end;
 
@@ -980,7 +980,7 @@ begin
  SaveActionMI.Enabled:= True;
 end;
 
-function TMainForm.GenerateCommand(out command: string): boolean;
+function TMainForm.GenerateCommand(out command: string): Boolean;
 // collect data an generate command to be sent
 var
  voltage, jStr : string;
@@ -2129,7 +2129,7 @@ begin
  end; // else if not FileSuccess
 end;
 
-function TMainForm.OpenFile(InputName : string):Boolean;
+function TMainForm.OpenFile(InputName: string): Boolean;
 // read file content
 var
  FileData : string;
@@ -2139,7 +2139,7 @@ begin
  result:= False;
  try
   OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  FileSize := OpenFileStream.Size;
+  FileSize:= OpenFileStream.Size;
   SetLength(FileData, FileSize);
   OpenFileStream.Read(FileData[1], FileSize);
   CommandM.Text:= FileData;
@@ -2149,7 +2149,7 @@ begin
  end;
 end;
 
-function TMainForm.ParseCommand(command: string): boolean;
+function TMainForm.ParseCommand(command: string): Boolean;
 // parses the input command
 var
  address : string;
@@ -2457,7 +2457,7 @@ begin
  end; //end if OutName <> ''
 end;
 
-function TMainForm.SaveHandling(InName : string; const Calculation : Boolean):string;
+function TMainForm.SaveHandling(InName: string; const Calculation: Boolean): string;
 // handles the save dialog
 var YesNo : integer;
     OutNameTemp : string;
