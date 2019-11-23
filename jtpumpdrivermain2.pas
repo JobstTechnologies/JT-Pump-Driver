@@ -2180,13 +2180,13 @@ begin
  PumpNameSettingF.PumpNameE.Text:= Pump1GB1.Caption;
  // open connection dialog
  PumpNameSettingF.ShowModal;
- if (PumpName = 'Ignore') then // user pressed Disconnect
+ if PumpNameSettingF.ModalResult = mrCancel then
   exit
  else
   for j:= 1 to 7 do
   begin
    (FindComponent('Pump1GB' + IntToStr(j))
-    as TGroupBox).Caption:= PumpName;
+    as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
   end;
 end;
 
@@ -2197,13 +2197,13 @@ begin
  PumpNameSettingF.PumpNameE.Text:= Pump2GB1.Caption;
  // open connection dialog
  PumpNameSettingF.ShowModal;
- if (PumpName = 'Ignore') then // user pressed Disconnect
+ if PumpNameSettingF.ModalResult = mrCancel then
   exit
  else
   for j:= 1 to 7 do
   begin
    (FindComponent('Pump2GB' + IntToStr(j))
-    as TGroupBox).Caption:= PumpName;
+    as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
   end;
 end;
 
@@ -2214,13 +2214,13 @@ begin
  PumpNameSettingF.PumpNameE.Text:= Pump3GB1.Caption;
  // open connection dialog
  PumpNameSettingF.ShowModal;
- if (PumpName = 'Ignore') then // user pressed Disconnect
+ if PumpNameSettingF.ModalResult = mrCancel then
   exit
  else
   for j:= 1 to 7 do
   begin
    (FindComponent('Pump3GB' + IntToStr(j))
-    as TGroupBox).Caption:= PumpName;
+    as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
   end;
 end;
 
@@ -2231,13 +2231,13 @@ begin
  PumpNameSettingF.PumpNameE.Text:= Pump4GB1.Caption;
  // open connection dialog
  PumpNameSettingF.ShowModal;
- if (PumpName = 'Ignore') then // user pressed Disconnect
+ if PumpNameSettingF.ModalResult = mrCancel then
   exit
  else
   for j:= 1 to 7 do
   begin
    (FindComponent('Pump4GB' + IntToStr(j))
-    as TGroupBox).Caption:= PumpName;
+    as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
   end;
 end;
 
@@ -2275,6 +2275,7 @@ begin
   LoadedActionFileM.Text:= DummyString;
   LoadedActionFileM.Color:= clHighlight;
   command:= CommandM.Text;
+  // parse the command
   ParseSuccess:= ParseCommand(command);
   if ParseSuccess then
    // call command generation just to get the action time calculated
@@ -2293,8 +2294,10 @@ begin
     (FindComponent('Step' + IntToStr(j) + 'TS')
      as TTabSheet).TabVisible:= False;
   end;
-  // disable saving, will be re-enabled by GererateCommand
+ // disable saving, will be re-enabled by GererateCommand
  SaveActionMI.Enabled:= False;
+ // show step 1
+ RepeatPC.ActivePage:= Step1TS;
  end; // else if not FileSuccess
 end;
 
@@ -2375,7 +2378,7 @@ begin
  end;
 
  // disable all steps, will be re-enabled while parsing
- for j:= 2 to 6 do
+ for j:= 2 to 7 do
   (FindComponent('Step' + IntToStr(j) + 'UseCB')
    as TCheckBox).Checked:= false;
 
@@ -2383,7 +2386,7 @@ begin
  RepeatSE.Value:= 0;
  RunEndlessCB.Checked:= false;
  // set all duty cylces to 100%
- for j:= 1 to 6 do
+ for j:= 1 to 7 do
   (FindComponent('DutyCycle' + IntToStr(j) + 'FSE')
    as TFloatSpinEdit).Value:= 100;
 
@@ -2475,7 +2478,8 @@ begin
    if (StepCounter = 0) or (LastParsed = 'G')
     or ((LastParsed = 'M') and (StepTime >= 1)) then
    begin
-    if StepCounter < 7 then // we can only have 7 steps
+    // not if the next command is 'R' because this 'I' is just to stop all pumps
+    if (command[i+6] <> 'R') then
     begin
      inc(StepCounter);
      ICounter:= 0;
@@ -2490,13 +2494,13 @@ begin
     // enable the step
     (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
      as TCheckBox).Checked:= true;
+    // set the pumps
     if command[i+1] = '1' then
     (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
       as TCheckBox).Checked:= true
     else
      (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
       as TCheckBox).Checked:= false;
-    // check for further pumps
     if (command[i+2] = '0') or (command[i+2] = '1') then
     begin
      if command[i+2] = '1' then
@@ -2629,17 +2633,6 @@ begin
     Have2M:= false;
    end;
   end; // end parse 'G'
-
-  // parse step 'R'
-  if command[i] = 'R' then
-  begin
-   // R is always the termination command
-   // if LastParsed = I, the 'I' is no step but only turns off all pumps
-   if (LastParsed = 'I') and (StepCounter < 7) then // not if there are 7 steps
-    // disable the last step
-    (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
-     as TCheckBox).Checked:= false;
-  end; // end parse 'R'
 
  end; // end parse the command
 

@@ -7,15 +7,14 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, LazSerialPort, JTPumpDriverMain2, SerialUSBSelection, PumpNameSetting
-  { you can add units after this };
+  Forms, LazSerialPort, JTPumpDriverMain2, SerialUSBSelection, PumpNameSetting;
 
 {$R *.res}
 
 begin
-  RequireDerivedFormResource:=True;
-  Application.Title:='JT Pump Driver';
-  Application.Scaled:=True;
+  RequireDerivedFormResource:= True;
+  Application.Title:= 'JT Pump Driver';
+  Application.Scaled:= True;
   Application.Initialize;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TSerialUSBSelectionF, SerialUSBSelectionF);

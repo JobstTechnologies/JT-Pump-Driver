@@ -3110,6 +3110,7 @@ object MainForm: TMainForm
     top = 592
     object ConnectionMI: TMenuItem
       Caption = 'Connection'
+      ShortCut = 16451
       OnClick = ConnectionMIClick
     end
     object FileMI: TMenuItem
