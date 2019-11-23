@@ -3,8 +3,10 @@ Changes
 from version 2.41 to 2.50
 
 new features:
-- the pump name can be changed by double-clicking on a pump name in step 1
+- the pump name can be changed by double-clicking on a pump name
 - one can now set a 7th step
+- the pump names are saved when saving an action
+- shortcuts can be used to load and save actions
 
 bugfix:
 - steps where no pump is run can now correctly be saved and read

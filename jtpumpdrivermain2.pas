@@ -2304,6 +2304,7 @@ var
  OpenFileStream : TFileStream;
  LineReader : TStreamReader;
  ReadLine : string = '';
+ j, k : integer;
 begin
  result:= False;
  try
@@ -2312,7 +2313,7 @@ begin
   // read the command
   LineReader.ReadLine(ReadLine);
   CommandM.Text:= ReadLine;
-  // read the pump names
+  // read the pump names and set them to step 1
   LineReader.ReadLine(ReadLine);
   if ReadLine <> '' then // old files only stored the command
   begin
@@ -2323,7 +2324,22 @@ begin
    Pump3GB1.Caption:= ReadLine;
    LineReader.ReadLine(ReadLine);
    Pump4GB1.Caption:= ReadLine;
+  end
+  else
+  begin
+   Pump1GB1.Caption:= 'Pump 1';
+   Pump2GB1.Caption:= 'Pump 2';
+   Pump3GB1.Caption:= 'Pump 3';
+   Pump4GB1.Caption:= 'Pump 4';
   end;
+  // set the pump name for all other steps
+  for j:= 2 to 7 do
+   for k:= 1 to 4 do
+   begin
+    (FindComponent('Pump' + IntToStr(k) + 'GB' + IntToStr(j))
+     as TGroupBox).Caption:= (FindComponent('Pump' + IntToStr(k) + 'GB1')
+     as TGroupBox).Caption;
+   end;
   result:= True;
  finally
   LineReader.Free;
@@ -2336,6 +2352,7 @@ function TMainForm.ParseCommand(command: string): Boolean;
 var
  address : string;
  SOrder : array [0..3] of char;
+ LastParsed : char = 'X';
  StepCounter, MCounter, ICounter, i, j, k, G1 : integer;
  MousePointer : TPoint;
  StepTime, M1, M2, DutyStepTime : Double;
@@ -2344,7 +2361,7 @@ begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  StepCounter:= 0; MCounter:= 0; ICounter:= 0;
  SOrder:= '0000'; M1:= 0; M2:= 0; G1:= 0;
- result:= false; Have2M:= false;
+ result:= false; Have2M:= false; StepTime:= 0;
 
  // first check address
  address:= Copy(command, 0, 2);
@@ -2382,6 +2399,7 @@ begin
    MCounter:= 0; // there can be several occurrences of 'M' for every step
    ICounter:= 0; // there can be several occurrences of 'I' for every step
    SOrder:= '0000';
+   LastParsed:= 'S';
    // determine the length
    j:= i;
    repeat
@@ -2425,7 +2443,7 @@ begin
    // D is always connected to 'S', thus use the same StepCounter
    // syntax is Dxxxx, with x = [0,1] and there might only be one x
    // this is also possible: S39991999D11, then the first 1 belongs to pump 3
-
+   LastParsed:= 'D';
    // determine the length
    j:= i;
    repeat
@@ -2443,71 +2461,35 @@ begin
    end;
   end; // end parse 'D'
 
-  // parse step 'M'
-  if command[i] = 'M' then
-  begin
-   // M can occur twice in one step, thus use StepCounter
-   // but only parse the first occurence
-   // syntax is Mxxxx, with x = time in milliseconds
-   inc(MCounter);
-   // determine the length
-   j:= i;
-   repeat
-    inc(j)
-   until IsDigit(command[j]) = false;
-   StepTime:= StrToFloat(Copy(command, i+1, j-i-1)) / 1000;
-   // only output if it is the first occurence ina step
-   if MCounter = 1 then
-   begin
-    if (StepTime >= 1000) and (StepTime < 60000) then
-    begin
-     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
-      as TFloatSpinEdit).Value:= StepTime / 60;
-     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBmin')
-      as TRadioButton).Checked:= true;
-     end;
-    if (StepTime > 60000) then
-    begin
-     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
-      as TFloatSpinEdit).Value:= StepTime / 3600;
-     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBh')
-      as TRadioButton).Checked:= true;
-    end;
-    if (StepTime < 1000) then
-    begin
-     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
-      as TFloatSpinEdit).Value:= StepTime;
-     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBs')
-      as TRadioButton).Checked:= true;
-    end;
-    // store the time for a possible duty cycle calculation
-    M1:= StepTime;
-   end
-   else if MCounter = 2 then
-   begin
-    // store the second time for the duty cycle
-    M2:= StepTime;
-    Have2M:= true;
-   end;
-  end; // end parse 'M'
-
   // parse step 'I'
   if command[i] = 'I' then
   begin
-   // I can occur twice in one step, thus use StepCounter
-   // but only parse the first occurence
    // syntax is Ixxxx, with x = [0,1] and there might only be one x
+   // 'I' can occur twice in one step, thus use StepCounter but only
+   // parse the first occurence
+   // there might also be no 'S' before 'I', then we must increase StepCounter
+   // this is the case if:
+   //  - the last parsed command is 'G'
+   //  - the last parsed command is 'M' and the time is greater than 1 s
+   //  - StepCounter is -1
+   if (StepCounter = 0) or (LastParsed = 'G')
+    or ((LastParsed = 'M') and (StepTime >= 1)) then
+   begin
+    if StepCounter < 7 then // we can only have 7 steps
+    begin
+     inc(StepCounter);
+     ICounter:= 0;
+     MCounter:= 0;
+    end;
+   end;
    inc(ICounter);
-   // the first step might not have any 'S', therefore set the step here
-   if StepCounter  = 0 then
-    inc(StepCounter);
+   LastParsed:= 'I';
    // only output if it is the first occurence in a step
    if ICounter = 1 then
    begin
     // enable the step
-    if StepCounter > 1 then
-     (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
-      as TCheckBox).Checked:= true;
+    (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
+     as TCheckBox).Checked:= true;
     if command[i+1] = '1' then
     (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
       as TCheckBox).Checked:= true
@@ -2545,10 +2527,60 @@ begin
    end;
   end; // end parse 'I'
 
+  // parse step 'M'
+  if command[i] = 'M' then
+  begin
+   // M can occur twice in one step, thus use StepCounter
+   // but only parse the first occurence
+   // syntax is Mxxxx, with x = time in milliseconds
+   inc(MCounter);
+   LastParsed:= 'M';
+   // determine the length
+   j:= i;
+   repeat
+    inc(j)
+   until IsDigit(command[j]) = false;
+   StepTime:= StrToFloat(Copy(command, i+1, j-i-1)) / 1000;
+   // only output if it is the first occurence in a step
+   if MCounter = 1 then
+   begin
+    if (StepTime >= 1000) and (StepTime < 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime / 60;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBmin')
+      as TRadioButton).Checked:= true;
+     end;
+    if (StepTime > 60000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime / 3600;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBh')
+      as TRadioButton).Checked:= true;
+    end;
+    if (StepTime < 1000) then
+    begin
+     (FindComponent('RunTime' + IntToStr(StepCounter) + 'FSE')
+      as TFloatSpinEdit).Value:= StepTime;
+     (FindComponent('Unit' + IntToStr(StepCounter) + 'RBs')
+      as TRadioButton).Checked:= true;
+    end;
+    // store the time for a possible duty cycle calculation
+    M1:= StepTime;
+   end
+   else if MCounter = 2 then
+   begin
+    // store the second time for the duty cycle
+    M2:= StepTime;
+    Have2M:= true;
+   end;
+  end; // end parse 'M'
+
   // parse step 'G'
   if command[i] = 'G' then
   // the frontend only supports maximal one loop nesting level e.g. ggXGAgXGBGC
   begin
+   LastParsed:= 'G';
    // if we have 2 'M' statements and M1 < 1, then 'G' is for the duty cycle
    // if there is no digit, it is the overall loop run forever
    if not isDigit(command[i+1]) then
@@ -2597,6 +2629,17 @@ begin
     Have2M:= false;
    end;
   end; // end parse 'G'
+
+  // parse step 'R'
+  if command[i] = 'R' then
+  begin
+   // R is always the termination command
+   // if LastParsed = I, the 'I' is no step but only turns off all pumps
+   if (LastParsed = 'I') and (StepCounter < 7) then // not if there are 7 steps
+    // disable the last step
+    (FindComponent('Step' + IntToStr(StepCounter) + 'UseCB')
+     as TCheckBox).Checked:= false;
+  end; // end parse 'R'
 
  end; // end parse the command
 

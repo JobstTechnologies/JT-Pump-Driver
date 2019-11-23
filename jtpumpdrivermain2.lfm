@@ -463,6 +463,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB2: TCheckBox
           Left = 8
           Height = 19
@@ -534,6 +535,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB2: TCheckBox
           Left = 8
           Height = 19
@@ -605,6 +607,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB2: TCheckBox
           Left = 8
           Height = 19
@@ -676,6 +679,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 2
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB2: TCheckBox
           Left = 8
           Height = 19
@@ -856,6 +860,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB3: TCheckBox
           Left = 8
           Height = 19
@@ -917,7 +922,7 @@ object MainForm: TMainForm
         end
       end
       object Pump2GB3: TGroupBox
-        Left = 191
+        Left = 190
         Height = 200
         Top = 56
         Width = 155
@@ -927,6 +932,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB3: TCheckBox
           Left = 8
           Height = 19
@@ -998,6 +1004,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB3: TCheckBox
           Left = 8
           Height = 19
@@ -1069,6 +1076,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 2
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB3: TCheckBox
           Left = 8
           Height = 19
@@ -1249,6 +1257,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB4: TCheckBox
           Left = 8
           Height = 19
@@ -1320,6 +1329,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB4: TCheckBox
           Left = 8
           Height = 19
@@ -1391,6 +1401,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB4: TCheckBox
           Left = 8
           Height = 19
@@ -1462,6 +1473,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 2
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB4: TCheckBox
           Left = 8
           Height = 19
@@ -1642,6 +1654,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB5: TCheckBox
           Left = 8
           Height = 19
@@ -1713,6 +1726,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB5: TCheckBox
           Left = 8
           Height = 19
@@ -1784,6 +1798,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB5: TCheckBox
           Left = 8
           Height = 19
@@ -1855,6 +1870,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 2
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB5: TCheckBox
           Left = 8
           Height = 19
@@ -2035,6 +2051,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB6: TCheckBox
           Left = 8
           Height = 19
@@ -2106,6 +2123,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB6: TCheckBox
           Left = 8
           Height = 19
@@ -2177,6 +2195,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB6: TCheckBox
           Left = 8
           Height = 19
@@ -2248,6 +2267,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 2
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB6: TCheckBox
           Left = 8
           Height = 19
@@ -2515,6 +2535,7 @@ object MainForm: TMainForm
         ParentColor = False
         ParentFont = False
         TabOrder = 3
+        OnDblClick = Pump1GBDblClick
         object Pump1OnOffCB7: TCheckBox
           Left = 8
           Height = 19
@@ -2589,6 +2610,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 4
+        OnDblClick = Pump2GBDblClick
         object Pump2OnOffCB7: TCheckBox
           Left = 8
           Height = 19
@@ -2662,6 +2684,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 5
+        OnDblClick = Pump4GBDblClick
         object Pump4OnOffCB7: TCheckBox
           Left = 8
           Height = 19
@@ -2735,6 +2758,7 @@ object MainForm: TMainForm
         Enabled = False
         ParentFont = False
         TabOrder = 6
+        OnDblClick = Pump3GBDblClick
         object Pump3OnOffCB7: TCheckBox
           Left = 8
           Height = 19
@@ -3092,10 +3116,12 @@ object MainForm: TMainForm
       Caption = 'File'
       object LoadActionMI: TMenuItem
         Caption = 'Load Action'
+        ShortCut = 16460
         OnClick = LoadActionMIClick
       end
       object SaveActionMI: TMenuItem
         Caption = 'Save Action'
+        ShortCut = 16467
         OnClick = SaveActionMIClick
       end
     end
