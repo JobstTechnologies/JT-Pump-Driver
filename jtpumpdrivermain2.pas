@@ -400,7 +400,7 @@ begin
   if HaveSerial then
   begin
    // stop pumps
-   command:= '/0I0000lR' + #13#10;
+   command:= '/0I0000lR' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;
@@ -423,7 +423,7 @@ begin
   if HaveSerial then
   begin
    // stop pumps
-   command:= '/0I0000lR' + #13#10;
+   command:= '/0I0000lR' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;
@@ -458,7 +458,7 @@ begin
    exit;
   end;
   // blink 5 times
-  command:= '/0gLM500lM500G4R' + #13#10;
+  command:= '/0gLM500lM500G4R' + LineEnding;
   ser.SendString(command);
  finally
   if ser.LastError <> 0 then
@@ -529,8 +529,8 @@ begin
     begin
      MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
       + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
-      + #13#10 + 'You have an unknown old firmware version installed.'
-      + #13#10 + 'Please use the menu Miscellaneous -> Firmware Update.',
+      + LineEnding + 'You have an unknown old firmware version installed.'
+      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
       mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
      IndicatorPanelP.Caption:= 'Firmware too old';
      IndicatorPanelP.Color:= clRed;
@@ -540,8 +540,8 @@ begin
     begin
      MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
       + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
-      + #13#10 + 'You have firmware version ' + FirmwareVersion + ' installed.'
-      + #13#10 + 'Please use the menu Miscellaneous -> Firmware Update.',
+      + LineEnding + 'You have firmware version ' + FirmwareVersion + ' installed.'
+      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
       mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
      IndicatorPanelP.Caption:= 'Firmware too old';
      IndicatorPanelP.Color:= clRed;
@@ -585,13 +585,13 @@ begin
  if not FileExists(bossacPath) then
  begin
   MessageDlgPos('The file "bossac.exe" is not in the same folder as this program.'
-   + #13#10 + 'No firmware update possible.',
+   + LineEnding + 'No firmware update possible.',
    mtError, [mbOK], 0 , MousePointer.X, MousePointer.Y);
   exit;
  end;
 
  // basic info
- MessageDlgPos('Specify now the COM port of the pump driver' + #13#10
+ MessageDlgPos('Specify now the COM port of the pump driver' + LineEnding
   + 'and select then the firmware file.',
   mtInformation, [mbOK], 0, MousePointer.X, MousePointer.Y);
 
@@ -661,7 +661,7 @@ begin
    ser.Connect(COMPort);
    // send now a simple command to get the firmware version back
    // blink 1 time
-   command:= '/0LM500lM500R' + #13#10;
+   command:= '/0LM500lM500R' + LineEnding;
    ser.SendString(command);
    // receive firmware version
    FirmwareVersion:= ser.RecvPacket(1000);
@@ -827,7 +827,7 @@ begin
    ser.Connect(BootCOM);
    // send now a simple command to get the firmware version back
    // blink 1 time
-   command:= '/0LM500lM500R' + #13#10;
+   command:= '/0LM500lM500R' + LineEnding;
    ser.SendString(command);
    // receive firmware version
    FirmwareVersion:= ser.RecvPacket(1000);
@@ -861,8 +861,8 @@ begin
    else if FirmwareVersion = 'unknown' then
     begin
      MessageDlgPos('The firmware has been updated sucessfully but to an unknown'
-      + #13#10 + 'old version that is not supported by JT Pump Driver '
-      + Version + '.' + #13#10 + 'JT Pump Driver ' + Version
+      + LineEnding + 'old version that is not supported by JT Pump Driver '
+      + Version + '.' + LineEnding + 'JT Pump Driver ' + Version
       + ' requires firmware version ' + FloatToStr(RequiredFirmwareVersion)
       + ' or newer!' , mtInformation, [mbOK], 0, MousePointer.X, MousePointer.Y);
      IndicatorPanelP.Caption:= 'Firmware too old';
@@ -871,8 +871,8 @@ begin
     end
    else
    begin
-    MessageDlgPos('The firmware could not be updated sucessfully.' + #13#10
-     + 'Here is the full output of the failed firmware update attempt:' + #13#10
+    MessageDlgPos('The firmware could not be updated sucessfully.' + LineEnding
+     + 'Here is the full output of the failed firmware update attempt:' + LineEnding
      + BossacOut, mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     exit;
    end;
@@ -880,8 +880,8 @@ begin
    begin
     MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
      + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
-     + #13#10 + 'You have firmware version ' + FirmwareVersion + ' installed.'
-     + #13#10 + 'Please use the menu Miscellaneous -> Firmware Update.',
+     + LineEnding + 'You have firmware version ' + FirmwareVersion + ' installed.'
+     + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
      IndicatorPanelP.Caption:= 'Firmware too old';
      IndicatorPanelP.Color:= clRed;
@@ -949,12 +949,12 @@ var
  MousePointer : TPoint;
 begin
  MousePointer:= Mouse.CursorPos;
- MessageDlgPos('       JT Pump Driver version ' + Version + #13#10
-  + 'Program to control a pump driver for CCP1 pumps.' + #13#10
-  + 'Usage:' + #13#10
-  + '- connect the pump driver to the PC' + #13#10
-  + '- click on the menu "Connection" and select the' + #13#10
-  + '  COM port of the pump driver' + #13#10
+ MessageDlgPos('       JT Pump Driver version ' + Version + LineEnding
+  + 'Program to control a pump driver for CCP1 pumps.' + LineEnding
+  + 'Usage:' + LineEnding
+  + '- connect the pump driver to the PC' + LineEnding
+  + '- click on the menu "Connection" and select the' + LineEnding
+  + '  COM port of the pump driver' + LineEnding
   + '- set the properties you like and press "Run Pumps"',
    mtInformation, [mbOK], 0 ,MousePointer.X, MousePointer.Y);
 end;
@@ -965,7 +965,7 @@ var
  command : string;
 begin
  // stop the pumps and blink 3 times
- command:= '/0I0000gLM500lM500G2R' + #13#10;
+ command:= '/0I0000gLM500lM500G2R' + LineEnding;
  if HaveSerial then // the user set a COM port
   try
    ser.SendString(command);
@@ -1217,7 +1217,7 @@ begin
                 as TFloatSpinEdit).Value * timeFactor;
    end;
    timeCalc:= timeCalc + timeStep;
-   // if the direction changes, wait 1000 ms to protect the pumps
+   // if the direction changes, wait 999 ms to protect the pumps
    // only if the next step is actually used and we have 100% duty cylce
    // only necessary if DutyCycle = 100
    if (FindComponent('DutyCycle' + jStr + 'FSE')
@@ -1243,9 +1243,9 @@ begin
        and ((FindComponent('Pump4DirectionRG' + jStr) as TRadioGroup).ItemIndex
         <> (FindComponent('Pump4DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex)) then
      begin
-      command:= command + 'I0000M1000'; // stop for 1000 ms
-      timeStep:= timeStep + 1000;
-      timeCalc:= timeCalc + 1000;
+      command:= command + 'I0000M999'; // stop for 999 ms
+      timeStep:= timeStep + 999;
+      timeCalc:= timeCalc + 999;
      end;
     end
     // next step could be step 1
@@ -1271,9 +1271,9 @@ begin
       // only output if there is no single run
       if (RepeatSE.Value > 0) or (RunEndlessCB.Checked) then
       begin
-       command:= command + 'I0000M1000'; // stop for 1000 ms
-       timeStep:= timeStep + 1000;
-       timeCalc:= timeCalc + 1000;
+       command:= command + 'I0000M999'; // stop for 999 ms
+       timeStep:= timeStep + 999;
+       timeCalc:= timeCalc + 999;
       end;
      end;
     end; // end if if ((RepeatSE.Value > 0)
@@ -1322,7 +1322,7 @@ begin
    // output time in sensible unit
    if timeCalc <= 1e6 then
    begin
-    TotalTimeLE.Text:= FloatToStr(timeCalc /1000);
+    TotalTimeLE.Text:= FloatToStr(RoundTo(timeCalc /1000, -2));
     TotalTimeLE.EditLabel.Caption:= 'Total Time in s';
    end
    else if timeCalc <= 60e6 then
@@ -1422,7 +1422,7 @@ begin
   if (Length(command) + 2) mod 64 = 0 then
    command:= command + #10
   else
-   command:= command + #13#10;
+   command:= command + LineEnding;
 
   // if we have an open serial connection, execute
   if HaveSerial then
@@ -1720,7 +1720,7 @@ begin
   command:= command + 'lR';
   // execute
   CommandM.Text:= command;
-  command:= command + #13#10;
+  command:= command + LineEnding;
   if HaveSerial then
   begin
    ser.SendString(command);
@@ -2184,10 +2184,8 @@ begin
   exit
  else
   for j:= 1 to 7 do
-  begin
    (FindComponent('Pump1GB' + IntToStr(j))
     as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
-  end;
 end;
 
 procedure TMainForm.Pump2GBDblClick(Sender: TObject);
@@ -2201,10 +2199,8 @@ begin
   exit
  else
   for j:= 1 to 7 do
-  begin
    (FindComponent('Pump2GB' + IntToStr(j))
     as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
-  end;
 end;
 
 procedure TMainForm.Pump3GBDblClick(Sender: TObject);
@@ -2218,10 +2214,8 @@ begin
   exit
  else
   for j:= 1 to 7 do
-  begin
    (FindComponent('Pump3GB' + IntToStr(j))
     as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
-  end;
 end;
 
 procedure TMainForm.Pump4GBDblClick(Sender: TObject);
@@ -2235,10 +2229,8 @@ begin
   exit
  else
   for j:= 1 to 7 do
-  begin
    (FindComponent('Pump4GB' + IntToStr(j))
     as TGroupBox).Caption:= PumpNameSettingF.PumpNameE.Text;
-  end;
 end;
 
 // opening --------------------------------------------------------------------
@@ -2306,20 +2298,28 @@ function TMainForm.OpenFile(InputName: string): Boolean;
 var
  OpenFileStream : TFileStream;
  LineReader : TStreamReader;
- ReadLine : string = '';
- j, k : integer;
+ ReadLine, ReadComplete : string;
+ j, k, Size : integer;
 begin
  result:= False;
  try
+  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
+  // Old files only had the command therefore read the whole file and search
+  // if there is a line ending. If yes, we must set the pump names explicitly.
+  Size:= OpenFileStream.Size;
+  SetLength(ReadComplete, Size);
+  OpenFileStream.Read(ReadComplete[1], Size);
+  // we must close and subsequently reopen the stream to get ReadLine working
+  OpenFileStream.Free;
   OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
   LineReader:= TStreamReader.Create(OpenFileStream);
   // read the command
   LineReader.ReadLine(ReadLine);
   CommandM.Text:= ReadLine;
-  // read the pump names and set them to step 1
-  LineReader.ReadLine(ReadLine);
-  if ReadLine <> '' then // old files only stored the command
+  if Pos(LineEnding, ReadComplete) <> 0 then
   begin
+   // read the pump names
+   LineReader.ReadLine(ReadLine);
    Pump1GB1.Caption:= ReadLine;
    LineReader.ReadLine(ReadLine);
    Pump2GB1.Caption:= ReadLine;
@@ -2473,18 +2473,33 @@ begin
    // there might also be no 'S' before 'I', then we must increase StepCounter
    // this is the case if:
    //  - the last parsed command is 'G'
-   //  - the last parsed command is 'M' and the time is greater than 1 s
+   //  - the last parsed command is 'M' >= 1s and the next 'M' is >= 1 s
    //  - StepCounter is -1
-   if (StepCounter = 0) or (LastParsed = 'G')
-    or ((LastParsed = 'M') and (StepTime >= 1)) then
+   if (LastParsed = 'M') and (StepTime >= 1) then
    begin
-    // not if the next command is 'R' because this 'I' is just to stop all pumps
-    if (command[i+6] <> 'R') then
+    // check if there is a next 'M' with 1s
+    if (command[i+5] = 'M') then
     begin
-     inc(StepCounter);
-     ICounter:= 0;
-     MCounter:= 0;
+     // determine the length
+     j:= i + 5;
+     repeat
+      inc(j)
+     until IsDigit(command[j]) = false;
+     StepTime:= StrToFloat(Copy(command, i+6, j-i-6)) / 1000;
+     if (StepTime >= 1) then
+     begin
+      inc(StepCounter);
+      ICounter:= 0;
+      MCounter:= 0;
+     end;
     end;
+   end;
+   if (StepCounter = 0)
+    or ((LastParsed = 'G') and (command[i+6] <> 'R')) then // not if last 'I'
+   begin
+    inc(StepCounter);
+    ICounter:= 0;
+    MCounter:= 0;
    end;
    inc(ICounter);
    LastParsed:= 'I';
@@ -2670,16 +2685,20 @@ begin
     SaveFileStream:= TFileStream.Create(OutName, fmCreate);
    // write the command
    SaveFileStream.Write(command[1], Length(command));
-   SaveFileStream.Write(#13#10, 2); // line break
+   SaveFileStream.Write(LineEnding, 2); // line break
    // write the pump names
-   SaveFileStream.Write(Pump1GB1.Caption[1], Length(Pump1GB1.Caption));
-   SaveFileStream.Write(#13#10, 2);
-   SaveFileStream.Write(Pump2GB1.Caption[1], Length(Pump2GB1.Caption));
-   SaveFileStream.Write(#13#10, 2);
-   SaveFileStream.Write(Pump3GB1.Caption[1], Length(Pump3GB1.Caption));
-   SaveFileStream.Write(#13#10, 2);
-   SaveFileStream.Write(Pump4GB1.Caption[1], Length(Pump4GB1.Caption));
-   SaveFileStream.Write(#13#10, 2);
+   if Pump1GB1.Caption <> '' then // one cannot output an empty name via FileStream.Write
+    SaveFileStream.Write(Pump1GB1.Caption[1], Length(Pump1GB1.Caption));
+   SaveFileStream.Write(LineEnding, 2);
+   if Pump2GB1.Caption <> '' then
+    SaveFileStream.Write(Pump2GB1.Caption[1], Length(Pump2GB1.Caption));
+   SaveFileStream.Write(LineEnding, 2);
+   if Pump3GB1.Caption <> '' then
+    SaveFileStream.Write(Pump3GB1.Caption[1], Length(Pump3GB1.Caption));
+   SaveFileStream.Write(LineEnding, 2);
+   if Pump4GB1.Caption <> '' then
+    SaveFileStream.Write(Pump4GB1.Caption[1], Length(Pump4GB1.Caption));
+   SaveFileStream.Write(LineEnding, 2);
   finally
    SaveFileStream.Free;
   end; //end finally
@@ -2706,7 +2725,7 @@ begin
   if FileExists(OutNameTemp) = true then
   begin
    with CreateMessageDialog // MessageDlg with mbNo as default
-       ('Do you want to overwrite the existing file'#13#10
+       ('Do you want to overwrite the existing file' + LineEnding
              + ExtractFileName(OutNameTemp) + ' ?',
              mtWarning,[mbYes]+[mbNo]) do
    try
