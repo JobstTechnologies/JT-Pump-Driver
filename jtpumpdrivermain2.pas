@@ -329,7 +329,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.50';
+  Version : string = '2.51';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -1713,63 +1713,65 @@ end;
 procedure TMainForm.StopBBClick(Sender: TObject);
 // stop all pumps
 var
-  command, stopTime : string;
-  j : integer;
+ command, stopTime : string;
+ j : integer;
 begin
-  // re-enable the connection menu in every case
-  ConnectionMI.Enabled:= True;
-  FirmwareUpdateMI.Enabled:= True;
-  command:= '';
-  // address
-  command:= '/0';
-  // disable all pumps
-  command:= command + 'I0000';
-  // execute flag and turn off LED
-  command:= command + 'lR';
-  // execute
-  CommandM.Text:= command;
-  command:= command + LineEnding;
-  if HaveSerial then
+ // re-enable the connection menu in every case
+ ConnectionMI.Enabled:= True;
+ FirmwareUpdateMI.Enabled:= True;
+ command:= '';
+ // address
+ command:= '/0';
+ // disable all pumps
+ command:= command + 'I0000';
+ // execute flag and turn off LED
+ command:= command + 'lR';
+ // execute
+ CommandM.Text:= command;
+ command:= command + LineEnding;
+ if HaveSerial then
+ begin
+  ser.SendString(command);
+  if ser.LastError <> 0 then
   begin
-   ser.SendString(command);
-   if ser.LastError <> 0 then
+   with Application do
+    MessageBox(PChar(COMPort + 'error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
+   ConnComPortLE.Color:= clRed;
+   ConnComPortLE.Text:= 'Try to reconnect';
+   IndicatorPanelP.Caption:= 'Connection failiure';
+   if ser.LastError = 9997 then
    begin
-    with Application do
-     MessageBox(PChar(COMPort + 'error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
-    ConnComPortLE.Color:= clRed;
-    ConnComPortLE.Text:= 'Try to reconnect';
-    IndicatorPanelP.Caption:= 'Connection failiure';
-    if ser.LastError = 9997 then
-    begin
-     StopBB.Enabled:= False;
-     exit; // we cannot close socket or free when the connection timed out
-    end;
-    ser.CloseSocket;
-    ser.Free;
-    HaveSerial:= False;
-    exit;
+    StopBB.Enabled:= False;
+    exit; // we cannot close socket or free when the connection timed out
    end;
-   //received:= ser.RecvString(1000);
-   //with Application do
-   // MessageBox(PChar(received), 'Information', MB_ICONINFORMATION+MB_OK);
+   ser.CloseSocket;
+   ser.Free;
+   HaveSerial:= False;
+   exit;
   end;
-  // output stop time only when there was actually a run
-  if IndicatorPanelP.Caption = 'Pumps are running' then
-  begin
-   stopTime:= FormatDateTime('dd.mm.yyyy, hh:nn:ss', now);
-   FinishTimeLE.Text:= stopTime;
-   IndicatorPanelP.Caption:= 'Manually stopped';
-   IndicatorPanelP.Color:= clHighlight;
-  end;
-  OverallTimer.Enabled:= False;
-  RepeatTimer.Enabled:= False;
-  // we must prevent that too long commands overflow the Arduino command buffer
-  // therefore block the enabing to start a new action for a second
-  StopTimer.Enabled:= True;
-  RunBB.Enabled:= False;
-  RunFreeBB.Enabled:= False;
-  GenerateCommandBB.Enabled:= True;
-  // enable all setting possibilities
+  //received:= ser.RecvString(1000);
+  //with Application do
+  // MessageBox(PChar(received), 'Information', MB_ICONINFORMATION+MB_OK);
+ end;
+ // output stop time only when there was actually a run
+ if IndicatorPanelP.Caption = 'Pumps are running' then
+ begin
+  stopTime:= FormatDateTime('dd.mm.yyyy, hh:nn:ss', now);
+  FinishTimeLE.Text:= stopTime;
+  IndicatorPanelP.Caption:= 'Manually stopped';
+  IndicatorPanelP.Color:= clHighlight;
+ end;
+ OverallTimer.Enabled:= False;
+ RepeatTimer.Enabled:= False;
+ // we must prevent that too long commands overflow the Arduino command buffer
+ // therefore block the enabing to start a new action for a second
+ StopTimer.Enabled:= True;
+ RunBB.Enabled:= False;
+ RunFreeBB.Enabled:= False;
+ GenerateCommandBB.Enabled:= True;
+ // enable all setting possibilities only if no file is loaded
+ if LoadedActionFileM.Caption = 'None' then
+ begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
   begin
@@ -1791,6 +1793,7 @@ begin
   end;
   // tab 2 must always be visible
   Step2TS.TabVisible:= True;
+ end;
 end;
 
 procedure TMainForm.StopTimerFinished;

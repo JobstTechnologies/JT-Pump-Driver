@@ -1,5 +1,10 @@
 Changes
 
+from version 2.50 to 2.51
+
+- fix bug that pressing Stop enabled the settings if an action file is loaded
+
+
 from version 2.41 to 2.50
 
 new features:
