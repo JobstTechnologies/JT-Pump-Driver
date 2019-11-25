@@ -385,6 +385,14 @@ begin
  finally
   Reg.Free;
  end;
+ // if there is only one COM port, preselect it
+ with SerialUSBSelectionF do
+ begin
+  if SerialUSBPortCB.Items.Count = 1 then
+   SerialUSBPortCB.ItemIndex:= 0
+  else
+   SerialUSBPortCB.ItemIndex:= -1;
+ end;
  // open connection dialog
  SerialUSBSelectionF.ShowModal;
  if (COMPort = 'Ignore') then // user pressed Disconnect

@@ -7,7 +7,7 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
   ClientHeight = 119
   ClientWidth = 259
   Position = poMainFormCenter
-  LCLVersion = '2.0.4.0'
+  LCLVersion = '2.0.6.0'
   object SerialUSBPortL: TLabel
     Left = 16
     Height = 15
