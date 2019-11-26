@@ -1582,10 +1582,10 @@ begin
  for j:= 1 to 7 do
  begin
   (FindComponent('Step' + IntToStr(j) + 'TS')
-     as TTabSheet).Enabled:= True;
+   as TTabSheet).Enabled:= True;
   // stop all timers
   (FindComponent('StepTimer' + IntToStr(j))
-     as TTimer).Enabled:= False;
+   as TTimer).Enabled:= False;
  end;
  // view tab after last used step
  for j:= 2 to 6 do
@@ -1773,8 +1773,8 @@ begin
  GenerateCommandBB.Enabled:= True;
  // stop all timers
  for j:= 1 to 7 do
- (FindComponent('StepTimer' + IntToStr(j))
-  as TTimer).Enabled:= False;
+  (FindComponent('StepTimer' + IntToStr(j))
+   as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
  if LoadedActionFileM.Caption = 'None' then
  begin
