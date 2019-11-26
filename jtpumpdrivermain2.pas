@@ -354,6 +354,13 @@ begin
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
  LoadedActionFileM.Text:= 'None'; // explicitly set there because the IDE always
                                   // stores initial values with trailing LineEnding
+ // load file directly if it was provided via command line
+ if ParamStr(1) <> '' then
+  begin
+   DropfileName:= ParamStr(1);
+   LoadActionMIClick(Sender);
+   DropfileName:= '';
+  end;
 end;
 
 procedure TMainForm.ConnectionMIClick(Sender: TObject);

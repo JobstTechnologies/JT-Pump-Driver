@@ -2,8 +2,13 @@ Changes
 
 from version 2.51 to 2.52
 
+new feature:
+- it is now possible to double-click on a *.PDAction file and select the
+  JTPumpDriver***.exe to open later *.PDAction files immediately with
+  JT Pump Driver by double-clicking on them
+
 changed:
-- treat running Free Pumps as is an action file was loaded
+- pressing the button Free Pumps is now treated as if an action file was loaded
 
 bugfixes:
 - after an action was finished, action settings were enabled
