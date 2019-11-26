@@ -12,6 +12,7 @@ object PumpNameSettingF: TPumpNameSettingF
     Height = 23
     Top = 16
     Width = 136
+    OnKeyPress = PumpNameEKeyPress
     TabOrder = 0
   end
   object OKButtonB: TBitBtn

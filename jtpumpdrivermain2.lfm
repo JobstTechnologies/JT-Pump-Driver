@@ -3038,7 +3038,7 @@ object MainForm: TMainForm
     object GenerateCommandBB: TBitBtn
       Left = 376
       Height = 47
-      Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a an loaded action file'
+      Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a loaded action file'
       Top = 0
       Width = 128
       Caption = 'Generate Command'

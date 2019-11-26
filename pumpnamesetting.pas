@@ -5,7 +5,8 @@ unit PumpNameSetting;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
+  LCLType;
 
 type
 
@@ -16,6 +17,7 @@ type
     OKButtonB: TBitBtn;
     CancelButtonB: TBitBtn;
     PumpNameE: TEdit;
+    procedure PumpNameEKeyPress(Sender: TObject; var Key: char);
   private
 
   public
@@ -31,6 +33,13 @@ implementation
 
 { TPumpNameSettingF }
 
+
+procedure TPumpNameSettingF.PumpNameEKeyPress(Sender: TObject; var Key: char);
+begin
+ // if we got a return key, treat it as if the user pressed the OK button
+ if key = Char(VK_RETURN) then
+  OKButtonB.Click;
+end;
 
 end.
 

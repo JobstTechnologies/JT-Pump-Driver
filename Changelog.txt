@@ -1,5 +1,16 @@
 Changes
 
+from version 2.51 to 2.52
+
+changed:
+- treat running Free Pumps as is an action file was loaded
+
+bugfixes:
+- pressing Return in pump name changing dialog did not accept name
+- use more sensible rounding for total time
+- fix some tooltips
+
+
 from version 2.50 to 2.51
 
 new feature:

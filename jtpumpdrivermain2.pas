@@ -330,7 +330,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.51';
+  Version : string = '2.52';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -1332,7 +1332,7 @@ begin
    // output time in sensible unit
    if timeCalc <= 1e6 then
    begin
-    TotalTimeLE.Text:= FloatToStr(RoundTo(timeCalc /1000, -2));
+    TotalTimeLE.Text:= FloatToStr(RoundTo(timeCalc /1000, -1));
     TotalTimeLE.EditLabel.Caption:= 'Total Time in s';
    end
    else if timeCalc <= 60e6 then
@@ -1811,43 +1811,43 @@ end;
 procedure TMainForm.RunFreeBBClick(Sender: TObject);
 // starts free running cycle:
 // run 30 seconds in each direction 10 times
+// this is like loading a *.PDAction file, therefore use the file load routines
 var
-  i, j : integer;
+ j : integer;
+ command : string;
+ ParseSuccess : Boolean;
 begin
-  // we need 2 steps
-  Step2UseCB.Checked:= True;
-  Step3UseCB.Checked:= False;
-  RunEndlessCB.Checked:= False;
-  // we run each step for 30 seconds
-  RunTime1FSE.Value:= 30;
-  Unit1RBs.Checked:= True;
-  RunTime2FSE.Value:= 30;
-  Unit2RBs.Checked:= True;
-  // set to 100% duty cycle
-  DutyCycle1FSE.Value:= 100;
-  DutyCycle2FSE.Value:= 100;
-  // turn on all pumps
-  for i:= 1 to 2 do
-   for j:= 1 to 4 do
-   begin
-    (FindComponent('Pump' + IntToStr(j) + 'OnOffCB' + IntToStr(i))
-      as TCheckBox).Checked:= True;
-    // set voltage to 3.3 V
-    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(i))
-      as TFloatSpinEdit).Value:= 3.3;
-    // forward 30 seconds
-    if i=1 then
-    (FindComponent('Pump' + IntToStr(j) + 'DirectionRG' + IntToStr(i))
-      as TRadioGroup).ItemIndex:= 0
-    // backward 30 seconds
-    else
-     (FindComponent('Pump' + IntToStr(j) + 'DirectionRG' + IntToStr(i))
-      as TRadioGroup).ItemIndex:= 1;
-   end;
-  // repeat 9 times
-  RepeatSE.Value:= 9;
-  // run
-  RunBBClick(Sender);
+ LoadedActionFileM.Text:= 'Free Pumps';
+ LoadedActionFileM.Color:= clInfoBK;
+ // input the action as command
+ command:=
+  '/0LgS1999299939994999D0000I1111M30000I0000M999S1999299939994999D1111I1111M30000I0000M999G9I0000lR';
+ CommandM.Text:= command;
+ // parse the command
+ ParseSuccess:= ParseCommand(command);
+ if ParseSuccess then
+  // call command generation just to get the action time calculated
+  GenerateCommand(command);
+ // disable all setting possibilities
+ RunSettingsGB.Enabled:= False;
+ for j:= 1 to 7 do
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+   as TTabSheet).Enabled:= False;
+ RepeatOutputLE.Visible:= False;
+ // do not show unused steps
+ for j:= 2 to 7 do
+ begin
+  if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+      as TCheckBox).Checked = False then
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+    as TTabSheet).TabVisible:= False;
+ end;
+ // disable saving, will be re-enabled by GererateCommand
+ SaveActionMI.Enabled:= False;
+ // show step 1
+ RepeatPC.ActivePage:= Step1TS;
+ // run
+ RunBBClick(Sender);
 end;
 
 procedure TMainForm.RunEndlessCBChange(Sender: TObject);
@@ -2295,7 +2295,7 @@ begin
   DummyString:= ExtractFileName(InName);
   SetLength(DummyString, Length(DummyString) - 9);
   LoadedActionFileM.Text:= DummyString;
-  LoadedActionFileM.Color:= clHighlight;
+  LoadedActionFileM.Color:= clActiveCaption;
   command:= CommandM.Text;
   // parse the command
   ParseSuccess:= ParseCommand(command);
@@ -2306,13 +2306,13 @@ begin
   RunSettingsGB.Enabled:= False;
   for j:= 1 to 7 do
    (FindComponent('Step' + IntToStr(j) + 'TS')
-      as TTabSheet).Enabled:= False;
+    as TTabSheet).Enabled:= False;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps
   for j:= 2 to 7 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-     as TCheckBox).Checked = False then
+       as TCheckBox).Checked = False then
     (FindComponent('Step' + IntToStr(j) + 'TS')
      as TTabSheet).TabVisible:= False;
   end;
