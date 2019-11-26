@@ -2,8 +2,13 @@ Changes
 
 from version 2.50 to 2.51
 
+new feature:
 - allow to drag and drop a file to open it
-- fix bug that pressing Stop enabled the settings if an action file is loaded
+
+bugfixes:
+- finished actions stopped the pumps but not the timers
+- pressing Stop enabled to edit settings also when an action file is loaded
+- replace shortcut to connect from Ctrl+C to Ctrl+O (_O_pen connection)
 
 
 from version 2.41 to 2.50

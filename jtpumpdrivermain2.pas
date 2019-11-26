@@ -1501,8 +1501,8 @@ begin
   StartTimeLE.Text:= startTime;
 
   // start OverallTimer to indicate running state
-  if time < 86400000 then // if less than one day
-   OverallTimer.Interval:= trunc(time)
+  if GlobalTime < 86400000 then // if less than one day
+   OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
    OverallTimer.Interval:= 86400000;
   OverallTimer.Enabled:= True;
@@ -1771,18 +1771,17 @@ begin
  RunBB.Enabled:= False;
  RunFreeBB.Enabled:= False;
  GenerateCommandBB.Enabled:= True;
+ // stop all timers
+ for j:= 1 to 7 do
+ (FindComponent('StepTimer' + IntToStr(j))
+  as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
  if LoadedActionFileM.Caption = 'None' then
  begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
-  begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
-     as TTabSheet).Enabled:= True;
-   // stop all timers
-   (FindComponent('StepTimer' + IntToStr(j))
-     as TTimer).Enabled:= False;
-  end;
+    as TTabSheet).Enabled:= True;
   // view tab after last used step
   for j:= 2 to 6 do
   begin
