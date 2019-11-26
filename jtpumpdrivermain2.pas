@@ -1776,7 +1776,9 @@ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
- if LoadedActionFileM.Caption = 'None' then
+ // the IDE only allows to set default text with LineEnding
+ if (LoadedActionFileM.Text = 'None')
+  or (LoadedActionFileM.Text = 'None' + LineEnding) then
  begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
