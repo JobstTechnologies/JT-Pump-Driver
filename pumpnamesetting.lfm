@@ -6,6 +6,8 @@ object PumpNameSettingF: TPumpNameSettingF
   Caption = 'Pump name selection'
   ClientHeight = 119
   ClientWidth = 241
+  OnCreate = FormCreate
+  OnShow = FormCreate
   LCLVersion = '2.0.6.0'
   object PumpNameE: TEdit
     Left = 88

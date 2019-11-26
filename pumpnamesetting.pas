@@ -17,6 +17,7 @@ type
     OKButtonB: TBitBtn;
     CancelButtonB: TBitBtn;
     PumpNameE: TEdit;
+    procedure FormCreate(Sender: TObject);
     procedure PumpNameEKeyPress(Sender: TObject; var Key: char);
   private
 
@@ -33,6 +34,10 @@ implementation
 
 { TPumpNameSettingF }
 
+procedure TPumpNameSettingF.FormCreate(Sender: TObject);
+begin
+ ActiveControl:= PumpNameE;
+end;
 
 procedure TPumpNameSettingF.PumpNameEKeyPress(Sender: TObject; var Key: char);
 begin

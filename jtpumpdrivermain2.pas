@@ -352,6 +352,8 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
  MainForm.Caption:= 'JT Pump Driver ' + Version;
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
+ LoadedActionFileM.Text:= 'None'; // explicitly set there because the IDE always
+                                  // stores initial values with trailing LineEnding
 end;
 
 procedure TMainForm.ConnectionMIClick(Sender: TObject);
@@ -998,7 +1000,7 @@ procedure TMainForm.GenerateCommandBBClick(Sender: TObject);
 // call function to collect data an generate command
 var
  command : string;
- j : integer;
+ i, j : integer;
 begin
  GenerateCommand(command);
  CommandM.Text:= command;
@@ -1006,8 +1008,14 @@ begin
  // enable all setting possibilities
  RunSettingsGB.Enabled:= True;
  for j:= 1 to 7 do
+ begin
   (FindComponent('Step' + IntToStr(j) + 'TS')
    as TTabSheet).Enabled:= True;
+  // enable tooltips for pump name
+  for i:= 1 to 4 do
+   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+    as TGroupBox).ShowHint:= True;
+ end;
  // view tab after last used step
  for j:= 2 to 6 do
  begin
@@ -1410,7 +1418,7 @@ procedure TMainForm.RunBBClick(Sender: TObject);
 // execute generated command
 var
   command, StartTime : string;
-  j : integer;
+  i, j : integer;
   CommandResult : Boolean = False;
 begin
   // generate command
@@ -1474,12 +1482,19 @@ begin
   GenerateCommandBB.Enabled:= False;
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
-  for j:= 1 to 6 do
+  for j:= 1 to 7 do
+  begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
-      as TTabSheet).Enabled:= False;
+    as TTabSheet).Enabled:= False;
+   // disable tooltips for pump name
+   for i:= 1 to 4 do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= False;
+  end;
   RepeatOutputLE.Visible:= False;
   IndicatorPanelP.Caption:= 'Pumps are running';
   IndicatorPanelP.Color:= clRed;
+  // set timers
   if (StrToInt(RepeatSE.Text) > 0) and (RunEndlessCB.Checked = False) then
   begin
    RepeatOutputLE.Visible:= True;
@@ -1551,7 +1566,7 @@ procedure TMainForm.OverallTimerFinished;
 // Actions after time interval ends
 var
   finishTime : string;
-  j : integer;
+  i, j : integer;
 begin
  // if one day has passed but the pumps must run longer
  if GlobalTime > 86400000 then
@@ -1577,29 +1592,36 @@ begin
  IndicatorPanelP.Caption:= 'Run finished';
  IndicatorPanelP.Color:= clInfoBk;
  RepeatOutputLE.Visible:= False;
- // enable all setting possibilities
- RunSettingsGB.Enabled:= True;
+ // stop all timers
  for j:= 1 to 7 do
- begin
-  (FindComponent('Step' + IntToStr(j) + 'TS')
-   as TTabSheet).Enabled:= True;
-  // stop all timers
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
- end;
- // view tab after last used step
- for j:= 2 to 6 do
+ // enable all setting possibilities only if no file is loaded
+ if (LoadedActionFileM.Text = 'None') then
  begin
-  if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-      as TCheckBox).Checked = True then
-   (FindComponent('Step' + IntToStr(j+1) + 'TS')
-    as TTabSheet).TabVisible:= True
+  RunSettingsGB.Enabled:= True;
+  for j:= 1 to 7 do
+  begin
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+    as TTabSheet).Enabled:= True;
+   // enable tooltips for pump name
+   for i:= 1 to 4 do
+   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+    as TGroupBox).ShowHint:= True;
+  end;
+  // view tab after last used step
+  for j:= 2 to 6 do
+  begin
+   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
+       as TCheckBox).Checked = True then
+    (FindComponent('Step' + IntToStr(j+1) + 'TS')
+     as TTabSheet).TabVisible:= True
   else
    break;
+  end;
+  // tab 2 must always be visible
+  Step2TS.TabVisible:= True;
  end;
- // tab 2 must always be visible
- Step2TS.TabVisible:= True;
-
 end;
 
 procedure TMainForm.StepTimer1Finished(Sender: TObject);
@@ -1716,7 +1738,7 @@ procedure TMainForm.StopBBClick(Sender: TObject);
 // stop all pumps
 var
  command, stopTime : string;
- j : integer;
+ i, j : integer;
 begin
  // re-enable the connection menu in every case
  ConnectionMI.Enabled:= True;
@@ -1776,14 +1798,18 @@ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
- // the IDE only allows to set default text with LineEnding
- if (LoadedActionFileM.Text = 'None')
-  or (LoadedActionFileM.Text = 'None' + LineEnding) then
+ if (LoadedActionFileM.Text = 'None') then
  begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
+  begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).Enabled:= True;
+   // enable tooltips for pump name
+   for i:= 1 to 4 do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= True;
+  end;
   // view tab after last used step
   for j:= 2 to 6 do
   begin
