@@ -6,6 +6,8 @@ changed:
 - treat running Free Pumps as is an action file was loaded
 
 bugfixes:
+- after an action was finished, action settings were enabled
+  also when an action file was loaded
 - pressing Return in pump name changing dialog did not accept name
 - use more sensible rounding for total time
 - fix some tooltips
@@ -18,7 +20,7 @@ new feature:
 
 bugfixes:
 - finished actions stopped the pumps but not the timers
-- pressing Stop enabled to edit settings also when an action file is loaded
+- pressing Stop enabled to action settings also when an action file was loaded
 - replace shortcut to connect from Ctrl+C to Ctrl+O (_O_pen connection)
 
 
