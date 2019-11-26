@@ -3,6 +3,7 @@ object MainForm: TMainForm
   Height = 666
   Top = 116
   Width = 554
+  AllowDropFiles = True
   Caption = 'JT Pump Driver'
   ClientHeight = 646
   ClientWidth = 554
@@ -10,6 +11,7 @@ object MainForm: TMainForm
   Menu = MainMenu
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
   LCLVersion = '2.0.6.0'
   object RepeatPC: TPageControl

@@ -284,6 +284,7 @@ type
     procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
     procedure GenerateCommandBBClick(Sender: TObject);
     procedure GetFirmwareVersionMIClick(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
@@ -338,7 +339,8 @@ var
   GlobalRepeatTime : Double = 0;
   RepeatTime : Double = 0;
   HaveSerial : Boolean = False;
-  InName : string; // name of load file
+  InName : string = ''; // name of load file
+  DropfileName : string = ''; // name of dropped file
 
 implementation
 
@@ -2246,6 +2248,14 @@ end;
 
 // opening --------------------------------------------------------------------
 
+procedure TMainForm.FormDropFiles(Sender: TObject;
+  const FileNames: array of String);
+begin
+ DropfileName:= FileNames[0];
+ LoadActionMIClick(Sender);
+ DropfileName:= '';
+end;
+
 procedure TMainForm.LoadActionMIClick(Sender: TObject);
 var
  FileSuccess : Boolean = false;
@@ -2259,18 +2269,26 @@ begin
   for j:= 2 to 7 do
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).TabVisible:= True;
- OpenDialog.InitialDir:= '';
- OpenDialog.FileName:= '';
- if OpenDialog.Execute then
-  FileSuccess:= OpenFile(OpenDialog.FileName)
+ if DropFileName <> '' then // a file was dropped into the main window
+  FileSuccess:= OpenFile(DropFileName)
  else
-  exit; // user aborted the loading
+ begin
+  OpenDialog.InitialDir:= '';
+  OpenDialog.FileName:= '';
+  if OpenDialog.Execute then
+   FileSuccess:= OpenFile(OpenDialog.FileName)
+  else
+   exit; // user aborted the loading
+ end;
  if not FileSuccess then
   MessageDlgPos('Error while attempting to open file',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
  else
  begin
-  InName:= OpenDialog.FileName;
+  if DropFileName <> '' then
+   InName:= DropFileName
+  else
+   InName:= OpenDialog.FileName;
   SaveDialog.FileName:= ''; // will be re-set in TMainForm.SaveHandling
   // display file name without suffix
   DummyString:= ExtractFileName(InName);
