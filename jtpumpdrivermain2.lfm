@@ -13,7 +13,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.10.0'
   object RepeatPC: TPageControl
     Left = 16
     Height = 496
@@ -89,7 +89,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -100,7 +100,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -165,7 +165,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -176,7 +176,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -241,7 +241,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -252,7 +252,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -317,7 +317,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -328,7 +328,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -510,7 +510,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -520,7 +520,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -582,7 +582,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -592,7 +592,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -654,7 +654,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -664,7 +664,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -726,7 +726,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -736,7 +736,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -907,7 +907,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -917,7 +917,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -979,7 +979,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -989,7 +989,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1051,7 +1051,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1061,7 +1061,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1123,7 +1123,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1133,7 +1133,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1304,7 +1304,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1314,7 +1314,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1376,7 +1376,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1386,7 +1386,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1448,7 +1448,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1458,7 +1458,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1520,7 +1520,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1530,7 +1530,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1701,7 +1701,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1711,7 +1711,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1773,7 +1773,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1783,7 +1783,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1845,7 +1845,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1855,7 +1855,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -1917,7 +1917,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -1927,7 +1927,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2098,7 +2098,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -2108,7 +2108,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2170,7 +2170,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -2180,7 +2180,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2242,7 +2242,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -2252,7 +2252,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2314,7 +2314,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           TabOrder = 2
@@ -2324,7 +2324,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2583,7 +2583,7 @@ object MainForm: TMainForm
           Width = 103
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -2594,7 +2594,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2658,7 +2658,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -2669,7 +2669,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2732,7 +2732,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -2743,7 +2743,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -2806,7 +2806,7 @@ object MainForm: TMainForm
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
-          MinValue = 0
+          MinValue = 0.1
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
@@ -2817,7 +2817,7 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Top = 123
-          Width = 40
+          Width = 39
           Caption = 'Voltage'
           ParentColor = False
           ParentFont = False
@@ -3108,8 +3108,8 @@ object MainForm: TMainForm
     ParentFont = False
   end
   object MainMenu: TMainMenu
-    left = 432
-    top = 592
+    Left = 432
+    Top = 592
     object ConnectionMI: TMenuItem
       Caption = 'Connection'
       ShortCut = 16463
@@ -3148,29 +3148,29 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 100
     OnTimer = OverallTimerFinished
-    left = 491
-    top = 472
+    Left = 491
+    Top = 472
   end
   object RepeatTimer: TTimer
     Enabled = False
     Interval = 100
     OnTimer = RepeatTimerFinished
-    left = 400
-    top = 472
+    Left = 400
+    Top = 472
   end
   object StopTimer: TTimer
     Enabled = False
     Interval = 1500
     OnTimer = StopTimerFinished
-    left = 368
-    top = 592
+    Left = 368
+    Top = 592
   end
   object FirmwareFileDialog: TOpenDialog
     Title = 'Open firmware file'
     Filter = 'Binary file|*.bin'
     InitialDir = 'ExtractFileDir(Application.ExeName)'
-    left = 280
-    top = 592
+    Left = 280
+    Top = 592
   end
   object COMConnect: TLazSerial
     Active = False
@@ -3181,8 +3181,8 @@ object MainForm: TMainForm
     StopBits = sbOne
     Device = 'COM1'
     RcvLineCRLF = False
-    left = 184
-    top = 592
+    Left = 184
+    Top = 592
   end
   object FirmwareNote: TPopupNotifier
     Color = clInfoBk
@@ -3225,66 +3225,66 @@ object MainForm: TMainForm
     Text = 'Firmware update is in progress'
     Title = 'Firmware update'
     Visible = False
-    left = 104
-    top = 592
+    Left = 104
+    Top = 592
   end
   object StepTimer1: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer1Finished
-    left = 352
-    top = 440
+    Left = 352
+    Top = 440
   end
   object StepTimer2: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer2Finished
-    left = 352
-    top = 392
+    Left = 352
+    Top = 392
   end
   object StepTimer3: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer3Finished
-    left = 352
-    top = 344
+    Left = 352
+    Top = 344
   end
   object StepTimer4: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer4Finished
-    left = 352
-    top = 296
+    Left = 352
+    Top = 296
   end
   object StepTimer5: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer5Finished
-    left = 352
-    top = 248
+    Left = 352
+    Top = 248
   end
   object StepTimer6: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer6Finished
-    left = 352
-    top = 200
+    Left = 352
+    Top = 200
   end
   object SaveDialog: TSaveDialog
     Filter = 'Pump Driver Actions|*.PDAction'
-    left = 496
-    top = 592
+    Left = 496
+    Top = 592
   end
   object OpenDialog: TOpenDialog
     Filter = 'Pump Driver Actions|*.PDAction'
-    left = 24
-    top = 592
+    Left = 24
+    Top = 592
   end
   object StepTimer7: TTimer
     Enabled = False
     Interval = 100
     OnTimer = StepTimer7Finished
-    left = 352
-    top = 152
+    Left = 352
+    Top = 152
   end
 end

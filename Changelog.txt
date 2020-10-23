@@ -1,5 +1,17 @@
 Changes
 
+from version 2.52 to 2.53
+
+changed:
+- when a pump is turned on, a voltage of at least 0.1 V must be set
+  (to have the effect of low voltage use a low duty cycle)
+
+bugfixes:
+- in case the pump driver's USB connection was disconnected before
+  JT Pump Driver was closed, don't issue an error message when closing   
+- when using low duty cycles don't deny e.g. 1 hour as action time
+
+
 from version 2.51 to 2.52
 
 new feature:
