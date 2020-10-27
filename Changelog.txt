@@ -1,10 +1,16 @@
 Changes
 
+from version 2.53 to 2.54
+
+changed:
+- new About dialog with link to source code
+
+
 from version 2.52 to 2.53
 
 changed:
 - when a pump is turned on, a voltage of at least 0.1 V must be set
-  (to have the effect of low voltage use a low duty cycle)
+  (to have the effect of very low voltage use a low duty cycle)
 
 bugfixes:
 - in case the pump driver's USB connection was disconnected before

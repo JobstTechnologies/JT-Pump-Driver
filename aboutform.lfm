@@ -1,0 +1,75 @@
+object AboutFormF: TAboutFormF
+  Left = 747
+  Height = 230
+  Top = 177
+  Width = 325
+  Caption = 'About IMcoDrive'
+  ClientHeight = 230
+  ClientWidth = 325
+  Position = poMainFormCenter
+  LCLVersion = '2.0.10.0'
+  object SourceCodeText: TLabel
+    Left = 16
+    Height = 15
+    Top = 144
+    Width = 130
+    Caption = 'Source code available at:'
+    ParentColor = False
+  end
+  object GitHubLink: TLabel
+    Cursor = crHandPoint
+    Left = 16
+    Height = 15
+    Top = 160
+    Width = 291
+    Caption = 'https://github.com/JobstTechnologies/JT-Pump-Driver'
+    Font.Color = clHighlight
+    Font.Style = [fsUnderline]
+    ParentColor = False
+    ParentFont = False
+    OnClick = GitHubLinkClick
+  end
+  object BitBtn1: TBitBtn
+    Left = 128
+    Height = 24
+    Top = 192
+    Width = 65
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object UsageText: TStaticText
+    Left = 16
+    Height = 80
+    Top = 56
+    Width = 288
+    Caption = 'Usage:'#13#10'- connect the pump driver to the PC'#13#10'- click on the menu "Connection" and select the'#13#10'  COM port of the pump driver'#13#10'- set the properties you like and press "Run Pumps"'
+    TabOrder = 1
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 13
+    Width = 120
+    Caption = 'JT Pump Driver version'
+    ParentColor = False
+  end
+  object VersionNumber: TLabel
+    Left = 140
+    Height = 15
+    Top = 13
+    Width = 82
+    Caption = 'VersionNumber'
+    ParentColor = False
+  end
+  object DescriptionText: TStaticText
+    Left = 16
+    Height = 20
+    Top = 32
+    Width = 286
+    Caption = 'Program to control a pump driver for CCP1 pumps'
+    TabOrder = 2
+  end
+end

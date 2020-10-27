@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Release"/>
-    <Units Count="54">
+    <Units Count="55">
       <Unit0>
         <Filename Value="JTPumpDriver2.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="23" Y="11"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="46" Y="17"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -21,8 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="JTPumpDriverMain2"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="64"/>
-        <CursorPos X="36" Y="14"/>
+        <TopLine Value="356"/>
+        <CursorPos Y="970"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -34,7 +34,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="SerialUSBSelection"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="35" Y="19"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -47,9 +47,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PumpNameSetting"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="40"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="49"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
@@ -147,7 +147,7 @@
         <UsageCount Value="7"/>
       </Unit16>
       <Unit17>
-        <Filename Value="..\..\ICP12A\Lazarus\LazSerial\synaser.pas"/>
+        <Filename Value="D:\ICP12A\Lazarus\LazSerial\synaser.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="98"/>
         <CursorPos X="3" Y="119"/>
@@ -427,127 +427,140 @@
         <CursorPos Y="577"/>
         <UsageCount Value="9"/>
       </Unit53>
+      <Unit54>
+        <Filename Value="aboutform.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutFormF"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AboutForm"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="40" Y="20"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit54>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="40" Column="25" TopLine="15"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="280" Column="60" TopLine="263"/>
       </Position1>
       <Position2>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="8" Column="76"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="285" Column="24" TopLine="263"/>
       </Position2>
       <Position3>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="40" TopLine="15"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="985" Column="49" TopLine="975"/>
       </Position3>
       <Position4>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="42" TopLine="15"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="2091" TopLine="2066"/>
       </Position4>
       <Position5>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="2200" TopLine="2175"/>
+        <Caret Line="1579" Column="20" TopLine="1568"/>
       </Position5>
       <Position6>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="2181" Column="38" TopLine="2176"/>
+        <Caret Line="988" Column="15" TopLine="980"/>
       </Position6>
       <Position7>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1834" Column="96" TopLine="1820"/>
+        <Caret Line="1364" Column="51" TopLine="1345"/>
       </Position7>
       <Position8>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="2298" Column="44" TopLine="2270"/>
+        <Caret Line="2084" Column="37" TopLine="2064"/>
       </Position8>
       <Position9>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1025" Column="22" TopLine="1009"/>
+        <Caret Line="77" Column="14" TopLine="61"/>
       </Position9>
       <Position10>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1807" Column="36" TopLine="1793"/>
+        <Caret Line="1202" Column="18" TopLine="1195"/>
       </Position10>
       <Position11>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1483" Column="37" TopLine="1470"/>
+        <Caret Line="1586" TopLine="1558"/>
       </Position11>
       <Position12>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1484" Column="37" TopLine="1443"/>
+        <Caret Line="254" Column="12" TopLine="238"/>
       </Position12>
       <Position13>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="347" Column="21" TopLine="332"/>
+        <Caret Line="261" Column="12" TopLine="238"/>
       </Position13>
       <Position14>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="355" Column="24" TopLine="332"/>
+        <Caret Line="268" Column="12" TopLine="240"/>
       </Position14>
       <Position15>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1026" Column="24" TopLine="998"/>
+        <Caret Line="319" Column="35" TopLine="292"/>
       </Position15>
       <Position16>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1589" TopLine="1583"/>
+        <Caret Line="274" Column="34" TopLine="260"/>
       </Position16>
       <Position17>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="353" Column="10" TopLine="338"/>
+        <Caret Line="254" Column="12" TopLine="238"/>
       </Position17>
       <Position18>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1612" Column="3" TopLine="1588"/>
+        <Caret Line="261" Column="12" TopLine="238"/>
       </Position18>
       <Position19>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1601" Column="4" TopLine="1332"/>
+        <Caret Line="268" Column="12" TopLine="240"/>
       </Position19>
       <Position20>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1517" Column="17" TopLine="1362"/>
+        <Caret Line="248" Column="47" TopLine="240"/>
       </Position20>
       <Position21>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="1018" Column="4" TopLine="999"/>
+        <Caret Line="254" Column="12" TopLine="240"/>
       </Position21>
       <Position22>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="39" Column="58" TopLine="16"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="261" Column="12" TopLine="240"/>
       </Position22>
       <Position23>
-        <Filename Value="serialusbselection.pas"/>
-        <Caret Line="20" Column="46" TopLine="7"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="268" Column="12" TopLine="240"/>
       </Position23>
       <Position24>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="39" Column="27" TopLine="16"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="705" Column="27" TopLine="692"/>
       </Position24>
       <Position25>
-        <Filename Value="pumpnamesetting.pas"/>
-        <Caret Line="37" Column="36" TopLine="15"/>
+        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Caret Line="2093" Column="35" TopLine="2072"/>
       </Position25>
       <Position26>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="358" Column="2" TopLine="332"/>
+        <Caret Line="2084" Column="20" TopLine="2067"/>
       </Position26>
       <Position27>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="350" Column="20" TopLine="334"/>
+        <Caret Line="2082" Column="20" TopLine="2071"/>
       </Position27>
       <Position28>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="360" Column="18" TopLine="334"/>
+        <Caret Line="2384" Column="25" TopLine="2367"/>
       </Position28>
       <Position29>
         <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="362" Column="18" TopLine="334"/>
+        <Caret Line="11" Column="28"/>
       </Position29>
       <Position30>
-        <Filename Value="jtpumpdrivermain2.pas"/>
-        <Caret Line="2289" Column="19" TopLine="2253"/>
+        <Filename Value="aboutform.pas"/>
+        <Caret Line="20" Column="40"/>
       </Position30>
     </JumpHistory>
     <RunParams>

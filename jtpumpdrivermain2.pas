@@ -7,8 +7,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, EditBtn, Buttons, LCLType, Registry, Process,
-  SynaSer, LazSerial, Crt, SerialUSBSelection, PumpNameSetting, StrUtils,
-  PopupNotifier, Character, UITypes, Streamex;
+  SynaSer, LazSerial, Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
+  // the custom forms
+  SerialUSBSelection, PumpNameSetting, AboutForm;
 
 type
 
@@ -330,7 +331,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.53';
+  Version : string = '2.54';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -965,18 +966,11 @@ begin
 end;
 
 procedure TMainForm.AboutMIClick(Sender: TObject);
-var
- MousePointer : TPoint;
 begin
- MousePointer:= Mouse.CursorPos;
- MessageDlgPos('       JT Pump Driver version ' + Version + LineEnding
-  + 'Program to control a pump driver for CCP1 pumps.' + LineEnding
-  + 'Usage:' + LineEnding
-  + '- connect the pump driver to the PC' + LineEnding
-  + '- click on the menu "Connection" and select the' + LineEnding
-  + '  COM port of the pump driver' + LineEnding
-  + '- set the properties you like and press "Run Pumps"',
-   mtInformation, [mbOK], 0 ,MousePointer.X, MousePointer.Y);
+ // set version number
+ AboutFormF.VersionNumber.Caption:= Version;
+ // open the dialog
+ AboutFormF.ShowModal;
 end;
 
 procedure TMainForm.FormClose(Sender: TObject);

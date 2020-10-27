@@ -21,8 +21,8 @@
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="2"/>
       <MinorVersionNr Value="5"/>
-      <RevisionNr Value="3"/>
-      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="2.53"/>
+      <RevisionNr Value="4"/>
+      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="2.54"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -121,7 +121,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="JTPumpDriver2.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -150,6 +150,14 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="PumpNameSetting"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="aboutform.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutFormF"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AboutForm"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
