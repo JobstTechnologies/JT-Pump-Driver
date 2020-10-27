@@ -3,7 +3,7 @@ object AboutFormF: TAboutFormF
   Height = 230
   Top = 177
   Width = 325
-  Caption = 'About IMcoDrive'
+  Caption = 'About JT Pump Driver'
   ClientHeight = 230
   ClientWidth = 325
   Position = poMainFormCenter
