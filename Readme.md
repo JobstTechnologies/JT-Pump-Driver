@@ -25,5 +25,7 @@ This project uses the Arduino tool **bossac**: https://github.com/arduino/arduin
 # Compilation
 
 - Install the **Lazarus** IDE: https://www.lazarus-ide.org/.
+- Only for the first run of Lazarus:
+  _ Open the menu *Package → Online package Manager* and install there the packages **LazSerial** and **Synapse**.
 - Open the file *JTPumpDriver2.lpi* in Lazarus.
 - Build the Lazarus project or run it.
