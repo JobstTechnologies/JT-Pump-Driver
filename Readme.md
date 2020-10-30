@@ -1,6 +1,6 @@
 # JT Pump Driver
 
-Program to control a pump driver for CPP1 micropumps: https://www.jobst-technologies.com/products/microfluidics/
+Program to control [evaluation kits](https://www.jobst-technologies.com/products/microfluidics/peristaltic-micropumps/#Evaluation_Kits) for [CPP1 micropumps](https://www.jobst-technologies.com/products/microfluidics/peristaltic-micropumps).
 
 # Usage
 
@@ -14,17 +14,17 @@ To update or upload a new firmware:
 - Use the menu *Miscellaneous → Firmware Update*.
 - Follow the steps provided by the software.
 
-You can get the latest firmware version as binary from here: https://github.com/JobstTechnologies/JT-PumpDriver-Firmware/releases
+You can get the latest firmware version as binary from [here](https://github.com/JobstTechnologies/JT-PumpDriver-Firmware/releases\latest).
 
 # Copyrights
 
 Copyright by Jobst Technologies.
 
-This project uses the Arduino tool **bossac**: https://github.com/arduino/arduino-flash-tools
+This project uses the Arduino tool [**bossac**](https://github.com/arduino/arduino-flash-tools).
 
 # Compilation
 
-- Install the **Lazarus** IDE: https://www.lazarus-ide.org/.
+- Install the [**Lazarus** IDE](https://www.lazarus-ide.org/).
 - Only for the first run of Lazarus:
   - Open the menu *Package → Online Package Manager* and install there the packages **LazSerial** and **Synapse**.
 - Open the file *JTPumpDriver2.lpi* in Lazarus.
