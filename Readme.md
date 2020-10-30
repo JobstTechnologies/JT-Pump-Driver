@@ -14,7 +14,7 @@ To update or upload a new firmware:
 - Use the menu *Miscellaneous → Firmware Update*.
 - Follow the steps provided by the software.
 
-You can get the latest firmware version as binary from [here](https://github.com/JobstTechnologies/JT-PumpDriver-Firmware/releases\latest).
+You can get the latest firmware version as binary from [here](https://github.com/JobstTechnologies/JT-PumpDriver-Firmware/releases/latest).
 
 # Copyrights
 
