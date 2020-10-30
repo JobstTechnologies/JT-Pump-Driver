@@ -1,5 +1,11 @@
 Changes
 
+from version 2.54 to 2.55
+
+bugfix:
+- After a finished or stopped 'Free Pumps' run enable all step action elements
+
+
 from version 2.53 to 2.54
 
 changed:

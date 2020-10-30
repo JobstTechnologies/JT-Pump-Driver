@@ -331,7 +331,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.54';
+  Version : string = '2.55';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -1032,6 +1032,7 @@ begin
  // loaded settings are no longer valid
  LoadedActionFileM.Text:= 'None';
  LoadedActionFileM.Color:= clDefault;
+ LoadedActionFileM.Hint:= 'No action file loaded';
  // enable saving
  SaveActionMI.Enabled:= True;
 end;
@@ -1598,7 +1599,8 @@ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
- if (LoadedActionFileM.Text = 'None') then
+ if (LoadedActionFileM.Text = 'None')
+  or (LoadedActionFileM.Text = 'Free Pumps') then
  begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
@@ -1622,6 +1624,13 @@ begin
   end;
   // tab 2 must always be visible
   Step2TS.TabVisible:= True;
+ end;
+ // after a Free Pums run we must reset the LoadedActionFileM
+ if LoadedActionFileM.Text = 'Free Pumps' then
+ begin
+  LoadedActionFileM.Text:= 'None';
+  LoadedActionFileM.Color:= clDefault;
+  LoadedActionFileM.Hint:= 'No action file loaded';
  end;
 end;
 
@@ -1799,7 +1808,8 @@ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
  // enable all setting possibilities only if no file is loaded
- if (LoadedActionFileM.Text = 'None') then
+ if (LoadedActionFileM.Text = 'None')
+  or (LoadedActionFileM.Text = 'Free Pumps') then
  begin
   RunSettingsGB.Enabled:= True;
   for j:= 1 to 7 do
@@ -1824,6 +1834,13 @@ begin
   // tab 2 must always be visible
   Step2TS.TabVisible:= True;
  end;
+ // after a Free Pums run we must reset the LoadedActionFileM
+ if LoadedActionFileM.Text = 'Free Pumps' then
+ begin
+  LoadedActionFileM.Text:= 'None';
+  LoadedActionFileM.Color:= clDefault;
+  LoadedActionFileM.Hint:= 'No action file loaded';
+ end;
 end;
 
 procedure TMainForm.StopTimerFinished;
@@ -1846,6 +1863,7 @@ var
 begin
  LoadedActionFileM.Text:= 'Free Pumps';
  LoadedActionFileM.Color:= clInfoBK;
+ LoadedActionFileM.Hint:= 'Free Pumps';
  // input the action as command
  command:=
   '/0LgS1999299939994999D0000I1111M30000I0000M999S1999299939994999D1111I1111M30000I0000M999G9I0000lR';
@@ -2375,6 +2393,8 @@ begin
   SetLength(DummyString, Length(DummyString) - 9);
   LoadedActionFileM.Text:= DummyString;
   LoadedActionFileM.Color:= clActiveCaption;
+  // sometimes the file name is too long to fit into the widget, thus show it as tooltip
+  LoadedActionFileM.Hint:= DummyString;
   command:= CommandM.Text;
   // parse the command
   ParseSuccess:= ParseCommand(command);
@@ -2411,6 +2431,7 @@ var
  j, k, Size : integer;
 begin
  result:= False;
+ ReadComplete:= '';
  try
   OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
   // Old files only had the command therefore read the whole file and search
@@ -2482,6 +2503,8 @@ begin
   MessageDlgPos('Error: Loaded file does not begin with ''/0''.',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
   LoadedActionFileM.Text:= 'None';
+  LoadedActionFileM.Color:= clDefault;
+  LoadedActionFileM.Hint:= 'No action file loaded';
   CommandM.Text:= '';
   exit;
  end;

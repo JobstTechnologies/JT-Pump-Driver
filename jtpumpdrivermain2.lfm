@@ -2937,7 +2937,7 @@ object MainForm: TMainForm
     object LoadedActionFileM: TMemo
       Left = 8
       Height = 40
-      Hint = 'Name of the loaded action file'
+      Hint = 'No action file loaded'
       Top = 122
       Width = 124
       Alignment = taCenter
