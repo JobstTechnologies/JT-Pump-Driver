@@ -436,13 +436,7 @@ type
     Unit7RBs: TRadioButton;
     procedure AboutMIClick(Sender: TObject);
     procedure ConnectionMIClick(Sender: TObject);
-    procedure DutyCycle1FSEChange(Sender: TObject);
-    procedure DutyCycle2FSEChange(Sender: TObject);
-    procedure DutyCycle3FSEChange(Sender: TObject);
-    procedure DutyCycle4FSEChange(Sender: TObject);
-    procedure DutyCycle5FSEChange(Sender: TObject);
-    procedure DutyCycle6FSEChange(Sender: TObject);
-    procedure DutyCycle7FSEChange(Sender: TObject);
+    procedure DutyCycleXFSEChange(Sender: TObject);
     procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -2246,222 +2240,57 @@ begin
  RepeatPCChange(Sender);
 end;
 
-procedure TMainForm.DutyCycle1FSEChange(Sender: TObject);
+procedure TMainForm.DutyCycleXFSEChange(Sender: TObject);
 var
-j : integer;
-DutyTime, StepTime : Double;
+ DutyTime, StepTime : Double;
+ j, Step : integer;
+ SenderName : string;
 begin
+ SenderName:= (Sender as TComponent).Name;
+ // SenderName is in the form "DutyCyclexFSE" and we need the x
+ // so get the 10th character of the name
+ Step:= StrToInt(Copy(SenderName, 10, 1));
  // reset increment to 1. If this is not sufficent,
  // it will be reset later in this procedure
- RunTime1FSE.Increment:= 1;
+ (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Increment:= 1;
  // if the duty cycle is not 100% we must require 1.1 V for the pumps
  // otherwise the voltage would be to low to start a short movement
- if (DutyCycle1FSE.Value < 100) then
+ if ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Value < 100) then
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS1')
+   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
       as TFloatSpinEdit).MinValue:= 1.1
  else
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS1')
-      as TFloatSpinEdit).MinValue:= 0;
+   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
+      as TFloatSpinEdit).MinValue:= 0.1;
  // calculate necessary time increment
- if (DutyCycle1FSE.Value / 100) >= 0.05 then
+ if ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Value / 100) >= 0.05 then
   DutyTime:= 1 // base time is 1s
  else // calculate a base time so that the OnTime is 50 ms
-  DutyTime:= 0.05 / (DutyCycle1FSE.Value / 100);
+  DutyTime:= 0.05 / ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Value / 100);
  // if the unit is s, we can also set a new increment
- if Unit1RBs.Checked then
-  RunTime1FSE.Increment:= round(DutyTime);
+ if (FindComponent('Unit' + IntToStr(Step) + 'RBs')
+        as TRadioButton).Checked then
+  (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Increment:= round(DutyTime);
  // the set time might be smaller than necessary
  StepTime:= 1; // 1s
- if Unit1RBmin.Checked then
+ if (FindComponent('Unit' + IntToStr(Step) + 'RBmin')
+        as TRadioButton).Checked then
     StepTime:= 60
- else if Unit1RBh.Checked then
+ else if (FindComponent('Unit' + IntToStr(Step) + 'RBh')
+        as TRadioButton).Checked then
     StepTime:= 3600;
- StepTime:= RunTime1FSE.Value * StepTime; // time in s
+ StepTime:= (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Value * StepTime; // time in s
  if StepTime < DutyTime then
   // the maximal DutyTime is 50 s, thus the unit is already s
-  RunTime1FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle2FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime2FSE.Increment:= 1;
- if (DutyCycle2FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS2')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS2')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle2FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle2FSE.Value / 100);
- if Unit2RBs.Checked then
-  RunTime2FSE.Increment:= round(DutyTime);
- StepTime:= 1;
- if Unit2RBmin.Checked then
-    StepTime:= 60
- else if Unit2RBh.Checked then
-    StepTime:= 3600;
- StepTime:= RunTime2FSE.Value * StepTime;
- if StepTime < DutyTime then
-  RunTime2FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle3FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime3FSE.Increment:= 1;
- if (DutyCycle3FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS3')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS3')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle3FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle3FSE.Value / 100);
- if Unit3RBs.Checked then
-   RunTime3FSE.Increment:= round(DutyTime);
-  StepTime:= 1;
-  if Unit3RBmin.Checked then
-     StepTime:= 60
-  else if Unit3RBh.Checked then
-     StepTime:= 3600;
-  StepTime:= RunTime3FSE.Value * StepTime;
-  if StepTime < DutyTime then
-   RunTime3FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle4FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime4FSE.Increment:= 1;
- if (DutyCycle4FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS4')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS4')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle4FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle4FSE.Value / 100);
- if Unit4RBs.Checked then
-  RunTime4FSE.Increment:= round(DutyTime);
- StepTime:= 1;
- if Unit4RBmin.Checked then
-    StepTime:= 60
- else if Unit4RBh.Checked then
-    StepTime:= 3600;
- StepTime:= RunTime4FSE.Value * StepTime;
- if StepTime < DutyTime then
-  RunTime4FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle5FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime5FSE.Increment:= 1;
- if (DutyCycle5FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS5')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS5')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle5FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle5FSE.Value / 100);
- if Unit5RBs.Checked then
-  RunTime5FSE.Increment:= round(DutyTime);
- StepTime:= 1;
- if Unit5RBmin.Checked then
-    StepTime:= 60
- else if Unit5RBh.Checked then
-    StepTime:= 3600;
- StepTime:= RunTime5FSE.Value * StepTime;
- if StepTime < DutyTime then
-  RunTime5FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle6FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime6FSE.Increment:= 1;
- if (DutyCycle6FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS6')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle6FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle6FSE.Value / 100);
- if Unit6RBs.Checked then
-  RunTime6FSE.Increment:= round(DutyTime);
- StepTime:= 1;
- if Unit6RBmin.Checked then
-    StepTime:= 60
- else if Unit6RBh.Checked then
-    StepTime:= 3600;
- StepTime:= RunTime6FSE.Value * StepTime;
- if StepTime < DutyTime then
-  RunTime6FSE.Value:= DutyTime;
-end;
-
-procedure TMainForm.DutyCycle7FSEChange(Sender: TObject);
-var
- j : integer;
- DutyTime, StepTime : Double;
-begin
- RunTime7FSE.Increment:= 1;
- if (DutyCycle7FSE.Value < 100) then
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS7')
-     as TFloatSpinEdit).MinValue:= 1.1
- else
-  for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'VoltageFS7')
-     as TFloatSpinEdit).MinValue:= 0;
- if (DutyCycle7FSE.Value / 100) >= 0.05 then
-  DutyTime:= 1
- else
-  DutyTime:= 0.05 / (DutyCycle7FSE.Value / 100);
- if Unit7RBs.Checked then
-  RunTime7FSE.Increment:= round(DutyTime);
- StepTime:= 1;
- if Unit7RBmin.Checked then
-    StepTime:= 60
- else if Unit7RBh.Checked then
-    StepTime:= 3600;
- StepTime:= RunTime7FSE.Value * StepTime;
- if StepTime < DutyTime then
-  RunTime7FSE.Value:= DutyTime;
+  (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+        as TFloatSpinEdit).Value:= DutyTime;
 end;
 
 procedure TMainForm.PumpGBDblClick(Sender: TObject);
