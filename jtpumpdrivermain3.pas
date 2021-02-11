@@ -1774,6 +1774,7 @@ begin
     ConnComPortLE.Color:= clRed;
     ConnComPortLE.Text:= 'Try to reconnect';
     IndicatorPanelP.Caption:= 'Connection failiure';
+    ConnectionMI.Enabled:= True;
     RunBB.Enabled:= False;
     RunFreeBB.Enabled:= False;
     if ser.LastError = 9997 then
@@ -2030,6 +2031,7 @@ begin
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failiure';
+   ConnectionMI.Enabled:= True;
    if ser.LastError = 9997 then
    begin
     StopBB.Enabled:= False;
@@ -2334,10 +2336,6 @@ var
  j : integer;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
- // make all steps visible because they might be invisible due to a prior loading
-  for j:= 2 to 7 do
-   (FindComponent('Step' + IntToStr(j) + 'TS')
-    as TTabSheet).TabVisible:= True;
  if DropFileName <> '' then // a file was dropped into the main window
   FileSuccess:= OpenFile(DropFileName)
  else
@@ -2354,6 +2352,10 @@ begin
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
  else
  begin
+  // make all steps visible because they might be invisible due to a prior loading
+  for j:= 2 to StepNum do
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+    as TTabSheet).TabVisible:= True;
   if DropFileName <> '' then
    InName:= DropFileName
   else
