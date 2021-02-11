@@ -1954,7 +1954,7 @@ begin
  else
   for j:= 1 to PumpNum do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
-      as TFloatSpinEdit).MinValue:= 0;
+      as TFloatSpinEdit).MinValue:= 0.1;
  // calculate necessary time increment
  if ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
         as TFloatSpinEdit).Value / 100) >= 0.05 then

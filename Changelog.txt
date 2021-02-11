@@ -2,8 +2,9 @@ Changes
 
 from version 2.55 to 2.56
 
-bugfix:
+bugfixes:
 - when rotation direction changed from step 6 to step 7 the pumps were no stopped for a second
+- respect minimal oltage of 0.1 V also when using a duty cycle
 
 miscellaneous:
 - massive program code simplifications to enable future support for more steps and pumps
