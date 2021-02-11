@@ -414,7 +414,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle1FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -824,7 +824,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle2FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1221,7 +1221,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle3FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1618,7 +1618,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle4FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2015,7 +2015,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle5FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2412,7 +2412,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle6FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2451,7 +2451,7 @@ object MainForm: TMainForm
           Width = 50
           DecimalPlaces = 1
           MinValue = 0.1
-          OnChange = DutyCycle7FSEChange
+          OnChange = DutyCycleXFSEChange
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
