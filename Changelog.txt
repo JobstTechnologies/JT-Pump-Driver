@@ -1,5 +1,14 @@
 Changes
 
+from version 2.55 to 2.56
+
+bugfix:
+- when rotation direction changed from step 6 to step 7 the pumps were no stopped for a second
+
+miscellaneous:
+- massive program code simplifications to enable future support for more steps and pumps
+
+
 from version 2.54 to 2.55
 
 bugfix:
