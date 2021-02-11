@@ -2741,14 +2741,14 @@ begin
    if (LastParsed = 'M') and (StepTime >= 1) then
    begin
     // check if there is a next 'M' with 1s
-    if (command[i+5] = 'M') then
+    if (command[i+PumpNum+1] = 'M') then
     begin
      // determine the length
-     j:= i + 5;
+     j:= i + PumpNum + 1;
      repeat
       inc(j)
      until IsDigit(command[j]) = false;
-     StepTime:= StrToFloat(Copy(command, i+6, j-i-6)) / 1000;
+     StepTime:= StrToFloat(Copy(command, i+PumpNum+2, j-i-(PumpNum+2))) / 1000;
      if (StepTime >= 1) then
      begin
       inc(StepCounter);
@@ -2758,7 +2758,7 @@ begin
     end;
    end;
    if (StepCounter = 0)
-    or ((LastParsed = 'G') and (command[i+6] <> 'R')) then // not if last 'I'
+    or ((LastParsed = 'G') and (command[i+PumpNum+2] <> 'R')) then // not if last 'I'
    begin
     inc(StepCounter);
     ICounter:= 0;
