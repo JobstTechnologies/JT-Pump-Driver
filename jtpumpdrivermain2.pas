@@ -1165,10 +1165,8 @@ begin
    // direction
    if HaveS then // only if there is any pump running
    begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG' + jStr)
-      as TRadioGroup).ItemIndex);
-    for k:= 2 to PumpNum do
+    command:= command + 'D';
+    for k:= 1 to PumpNum do
     begin
      if SOrder[k-1] <> '0' then
       command:= command +
