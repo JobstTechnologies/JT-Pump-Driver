@@ -1196,14 +1196,15 @@ end;
 function TMainForm.GenerateCommand(out command: string): Boolean;
 // collect data an generate command to be sent
 var
- voltage, jStr : string;
+ voltage, jStr, commandSplit, commandSave, commandOriginal : string;
  SOrder : array of char;
- timeFactor, DutyRepeats, XTime, OnTime, OffTime, j, k : integer;
+ timeFactor, DutyRepeats, XTime, OnTime, OffTime, i, j, k, j2, k2,
+   voltageCalc, countPump, countPumpNumber, posS: integer;
  timeCalc, timeOut, timeStep : Double;
  HaveS : Boolean = False;
 begin
- timeFactor:= 1; timeCalc:= 0;
- command:= ''; voltage:= '';
+ timeFactor:= 1; timeCalc:= 0; voltageCalc:= 0;
+ command:= ''; commandSplit:= ''; voltage:= '';
  IndicatorPanelP.Color:= clDefault;
  IndicatorPanelP.Caption:= ''; IndicatorPanelP.Hint:= '';
  setLength(SOrder, PumpNum);
@@ -1271,6 +1272,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump2OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1289,6 +1291,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump3OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1309,6 +1312,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1331,6 +1335,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump5OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1355,6 +1360,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump6OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1381,6 +1387,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump7OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1409,6 +1416,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump8OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1439,14 +1447,13 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    // direction
    if HaveS then // only if there is any pump running
    begin
-    command:= command + 'D' +
-     IntToStr((FindComponent('Pump' + SOrder[0] + 'DirectionRG' + jStr)
-      as TRadioGroup).ItemIndex);
-    for k:= 2 to PumpNum do
+    command:= command + 'D';
+    for k:= 1 to PumpNum do
     begin
      if SOrder[k-1] <> '0' then
       command:= command +
@@ -1507,6 +1514,76 @@ begin
                 as TFloatSpinEdit).Value * timeFactor;
    end;
    timeCalc:= timeCalc + timeStep;
+
+   // When the sum of the S values is larger than 3*999 we must
+   // split the step into substeps because the pump driver cannot
+   // deliver enough current to start all pumps at once
+   // We will then first start 2 pumps, then 15 ms later the next 2 and so on
+
+   if voltageCalc > (3*999) then
+   begin
+    // we take blocks of pumps vith a voltage below 3*999 thus restart counting
+    voltageCalc:= 0; k2:= 1;
+    countPump:= 0; posS:= 0; countPumpNumber:= 0;
+    commandOriginal:= command;
+    commandSave:= '';
+    for i:= 2 to Length(commandOriginal) do
+    begin
+     if commandOriginal[i] = 'S' then
+     begin
+      // store the position of the first 'S'
+      if posS = 0 then
+       posS:= i;
+      k2:= i + 1;
+     end;
+     // parse now until the first 'D' is found
+     while isDigit(commandOriginal[k2]) and (posS > 0) do
+     begin
+     voltageCalc:= voltageCalc + StrToInt(Copy(commandOriginal, k2+1, 3));
+      if voltageCalc > (3*999) then
+      begin // we have our first commandSplit
+       commandSave:= commandSave + commandSplit;
+       commandSplit:= commandSave;
+       // add the direction
+       commandSplit:= 'S' + commandSplit + 'D';
+       for j2:= 1 to countPump do
+       begin
+        if SOrder[j2-1] <> '0' then
+         commandSplit:= commandSplit +
+          IntToStr((FindComponent('Pump' + SOrder[j2-1] + 'DirectionRG' + jStr)
+           as TRadioGroup).ItemIndex);
+       end;
+       // add the action
+       commandSplit:= commandSplit + 'I';
+       for j2:= 1 to countPumpNumber do
+        commandSplit:= commandSplit +
+         BoolToStr((FindComponent('Pump' + IntToStr(j2) + 'OnOffCB' + jStr)
+          as TCheckBox).Checked,'1','0');
+       for j2:= countPumpNumber + 1 to PumpNum do
+        commandSplit:= commandSplit + '0';
+       // eventually add the 15 ms
+       commandSplit:= commandSplit + 'M15';
+       // insert commandSplit to command
+       Insert(commandSplit, command, posS);
+       // move position and start collecting again
+       posS:= posS + length(commandSplit);
+       commandSplit:= '';
+       // we start with the voltage of the currently not yet added pump
+       voltageCalc:= StrToInt(Copy(commandOriginal, k2+1, 3));
+      end; // end if voltageCalc
+      // we can add another pump
+      commandSplit:= commandSplit + Copy(commandOriginal, k2, 4);
+      inc(countPump);
+      countPumpNumber:= StrToInt(commandOriginal[k2]);
+      k2:= k2 + 4;
+
+     end; // end while
+     // when we found an 'S' we parsed and are ready
+     if posS > 0 then
+      break;
+    end; // end for i
+   end; // end if voltageCalc > (3*999)
+
    // if the direction changes, wait 999 ms to protect the pumps
    // only if the next step is actually used and we have 100% duty cylce
    // only necessary if DutyCycle = 100
