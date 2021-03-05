@@ -1208,6 +1208,7 @@ begin
  IndicatorPanelP.Color:= clDefault;
  IndicatorPanelP.Caption:= ''; IndicatorPanelP.Hint:= '';
  setLength(SOrder, PumpNum);
+ posS:= 1; // 1 and not 0 because we use it to access chars in strings
 
  // address
  command:= '/0';
@@ -1225,6 +1226,7 @@ begin
   for k:= 0 to PumpNum-1 do
    SOrder[k]:= '0';
   jStr:= IntToStr(j);
+  voltageCalc:= 0;
   if (FindComponent('Step' + jStr + 'UseCB') as TCheckBox).Checked
    and (FindComponent('Step' + jStr + 'TS') as TTabSheet).TabVisible then
   begin
@@ -1466,7 +1468,7 @@ begin
    for k:= 1 to PumpNum do
     command:= command +
      BoolToStr((FindComponent('Pump' + IntToStr(k) + 'OnOffCB' + jStr)
-        as TCheckBox).Checked,'1','0');
+        as TCheckBox).Checked, '1', '0');
    // calculate action time in ms
    timeStep:= 0;
    if (FindComponent('Unit' + jStr + 'RBs')
@@ -1518,26 +1520,26 @@ begin
    // When the sum of the S values is larger than 3*999 we must
    // split the step into substeps because the pump driver cannot
    // deliver enough current to start all pumps at once
-   // We will then first start 2 pumps, then 15 ms later the next 2 and so on
+   // In this case we will first start up to 3 pumps, then 10 ms later
+   // the next up to 3 and so on
 
    if voltageCalc > (3*999) then
    begin
     // we take blocks of pumps vith a voltage below 3*999 thus restart counting
     voltageCalc:= 0; k2:= 1;
-    countPump:= 0; posS:= 0; countPumpNumber:= 0;
+    countPump:= 0; countPumpNumber:= 0;
     commandOriginal:= command;
-    commandSave:= '';
-    for i:= 2 to Length(commandOriginal) do
+    commandSave:= ''; commandSplit:= '';
+    for i:= posS to Length(commandOriginal) do
     begin
      if commandOriginal[i] = 'S' then
      begin
-      // store the position of the first 'S'
-      if posS = 0 then
-       posS:= i;
+      // store the position of the first 'S' for this step
+      posS:= i;
       k2:= i + 1;
      end;
      // parse now until the first 'D' is found
-     while isDigit(commandOriginal[k2]) and (posS > 0) do
+     while isDigit(commandOriginal[k2]) and (posS > 1) do
      begin
      voltageCalc:= voltageCalc + StrToInt(Copy(commandOriginal, k2+1, 3));
       if voltageCalc > (3*999) then
@@ -1558,11 +1560,11 @@ begin
        for j2:= 1 to countPumpNumber do
         commandSplit:= commandSplit +
          BoolToStr((FindComponent('Pump' + IntToStr(j2) + 'OnOffCB' + jStr)
-          as TCheckBox).Checked,'1','0');
+          as TCheckBox).Checked, '1', '0');
        for j2:= countPumpNumber + 1 to PumpNum do
         commandSplit:= commandSplit + '0';
-       // eventually add the 15 ms
-       commandSplit:= commandSplit + 'M15';
+       // eventually add the 10 ms
+       commandSplit:= commandSplit + 'M10';
        // insert commandSplit to command
        Insert(commandSplit, command, posS);
        // move position and start collecting again
@@ -1578,10 +1580,12 @@ begin
       k2:= k2 + 4;
 
      end; // end while
-     // when we found an 'S' we parsed and are ready
-     if posS > 0 then
+     // when voltageCalc is here > 0 we already parsed enough
+     if voltageCalc > 0 then
       break;
     end; // end for i
+    // set position to end of command for next step
+    posS:= length(command);
    end; // end if voltageCalc > (3*999)
 
    // if the direction changes, wait 999 ms to protect the pumps
