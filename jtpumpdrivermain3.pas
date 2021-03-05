@@ -2205,7 +2205,7 @@ procedure TMainForm.RunFreeBBClick(Sender: TObject);
 // run 30 seconds in each direction 10 times
 // this is like loading a *.PDAction file, therefore use the file load routines
 var
- j, k : integer;
+ j : integer;
  command : string;
  ParseSuccess : Boolean;
 begin
