@@ -2021,7 +2021,7 @@ var
  ParseSuccess : Boolean = false;
  MousePointer : TPoint;
  command, DummyString : string;
- j : integer;
+ i, j : integer;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  if DropFileName <> '' then // a file was dropped into the main window
@@ -2065,8 +2065,13 @@ begin
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
   for j:= 1 to StepNum do
+  begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).Enabled:= False;
+   for i:= 1 to PumpNum do
+   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+    as TGroupBox).ShowHint:= False;
+  end;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps
   for j:= 2 to StepNum do

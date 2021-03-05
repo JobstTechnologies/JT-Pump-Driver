@@ -7,6 +7,7 @@ bugfixes:
 - respect minimal oltage of 0.1 V also when using a duty cycle
 - when a connection error occurred, enable connection menu to be able to try a reconnect
 - fix minor UI issue when attempting to load an action file and pressing Cancel in the file dialog
+- fix minor UI issue that tooltip to change pump name was shown for disabled pumps
 
 miscellaneous:
 - massive program code simplifications to enable future support for more steps and pumps
