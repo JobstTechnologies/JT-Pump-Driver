@@ -1179,7 +1179,7 @@ begin
    for k:= 1 to PumpNum do
     command:= command +
      BoolToStr((FindComponent('Pump' + IntToStr(k) + 'OnOffCB' + jStr)
-        as TCheckBox).Checked,'1','0');
+        as TCheckBox).Checked, '1', '0');
    // calculate action time in ms
    timeStep:= 0;
    if (FindComponent('Unit' + jStr + 'RBs')
