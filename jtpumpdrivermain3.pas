@@ -2212,41 +2212,25 @@ begin
  LoadedActionFileM.Text:= 'Free Pumps';
  LoadedActionFileM.Color:= clInfoBK;
  LoadedActionFileM.Hint:= 'Free Pumps';
+ // start the pumps in blocks of 3 pumps at once
  // input the action as command
- // '/0LgS1999D0I1M30000I0M999S1999D1I1M30000I0M999G9I0lR'
- command:= '/0LgS';
- for k:= 1 to PumpNum do
-  command:= command + IntToStr(k) + '999';
- command:= command + 'D';
- for k:= 1 to PumpNum do
-  command:= command + '0';
- command:= command + 'I';
- for k:= 1 to PumpNum do
-  command:= command + '1';
- command:= command + 'M30000';
- command:= command + 'I';
- for k:= 1 to PumpNum do
-  command:= command + '0';
- command:= command + 'M999';
- command:= command + 'S';
- for k:= 1 to PumpNum do
-  command:= command + IntToStr(k) + '999';
- command:= command + 'D';
- for k:= 1 to PumpNum do
-  command:= command + '1';
- command:= command + 'I';
- for k:= 1 to PumpNum do
-  command:= command + '1';
- command:= command + 'M30000';
- command:= command + 'I';
- for k:= 1 to PumpNum do
-  command:= command + '0';
- command:= command + 'M999';
- command:= command + 'G9';
- command:= command + 'I';
- for k:= 1 to PumpNum do
-  command:= command + '0';
- command:= command + 'lR';
+ // '/0LgS199929993999D000I11100000M10
+ //      S199929993999499959996999D000000I11111100M10
+ //      S19992999399949995999699979998999D00000000I11111111M30000
+ //      I00000000M999
+ //      S199929993999D111I11100000M10
+ //      S199929993999499959996999D111111I11111100M10
+ //      S19992999399949995999699979998999D11111111I11111111M30000
+ //      I00000000M999G9I00000000lR
+ command:= '/0Lg';
+ command:= command + 'S199929993999D000I11100000M10';
+ command:= command + 'S199929993999499959996999D000000I11111100M10';
+ command:= command + 'S19992999399949995999699979998999D00000000I11111111M30000';
+ command:= command + 'I00000000M999';
+ command:= command + 'S199929993999D111I11100000M10';
+ command:= command + 'S199929993999499959996999D111111I11111100M10';
+ command:= command + 'S19992999399949995999699979998999D11111111I11111111M30000';
+ command:= command + 'I00000000M999G9I00000000lR';
 
  CommandM.Text:= command;
  // parse the command
