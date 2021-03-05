@@ -1166,7 +1166,15 @@ begin
  // check all possible steps
  for j:= 1 to StepNum do
  begin
-  (FindComponent('Step' + IntToStr(j) + 'TS')
+  (FindComponent('Step' + IntToStr(j) + 'UseCB')
+   as TCheckBox).Enabled:= True;
+  (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('S' + IntToStr(j) + 'P14')
+   as TTabSheet).Enabled:= True;
+  (FindComponent('S' + IntToStr(j) + 'P58')
    as TTabSheet).Enabled:= True;
   // enable tooltips for pump name
   for i:= 1 to PumpNum do
@@ -2414,7 +2422,7 @@ var
  ParseSuccess : Boolean = false;
  MousePointer : TPoint;
  command, DummyString : string;
- j : integer;
+ i, j : integer;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  if DropFileName <> '' then // a file was dropped into the main window
@@ -2453,16 +2461,33 @@ begin
   // parse the command
   ParseSuccess:= ParseCommand(command);
   if ParseSuccess then
-   // call command generation just to get the action time calculated
+   // call command generation to get the action time calculated and to add
+   // time steps in case many pumps have to be started at once
    GenerateCommand(command);
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
-  for j:= 1 to 7 do
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+  for j:= 1 to StepNum do
+  begin
+   // the user must be able to see if the pumps 5 - 8 are set
+   // therefore we cannot just disable the StepXTS component but it
+   // child component except of SXPC
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= False;
+   (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= False;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= False;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= False;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= False;
+   for i:= 1 to PumpNum do
+   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+    as TGroupBox).ShowHint:= False;
+  end;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps
-  for j:= 2 to 7 do
+  for j:= 2 to StepNum do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
        as TCheckBox).Checked = False then
@@ -2541,7 +2566,8 @@ var
  address : string;
  SOrder : array of char;
  LastParsed : char = 'X';
- StepCounter, MCounter, ICounter, i, j, k, G1, p : integer;
+ StepCounter, MCounter, ICounter, i, j, k, G1, p,
+   posSfirst, posSlast: integer;
  MousePointer : TPoint;
  StepTime, M1, M2, DutyStepTime : Double;
  Have2M : Boolean;
@@ -2579,6 +2605,41 @@ begin
  for j:= 1 to StepNum do
   (FindComponent('DutyCycle' + IntToStr(j) + 'FSE')
    as TFloatSpinEdit).Value:= 100;
+
+ // before we can parse the command, we need to clean it up
+ // there might be 10 ms long steps in it used to start many motors at once
+ // we ignore these because they will automatically be re-added at the
+ // next pump run
+ i:= 2;
+ posSfirst:= 0;
+ posSlast:= 0;
+ // parse from 'S' to the next 'S'
+ while i < length(command) do
+ begin
+  if command[i] = 'S' then
+  begin
+   if posSfirst = 0 then
+    posSfirst:= i
+   else
+    posSlast:= i;
+  end;
+  // check if the M command is 'M10' and only then cut out from the command
+  if (posSfirst > 0) and (posSlast > 0)
+   and (Copy(command, posSlast - 3, 3) = 'M10') then
+  begin
+   Delete(command, posSfirst, posSlast - posSfirst);
+   i:= posSfirst;
+   posSfirst:= 0;
+   posSlast:= 0;
+  end
+  else if (posSfirst > 0) and (posSlast > 0) then
+  begin
+   posSfirst:= 0;
+   posSlast:= 0;
+  end
+  else
+   inc(i);
+ end;
 
  // parse the command
  for i:= 2 to Length(command) do
