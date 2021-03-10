@@ -1,12 +1,12 @@
 Changes
 
-from version 2.56 to 3.00
+from version 2.60 to 3.00
 
 new:
 - support for up to 8 pumps
 
 
-from version 2.55 to 2.56
+from version 2.55 to 2.60
 
 new:
 - add an option to control the pumps live
