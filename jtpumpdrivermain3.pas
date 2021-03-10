@@ -1138,6 +1138,7 @@ begin
    as TTabSheet).TabVisible:= not LiveModeCB.Checked;
  Step1UseCB.Visible:= not LiveModeCB.Checked;
  RunSettingsGB.Enabled:= not LiveModeCB.Checked;
+ RunFreeBB.Enabled:= not LiveModeCB.Checked;
  if LiveModeCB.Checked then
  begin
   Step1TS.Caption:= 'Live';
