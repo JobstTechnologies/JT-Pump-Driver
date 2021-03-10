@@ -1,6 +1,6 @@
 Changes
 
-from version 2.55 to 2.56
+from version 2.55 to 2.60
 
 new:
 - add an option to control the pumps live
