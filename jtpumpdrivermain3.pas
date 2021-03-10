@@ -16,6 +16,7 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
+    LiveModeCB: TCheckBox;
     DutyCycle1FSE: TFloatSpinEdit;
     DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle3FSE: TFloatSpinEdit;
@@ -435,6 +436,7 @@ type
     Unit6RBs: TRadioButton;
     Unit7RBs: TRadioButton;
     procedure AboutMIClick(Sender: TObject);
+    procedure LiveModeCBChange(Sender: TObject);
     procedure ConnectionMIClick(Sender: TObject);
     procedure DutyCycleXFSEChange(Sender: TObject);
     procedure FirmwareUpdateMIClick(Sender: TObject);
@@ -464,6 +466,7 @@ type
 
   public
     function GenerateCommand(out command: string): Boolean;
+    procedure RunImmediate;
     function ParseCommand(command: string): Boolean;
     function DialogWithPos(const Message: string; DialogType: TMsgDlgType;
               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
@@ -1124,6 +1127,31 @@ begin
  AboutFormF.ShowModal;
 end;
 
+procedure TMainForm.LiveModeCBChange(Sender: TObject);
+// changes the program to transmit every pump settings change immediately
+var
+j : integer;
+begin
+ // make all steps invisible and rename step 1
+ for j:= 2 to StepNum do
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+   as TTabSheet).TabVisible:= not LiveModeCB.Checked;
+ Step1UseCB.Visible:= not LiveModeCB.Checked;
+ RunSettingsGB.Enabled:= not LiveModeCB.Checked;
+ if LiveModeCB.Checked then
+ begin
+  Step1TS.Caption:= 'Live';
+  // set that run until stop pressed
+  RunEndlessCB.Checked:= true;
+ end
+ else
+ begin
+  Step1TS.Caption:= 'Step 1';
+  RunEndlessCB.Checked:= false;
+ end;
+
+end;
+
 procedure TMainForm.FormClose(Sender: TObject);
 // Close serial connection
 var
@@ -1162,7 +1190,8 @@ begin
  CommandM.Text:= command;
  // the button re-enables editing after an action file was loaded
  // enable all setting possibilities
- RunSettingsGB.Enabled:= True;
+ LiveModeCB.Enabled:= True;
+ RunSettingsGB.Enabled:= not LiveModeCB.Checked;
  // check all possible steps
  for j:= 1 to StepNum do
  begin
@@ -1191,8 +1220,9 @@ begin
   else
    break;
  end;
- // tab 2 must always be visible
- Step2TS.TabVisible:= True;
+ // tab 2 must always be visible except when in live mode
+ if not LiveModeCB.Checked then
+  Step2TS.TabVisible:= True;
  // loaded settings are no longer valid
  LoadedActionFileM.Text:= 'None';
  LoadedActionFileM.Color:= clDefault;
@@ -1213,8 +1243,12 @@ var
 begin
  timeFactor:= 1; timeCalc:= 0; voltageCalc:= 0;
  command:= ''; commandSplit:= ''; voltage:= '';
- IndicatorPanelP.Color:= clDefault;
- IndicatorPanelP.Caption:= ''; IndicatorPanelP.Hint:= '';
+ if not LiveModeCB.Checked then
+ begin
+  IndicatorPanelP.Color:= clDefault;
+  IndicatorPanelP.Caption:= '';
+ end;
+ IndicatorPanelP.Hint:= '';
  setLength(SOrder, PumpNum);
  posS:= 1; // 1 and not 0 because we use it to access chars in strings
 
@@ -1799,6 +1833,9 @@ for step:= 1 to StepNum do
      as TFloatSpinEdit).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB' + IntToStr(step))
      as TCheckBox).Checked;
   end;
+  // if in live mode send trigger command generation and sending
+  if LiveModeCB.Checked then
+   RunImmediate;
 end;
 
 procedure TMainForm.RepeatPCChange(Sender: TObject);
@@ -1818,6 +1855,71 @@ begin
       as TTabSheet).TabVisible) then
     (FindComponent('Step' + IntToStr(i+1) + 'TS')
       as TTabSheet).TabVisible:= True;
+end;
+
+procedure TMainForm.RunImmediate;
+// execute generated command
+var
+  command : string;
+  CommandResult : Boolean = False;
+begin
+ // generate command
+ CommandResult:= GenerateCommand(command);
+ // if GenerateCommand returns e.g. a too long time stop
+ if not CommandResult then
+ begin
+  StopBBClick(StopBB);
+  exit;
+ end;
+ CommandM.Text:= command;
+ // The TinyZero has an input buffer of 512 characters, if it is full, the
+ // COM connection will break (no communication posible).
+ // There is a special case (in my opinion a bug) that if the input string has
+ // modulo 64 characters, the TinyZero will not accept it directly. First with
+ // the next command it will be executed (e.g. when pressing the Stop button).
+ // The solution is to vary in this case the string termination since the
+ // Arduino code checks only for the #10 char.
+ if (Length(command) + 2) mod 64 = 0 then
+  command:= command + #10
+ else
+  command:= command + LineEnding;
+  // if we have an open serial connection, execute
+ if HaveSerial then
+ begin
+  // disable the connection menu that the user cannot close
+  // the conenction while the pumps are running
+  ConnectionMI.Enabled:= False;
+  FirmwareUpdateMI.Enabled:= False;
+  // send the command
+  ser.SendString(command);
+  if ser.LastError <> 0 then
+  begin
+   with Application do
+    MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
+   ConnComPortLE.Color:= clRed;
+   ConnComPortLE.Text:= 'Try to reconnect';
+   IndicatorPanelP.Caption:= 'Connection failiure';
+   ConnectionMI.Enabled:= True;
+   RunBB.Enabled:= False;
+   RunFreeBB.Enabled:= False;
+   if ser.LastError = 9997 then
+   begin
+    StopBB.Enabled:= False;
+    exit; // we cannot close socket or free if the connection timed out
+   end;
+   ser.CloseSocket;
+   ser.Free;
+   HaveSerial:= False;
+   exit;
+  end;
+ end
+ else // no serial connection
+ begin
+  RunBB.Enabled:= False;
+  RunFreeBB.Enabled:= False;
+  exit;
+ end;
+
 end;
 
 procedure TMainForm.RunBBClick(Sender: TObject);
@@ -1855,6 +1957,7 @@ begin
    // the conenction while the pumps are running
    ConnectionMI.Enabled:= False;
    FirmwareUpdateMI.Enabled:= False;
+   // send the command
    ser.SendString(command);
    if ser.LastError <> 0 then
    begin
@@ -1889,14 +1992,19 @@ begin
   GenerateCommandBB.Enabled:= False;
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
-  for j:= 1 to StepNum do
+  LiveModeCB.Enabled:= False;
+  // not the pump settings when in live mode
+  if not LiveModeCB.Checked then
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
-    as TTabSheet).Enabled:= False;
-   // disable tooltips for pump name
-   for i:= 1 to PumpNum do
-    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-     as TGroupBox).ShowHint:= False;
+   for j:= 1 to StepNum do
+   begin
+    (FindComponent('Step' + IntToStr(j) + 'TS')
+     as TTabSheet).Enabled:= False;
+    // disable tooltips for pump name
+    for i:= 1 to PumpNum do
+     (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+      as TGroupBox).ShowHint:= False;
+   end;
   end;
   RepeatOutputLE.Visible:= False;
   IndicatorPanelP.Caption:= 'Pumps are running';
@@ -2007,7 +2115,8 @@ begin
  if (LoadedActionFileM.Text = 'None')
   or (LoadedActionFileM.Text = 'Free Pumps') then
  begin
-  RunSettingsGB.Enabled:= True;
+  LiveModeCB.Enabled:= True;
+  RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
@@ -2027,8 +2136,9 @@ begin
   else
    break;
   end;
-  // tab 2 must always be visible
-  Step2TS.TabVisible:= True;
+  // tab 2 must always be visible except when in live mode
+  if not LiveModeCB.Checked then
+   Step2TS.TabVisible:= True;
  end;
  // after a Free Pums run we must reset the LoadedActionFileM
  if LoadedActionFileM.Text = 'Free Pumps' then
@@ -2159,7 +2269,8 @@ begin
  if (LoadedActionFileM.Text = 'None')
   or (LoadedActionFileM.Text = 'Free Pumps') then
  begin
-  RunSettingsGB.Enabled:= True;
+  LiveModeCB.Enabled:= True;
+  RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
    (FindComponent('Step' + IntToStr(j) + 'TS')
@@ -2179,8 +2290,9 @@ begin
    else
     break;
   end;
-  // tab 2 must always be visible
-  Step2TS.TabVisible:= True;
+  // tab 2 must always be visible except when in live mode
+  if not LiveModeCB.Checked then
+   Step2TS.TabVisible:= True;
  end;
  // after a Free Pums run we must reset the LoadedActionFileM
  if LoadedActionFileM.Text = 'Free Pumps' then
@@ -2240,6 +2352,7 @@ begin
   GenerateCommand(command);
  // disable all setting possibilities
  RunSettingsGB.Enabled:= False;
+ LiveModeCB.Enabled:= False;
  for j:= 1 to StepNum do
   (FindComponent('Step' + IntToStr(j) + 'TS')
    as TTabSheet).Enabled:= False;
@@ -2267,8 +2380,8 @@ begin
   begin
    RepeatSE.Enabled:= False;
    RepeatOutputLE.Visible:= False;
-   // disable runtime only, if there is only one step
-   if not Step2UseCB.Checked then
+   // disable runtime only, if there is only one step or in live mode
+   if (not Step2UseCB.Checked) or LiveModeCB.Checked then
     ActionTime1GB.Enabled:= False;
   end
   else
@@ -2366,6 +2479,10 @@ begin
   // the maximal DutyTime is 50 s, thus the unit is already s
   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
         as TFloatSpinEdit).Value:= DutyTime;
+
+ // if in live mode send trigger command generation and sending
+ if LiveModeCB.Checked then
+  RunImmediate;
 end;
 
 procedure TMainForm.PumpGBDblClick(Sender: TObject);
@@ -2425,6 +2542,9 @@ begin
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
  else
  begin
+  // an action file is never live mode
+  if LiveModeCB.Checked then
+   LiveModeCB.Checked:= False;
   // make all steps visible because they might be invisible due to a prior loading
   for j:= 2 to StepNum do
    (FindComponent('Step' + IntToStr(j) + 'TS')
@@ -2450,6 +2570,7 @@ begin
    GenerateCommand(command);
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
+  LiveModeCB.Enabled:= False;
   for j:= 1 to StepNum do
   begin
    // the user must be able to see if the pumps 5 - 8 are set

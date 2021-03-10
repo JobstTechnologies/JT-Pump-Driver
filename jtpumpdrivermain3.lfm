@@ -5253,7 +5253,7 @@ object MainForm: TMainForm
     end
   end
   object ActionsGB: TGroupBox
-    Left = 15
+    Left = 16
     Height = 64
     Top = 520
     Width = 529
@@ -5361,6 +5361,18 @@ object MainForm: TMainForm
     Caption = 'Command'
     ParentColor = False
     ParentFont = False
+  end
+  object LiveModeCB: TCheckBox
+    Left = 405
+    Height = 19
+    Hint = 'All steps will be disabled and'#13#10'every pump settings change'#13#10'will have an immediate effect'
+    Top = 8
+    Width = 75
+    Caption = 'Live Mode'
+    OnChange = LiveModeCBChange
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 5
   end
   object MainMenu: TMainMenu
     Left = 432
