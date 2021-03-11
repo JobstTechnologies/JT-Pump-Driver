@@ -285,8 +285,8 @@ type
     procedure GetFirmwareVersionMIClick(Sender: TObject);
     procedure LiveModeCBChange(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
+    procedure PumpVoltageFSChange(Sender: TObject);
     procedure PumpGBDblClick(Sender: TObject);
-    procedure PumpOnOffCBSingleChange(Sender: TObject);
     procedure PumpOnOffCBLoopChange(Sender: TObject);
     procedure RepeatPCChange(Sender: TObject);
     procedure RunBBClick(Sender: TObject);
@@ -983,11 +983,15 @@ begin
   Step1TS.Caption:= 'Live';
   // set that run until stop pressed
   RunEndlessCB.Checked:= true;
+  // en/disable pump setting elements
+  PumpOnOffCBLoopChange(Sender);
  end
  else
  begin
   Step1TS.Caption:= 'Step 1';
   RunEndlessCB.Checked:= false;
+  // en/disable pump setting elements
+  PumpOnOffCBLoopChange(Sender);
  end;
 
 end;
@@ -1404,21 +1408,6 @@ begin
   result:= True;
 end;
 
-procedure TMainForm.PumpOnOffCBSingleChange(Sender: TObject);
-var
-  i : integer;
-begin
-  for i:= 1 to PumpNum do
-  begin
-   (FindComponent('Pump' + IntToStr(i) + 'DirectionRG')
-     as TRadioGroup).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB')
-     as TCheckBox).Checked;
-   (FindComponent('Pump' + IntToStr(i) + 'VoltageFS')
-     as TFloatSpinEdit).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB')
-     as TCheckBox).Checked;
-  end;
-end;
-
 procedure TMainForm.PumpOnOffCBLoopChange(Sender: TObject);
 var
   i, step : integer;
@@ -1426,16 +1415,36 @@ begin
 for step:= 1 to StepNum do
   for i:= 1 to PumpNum do
   begin
+   // when in live mode the pump direction must be kept disabled when pump
+   // is on and all elements must be enabled when the pump if off
+   if LiveModeCB.Checked then
+   begin
+   (FindComponent('Pump' + IntToStr(i) + 'DirectionRG' + IntToStr(step))
+     as TRadioGroup).Enabled:= not (FindComponent('Pump' + IntToStr(i) + 'OnOffCB' + IntToStr(step))
+     as TCheckBox).Checked;
+   (FindComponent('Pump' + IntToStr(i) + 'VoltageFS' + IntToStr(step))
+     as TFloatSpinEdit).Enabled:= True;
+   end
+   else // outside live mode, disable all elements when pump is off
+   begin
    (FindComponent('Pump' + IntToStr(i) + 'DirectionRG' + IntToStr(step))
      as TRadioGroup).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB' + IntToStr(step))
      as TCheckBox).Checked;
    (FindComponent('Pump' + IntToStr(i) + 'VoltageFS' + IntToStr(step))
      as TFloatSpinEdit).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB' + IntToStr(step))
      as TCheckBox).Checked;
+   end
   end;
   // if in live mode send trigger command generation and sending
   if LiveModeCB.Checked then
    RunImmediate;
+end;
+
+procedure TMainForm.PumpVoltageFSChange(Sender: TObject);
+begin
+ // if in live mode send trigger command generation and sending
+ if LiveModeCB.Checked then
+  RunImmediate;
 end;
 
 procedure TMainForm.RepeatPCChange(Sender: TObject);
