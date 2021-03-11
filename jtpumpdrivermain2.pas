@@ -1433,7 +1433,7 @@ for step:= 1 to StepNum do
    (FindComponent('Pump' + IntToStr(i) + 'VoltageFS' + IntToStr(step))
      as TFloatSpinEdit).Enabled:= (FindComponent('Pump' + IntToStr(i) + 'OnOffCB' + IntToStr(step))
      as TCheckBox).Checked;
-   end
+   end;
   end;
   // if in live mode send trigger command generation and sending
   if LiveModeCB.Checked then
