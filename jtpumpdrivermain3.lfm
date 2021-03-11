@@ -203,6 +203,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -279,6 +280,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -355,6 +357,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -431,6 +434,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -511,6 +515,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -587,6 +592,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -663,6 +669,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -739,6 +746,7 @@ object MainForm: TMainForm
               Increment = 0.1
               MaxValue = 3.3
               MinValue = 0.1
+              OnChange = PumpVoltageFSChange
               ParentFont = False
               ParentShowHint = False
               ShowHint = True

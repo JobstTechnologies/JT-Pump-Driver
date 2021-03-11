@@ -15,7 +15,6 @@
         <TextName Value="JobstTechnologies.JTPumpDriver"/>
         <TextDesc Value="CPP driver control"/>
       </XPManifest>
-      <Icon Value="0"/>
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
