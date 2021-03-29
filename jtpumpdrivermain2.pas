@@ -316,7 +316,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.60';
+  Version : string = '2.61';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
