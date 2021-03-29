@@ -1,9 +1,16 @@
 Changes
 
-from version 2.60 to 3.00
+from version 2.61 to 3.00
 
 new:
 - support for up to 8 pumps
+
+
+from version 2.60 to 2.61
+
+bugfixes:
+- in Live mode pumps were run despite the run pumps button was not yet pressed
+- when Live mode was left, all steps were shown
 
 
 from version 2.55 to 2.60

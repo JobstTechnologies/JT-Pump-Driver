@@ -1132,15 +1132,15 @@ procedure TMainForm.LiveModeCBChange(Sender: TObject);
 var
 j : integer;
 begin
- // make all steps invisible and rename step 1
- for j:= 2 to StepNum do
-  (FindComponent('Step' + IntToStr(j) + 'TS')
-   as TTabSheet).TabVisible:= not LiveModeCB.Checked;
- Step1UseCB.Visible:= not LiveModeCB.Checked;
- RunSettingsGB.Enabled:= not LiveModeCB.Checked;
- RunFreeBB.Enabled:= not LiveModeCB.Checked;
  if LiveModeCB.Checked then
  begin
+  // make all steps invisible and rename step 1
+  for j:= 2 to StepNum do
+   (FindComponent('Step' + IntToStr(j) + 'TS')
+    as TTabSheet).TabVisible:= false;
+  Step1UseCB.Visible:= false;
+  RunSettingsGB.Enabled:= false;
+  RunFreeBB.Enabled:= false;
   Step1TS.Caption:= 'Live';
   // set that run until stop pressed
   RunEndlessCB.Checked:= true;
@@ -1149,7 +1149,9 @@ begin
  end
  else
  begin
+  // rename step 1 back and show step 2
   Step1TS.Caption:= 'Step 1';
+  Step2TS.TabVisible:= true;
   RunEndlessCB.Checked:= false;
   // en/disable pump setting elements
   PumpOnOffCBLoopChange(Sender);
@@ -1837,14 +1839,14 @@ for step:= 1 to StepNum do
    end;
   end;
   // if in live mode send trigger command generation and sending
-  if LiveModeCB.Checked then
+  if LiveModeCB.Checked and OverallTimer.Enabled then
    RunImmediate;
 end;
 
 procedure TMainForm.PumpVoltageFSChange(Sender: TObject);
 begin
  // if in live mode send trigger command generation and sending
- if LiveModeCB.Checked then
+ if LiveModeCB.Checked and OverallTimer.Enabled then
   RunImmediate;
 end;
 
@@ -2491,7 +2493,7 @@ begin
         as TFloatSpinEdit).Value:= DutyTime;
 
  // if in live mode send trigger command generation and sending
- if LiveModeCB.Checked then
+ if LiveModeCB.Checked and OverallTimer.Enabled then
   RunImmediate;
 end;
 
