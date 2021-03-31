@@ -1149,6 +1149,9 @@ begin
  end
  else
  begin
+  Step1UseCB.Visible:= true;
+  RunSettingsGB.Enabled:= true;
+  RunFreeBB.Enabled:= true;
   // rename step 1 back and show step 2
   Step1TS.Caption:= 'Step 1';
   Step2TS.TabVisible:= true;
