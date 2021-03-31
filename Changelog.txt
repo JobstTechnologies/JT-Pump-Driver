@@ -1,5 +1,11 @@
 Changes
 
+from version 2.61 to 2.62
+
+bugfix:
+- when Live mode was left not all possible settings were enabled
+
+
 from version 2.60 to 2.61
 
 bugfixes:

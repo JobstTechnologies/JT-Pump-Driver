@@ -316,7 +316,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.61';
+  Version : string = '2.62';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -988,6 +988,9 @@ begin
  end
  else
  begin
+  Step1UseCB.Visible:= true;
+  RunSettingsGB.Enabled:= true;
+  RunFreeBB.Enabled:= true;
   // rename step 1 back and show step 2
   Step1TS.Caption:= 'Step 1';
   Step2TS.TabVisible:= true;
