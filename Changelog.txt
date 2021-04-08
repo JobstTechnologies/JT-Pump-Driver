@@ -1,5 +1,11 @@
 Changes
 
+from version 2.62 to 2.63
+
+bugfix:
+- minor Live mode UI issue
+
+
 from version 2.61 to 2.62
 
 bugfix:
