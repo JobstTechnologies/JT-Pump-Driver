@@ -1138,7 +1138,6 @@ begin
   for j:= 2 to StepNum do
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).TabVisible:= false;
-  Step1UseCB.Visible:= false;
   RunSettingsGB.Enabled:= false;
   RunFreeBB.Enabled:= false;
   Step1TS.Caption:= 'Live';
@@ -1149,7 +1148,6 @@ begin
  end
  else
  begin
-  Step1UseCB.Visible:= true;
   RunSettingsGB.Enabled:= true;
   RunFreeBB.Enabled:= true;
   // rename step 1 back and show step 2

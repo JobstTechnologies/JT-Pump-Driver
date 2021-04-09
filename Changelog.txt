@@ -1,9 +1,15 @@
 Changes
 
-from version 2.62 to 3.00
+from version 2.63 to 3.00
 
 new:
 - support for up to 8 pumps
+
+
+from version 2.62 to 2.63
+
+bugfix:
+- minor Live mode UI issue
 
 
 from version 2.61 to 2.62
