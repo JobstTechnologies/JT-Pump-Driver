@@ -3156,7 +3156,15 @@ object MainForm: TMainForm
       end
       object FirmwareUpdateMI: TMenuItem
         Caption = 'Firmware Update'
+        Enabled = False
         OnClick = FirmwareUpdateMIClick
+      end
+      object FirmwareResetMI: TMenuItem
+        Caption = 'Firmware Reset (voids warranty!)'
+        Hint = 'To force the flushing with a firmware'#13#10'NOTE: warranty is then void!'
+        ShortCut = 49234
+        Visible = False
+        OnClick = FirmwareResetMIClick
       end
     end
   end

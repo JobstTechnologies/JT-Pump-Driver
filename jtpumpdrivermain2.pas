@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
-  StdCtrls, ExtCtrls, Spin, EditBtn, Buttons, LCLType, Registry, Process,
-  SynaSer, LazSerial, Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
+  StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
+  LazSerial, Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm;
 
@@ -62,6 +62,7 @@ type
     LiveModeCB: TCheckBox;
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
+    FirmwareResetMI: TMenuItem;
     SaveActionMI: TMenuItem;
     FileMI: TMenuItem;
     OpenDialog: TOpenDialog;
@@ -285,6 +286,7 @@ type
     procedure GetFirmwareVersionMIClick(Sender: TObject);
     procedure LiveModeCBChange(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
+    procedure FirmwareResetMIClick(Sender: TObject);
     procedure PumpVoltageFSChange(Sender: TObject);
     procedure PumpGBDblClick(Sender: TObject);
     procedure PumpOnOffCBLoopChange(Sender: TObject);
@@ -304,6 +306,7 @@ type
   private
 
   public
+    procedure FirmwareUpdate(forced: Boolean);
     function GenerateCommand(out command: string): Boolean;
     procedure RunImmediate;
     function ParseCommand(command: string): Boolean;
@@ -316,7 +319,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.63';
+  Version : string = '2.64';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -365,6 +368,7 @@ begin
  // connected to an unknown device
  GetFirmwareVersionMI.Enabled:= true;
  FirmwareUpdateMI.Enabled:= true;
+ FirmwareResetMI.Enabled:= true;
  // determine all possible COM ports
  Reg:= TRegistry.Create;
  try
@@ -509,6 +513,7 @@ begin
     IndicatorPanelP.Color:= clRed;
     GetFirmwareVersionMI.Enabled:= false;
     FirmwareUpdateMI.Enabled:= false;
+    FirmwareResetMI.Enabled:= false;
     // disable all buttons
     RunBB.Enabled:= false;
     StopBB.Enabled:= false;
@@ -571,12 +576,22 @@ begin
 end;
 
 procedure TMainForm.FirmwareUpdateMIClick(Sender: TObject);
+begin
+ FirmwareUpdate(false); // no forced update
+end;
+
+procedure TMainForm.FirmwareResetMIClick(Sender: TObject);
+begin
+ FirmwareUpdate(true); // forced update
+end;
+
+procedure TMainForm.FirmwareUpdate(forced: Boolean);
 // flashes the program cache in the TinyZero controller with a new firmware
 var
  COMListStart, COMListBoot : TStringList;
  Reg : TRegistry;
  BootCOM, BossacOut, FirmwareFile, bossacPath, command : string;
- i : integer;
+ i, YesNo : integer;
  MousePointer : TPoint;
  exited : Boolean = false;
 begin
@@ -673,27 +688,30 @@ begin
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
    ser.config(9600, 8, 'N', SB1, False, False);
    ser.Connect(COMPort);
-   // send now a simple command to get the firmware version back
-   // blink 1 time
-   command:= '/0LM500lM500R' + LineEnding;
-   ser.SendString(command);
-   // receive firmware version
-   FirmwareVersion:= ser.RecvPacket(1000);
+   if not forced then
+   begin
+    // send now a simple command to get the firmware version back
+    // blink 1 time
+    command:= '/0LM500lM500R' + LineEnding;
+    ser.SendString(command);
+    // receive firmware version
+    FirmwareVersion:= ser.RecvPacket(1000);
+   end;
   finally
    if ser.LastError <> 0 then
    begin
     MessageDlgPos(COMPort + ' error: ' + ser.LastErrorDesc,
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     ConnComPortLE.Color:= clRed;
-    MessageDlgPos('The selected COM port is not the one of a pump driver!',
-     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-    IndicatorPanelP.Caption:= 'Wrong device';
+    IndicatorPanelP.Caption:= 'Connection error';
     IndicatorPanelP.Color:= clRed;
     if ser.LastError = 9997 then
     begin
      exited:= true;
      exit; // we cannot close socket or free when the connection timed out
     end;
+    MessageDlgPos('The selected COM port is not one of a pump driver!',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     ser.CloseSocket;
     ser.Free;
     HaveSerial:= False;
@@ -701,7 +719,7 @@ begin
     exit;
    end;
    // in case of successful data exchange but not a pump driver
-   if Pos('eceived command:', FirmwareVersion) = 0 then
+   if (Pos('eceived command:', FirmwareVersion) = 0) and (not forced) then
    // (omit the 'r' because some versions used a capital letter 'R')
    begin
     MessageDlgPos('The selected COM port is not the one of a pump driver!',
@@ -714,6 +732,23 @@ begin
   // if connected to wrong device, the exit only jumps out of try..finally block
   if exited then
    exit;
+  // allow the user to flush the device anyway
+  if forced then
+  begin
+   with CreateMessageDialog // MessageDlg
+       ('Do you really want to force the firmware update anyway on your own risk (guarantee void)?'
+        + LineEnding +
+        'NOTE: Assure that then no other device is connected to a COM port!',
+             mtWarning, [mbYes]+[mbNo]) do
+   try
+    ActiveControl:= FindComponent('NO') as TWinControl;
+    YesNo:= ShowModal;
+   finally
+    Free;
+   end;
+   if YesNo = mrNo then // if No
+    exit;
+  end;
   // open the firmware binary file
   if FirmwareFileDialog.Execute then
   begin
@@ -754,6 +789,16 @@ begin
   end;
   // since the process will need more than 10 seconds, show a note
   // at the position where the initial info message was output
+  if forced then
+  begin
+   FirmwareNote.Text:= 'Firmware reset is in progress';
+   FirmwareNote.Title:= 'Firmware reset';
+  end
+  else
+  begin
+   FirmwareNote.Text:= 'Firmware update is in progress';
+   FirmwareNote.Title:= 'Firmware update';
+  end;
   FirmwareNote.ShowAtPos(MousePointer.X, MousePointer.Y);
   Application.ProcessMessages; // to show the note before going to delay
   Delay(2000); // some time until the connection is in every case established
@@ -1502,6 +1547,7 @@ begin
   // the conenction while the pumps are running
   ConnectionMI.Enabled:= False;
   FirmwareUpdateMI.Enabled:= False;
+  FirmwareResetMI.Enabled:= False;
   // send the command
   ser.SendString(command);
   if ser.LastError <> 0 then
@@ -1569,6 +1615,7 @@ begin
    // the conenction while the pumps are running
    ConnectionMI.Enabled:= False;
    FirmwareUpdateMI.Enabled:= False;
+   FirmwareResetMI.Enabled:= False;
    // send the command
    ser.SendString(command);
    if ser.LastError <> 0 then
@@ -1712,6 +1759,7 @@ begin
  OverallTimer.Enabled:= False;
  ConnectionMI.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
+ FirmwareResetMI.Enabled:= True;
  RunBB.Caption:= 'Run Pumps';
  RunBB.Enabled:= True;
  RunFreeBB.Enabled:= True;
@@ -1820,6 +1868,7 @@ begin
  // re-enable the connection menu in every case
  ConnectionMI.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
+ FirmwareResetMI.Enabled:= True;
  command:= '';
  // address
  command:= '/0';
@@ -2603,8 +2652,8 @@ begin
              + ExtractFileName(OutNameTemp) + ' ?',
              mtWarning, [mbYes]+[mbNo]) do
    try
-    ActiveControl := FindComponent('NO') as TWinControl;
-    YesNo := ShowModal;
+    ActiveControl:= FindComponent('NO') as TWinControl;
+    YesNo:= ShowModal;
    finally
     Free;
    end;
