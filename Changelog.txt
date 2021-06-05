@@ -3,7 +3,7 @@ Changes
 from version 2.63 to 2.64
 
 new:
-- menu entry to force the flushing of the firmware
+- hidden menu entry to force the flashing of the firmware
 
 
 from version 2.62 to 2.63
