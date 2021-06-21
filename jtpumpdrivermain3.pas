@@ -702,6 +702,9 @@ begin
     begin
      MessageDlgPos('Not connected to a supported pump driver.',
       mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+     IndicatorPanelP.Caption:= 'Wrong device';
+     IndicatorPanelP.Color:= clRed;
+     ConnComPortLE.Color:= clRed;
      exit;
     end;
     // JT Pump Driver requires a certain firmware version
