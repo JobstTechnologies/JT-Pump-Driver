@@ -1,5 +1,12 @@
 Changes
 
+from version 2.64 to 2.65
+
+bugfix:
+- under some circumstances a successful connection to a pump driver was indicated
+  despite the connection failed
+
+
 from version 2.63 to 2.64
 
 new:
