@@ -1,9 +1,15 @@
 Changes
 
+from version 3.01 to 3.02
+
+improvement:
+- more stable USB serial connection
+
+
 from version 3.00 to 3.01
 
 new:
-- menu entry to force the flashing of the firmware
+- hidden menu entry to force the flashing of the firmware
 
 
 from version 2.63 to 3.00

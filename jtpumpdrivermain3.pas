@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  LazSerial, Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
+  Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
@@ -31,7 +31,6 @@ type
     ActionTime5GB: TGroupBox;
     ActionTime6GB: TGroupBox;
     ActionTime7GB: TGroupBox;
-    COMConnect: TLazSerial;
     DutyCycle1GB: TGroupBox;
     DutyCycle2GB: TGroupBox;
     DutyCycle3GB: TGroupBox;
@@ -480,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.01';
+  Version : string = '3.02';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -623,8 +622,9 @@ begin
   ser:= TBlockSerial.Create;
   HaveSerial:= True;
   ser.DeadlockTimeout:= 3000; //set timeout to 3 s
-  ser.config(9600, 8, 'N', SB1, False, False);
   ser.Connect(COMPort);
+  // the config must be set after the connection
+  ser.config(9600, 8, 'N', SB1, False, False);
 
   if ser.LastError <> 0 then
   begin
@@ -850,8 +850,8 @@ begin
    ser:= TBlockSerial.Create;
    HaveSerial:= True;
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
-   ser.config(9600, 8, 'N', SB1, False, False);
    ser.Connect(COMPort);
+   ser.config(9600, 8, 'N', SB1, False, False);
    if not forced then
    begin
     // send now a simple command to get the firmware version back
@@ -939,13 +939,13 @@ begin
    HaveSerial:= False;
   end;
 
-  // open new connection with 1200 baud
-  // we must use the TLazSerial package for the connection because when
-  // using the synaser package closing the connection the TinyZero does
-  // not get into boot mode
+  // open new connection with 1200 baud,
+  // this rate is mandatory to set the Arduino into boot mode
   try
-   COMConnect.Device:= COMPort;
-   COMConnect.Open;
+   ser:= TBlockSerial.Create;
+   ser.DeadlockTimeout:= 10000; //set timeout to 10 s
+   ser.Connect(COMPort);
+   ser.config(1200, 8, 'N', SB1, False, False);
   except
    MessageDlgPos('Error: A connection to ' + COMPort + ' cannot be opened.',
     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
@@ -969,7 +969,8 @@ begin
   Application.ProcessMessages; // keep the program alive to Windows
   // Close the connection
   try
-   COMConnect.Close;
+   ser.CloseSocket;
+   ser.Free;
   except
    MessageDlgPos('Error: ' + COMPort + ' cannot be closed.',
     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
@@ -1046,8 +1047,8 @@ begin
    ser:= TBlockSerial.Create;
    HaveSerial:= True;
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
-   ser.config(9600, 8, 'N', SB1, False, False);
    ser.Connect(BootCOM);
+   ser.config(9600, 8, 'N', SB1, False, False);
    // send now a simple command to get the firmware version back
    // blink 1 time
    command:= '/0LM500lM500R' + LineEnding;

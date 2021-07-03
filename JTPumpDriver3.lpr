@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, LazSerialPort, JTPumpDriverMain3, SerialUSBSelection, PumpNameSetting,
+  Forms, JTPumpDriverMain3, SerialUSBSelection, PumpNameSetting,
   AboutForm;
 
 {$R *.res}
