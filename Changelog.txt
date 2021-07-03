@@ -1,5 +1,11 @@
 Changes
 
+from version 2.65 to 2.66
+
+improvement:
+- more stable USB serial connection
+
+
 from version 2.64 to 2.65
 
 bugfix:

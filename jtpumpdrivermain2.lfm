@@ -3196,18 +3196,6 @@ object MainForm: TMainForm
     Left = 280
     Top = 592
   end
-  object COMConnect: TLazSerial
-    Active = False
-    BaudRate = br__1200
-    DataBits = db8bits
-    Parity = pNone
-    FlowControl = fcNone
-    StopBits = sbOne
-    Device = 'COM1'
-    RcvLineCRLF = False
-    Left = 184
-    Top = 592
-  end
   object FirmwareNote: TPopupNotifier
     Color = clInfoBk
     Icon.Data = {
