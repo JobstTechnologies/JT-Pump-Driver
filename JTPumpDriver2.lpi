@@ -124,28 +124,25 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="jtpumpdrivermain2.pas"/>
+        <Filename Value="JTPumpDriverMain2.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="JTPumpDriverMain2"/>
       </Unit1>
       <Unit2>
-        <Filename Value="serialusbselection.pas"/>
+        <Filename Value="SerialUSBSelection.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="SerialUSBSelectionF"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="SerialUSBSelection"/>
       </Unit2>
       <Unit3>
-        <Filename Value="pumpnamesetting.pas"/>
+        <Filename Value="PumpNameSetting.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="PumpNameSettingF"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="PumpNameSetting"/>
       </Unit3>
       <Unit4>
         <Filename Value="aboutform.pas"/>
