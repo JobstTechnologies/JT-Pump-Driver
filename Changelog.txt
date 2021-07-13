@@ -1,5 +1,13 @@
 Changes
 
+from version 2.66 to 2.67
+
+bugfix:
+- fix that endless repeats of several steps could lead to a crash
+  (all versions since 2.60 are affected)
+  (regression introduced by commit 8ea24e4c)
+
+
 from version 2.65 to 2.66
 
 improvement:
