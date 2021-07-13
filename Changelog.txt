@@ -1,5 +1,13 @@
 Changes
 
+from version 3.02 to 3.03
+
+bugfix:
+- fix that endless repeats of multiple steps could lead to a crash
+  (all versions since 2.56 are affected)
+  (regression introduced by commit 8ea24e4c)
+
+
 from version 3.01 to 3.02
 
 improvement:

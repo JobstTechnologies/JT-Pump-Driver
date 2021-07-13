@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.02';
+  Version : string = '3.03';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -2232,9 +2232,9 @@ var
  SenderName : string;
 begin
  SenderName:= (Sender as TComponent).Name;
- // SenderName is in the form "StepxTS" and we need the x
- // so get the 5th character of the name
- Step:= StrToInt(Copy(SenderName, 5, 1));
+ // SenderName is in the form "StepTimerX" and we need the X
+ // so get the 10th character of the name
+ Step:= StrToInt(Copy(SenderName, 10, 1));
  (FindComponent('StepTimer' + IntToStr(Step))
         as TTimer).Enabled:= False;
  // if there is a step+1, start its timer and show its tab
