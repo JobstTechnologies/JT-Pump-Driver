@@ -1,5 +1,12 @@
 Changes
 
+from version 3.03 to 3.04
+
+bugfix:
+- action files created with versions of JT Pump Driver that only support 4 pumps
+  can now be loaded and executed without errors
+
+
 from version 3.02 to 3.03
 
 bugfix:

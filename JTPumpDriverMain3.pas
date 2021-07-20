@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
+  Crt, StrUtils, PopupNotifier, Character, UITypes,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.03';
+  Version : string = '3.04';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -492,6 +492,7 @@ var
   DropfileName : string = ''; // name of dropped file
   StepNum : integer = 7; // number of steps
   PumpNum : integer = 8; // number of pumps
+  PumpNumFile : integer = 4; // number of pumps defined in a loaded action file
 
 implementation
 
@@ -2675,47 +2676,52 @@ end;
 function TMainForm.OpenFile(InputName: string): Boolean;
 // read file content
 var
- OpenFileStream : TFileStream;
- LineReader : TStreamReader;
- ReadLine, ReadComplete, PumpName : string;
- j, k, Size : integer;
+ StringList : TStringList;
+ PumpName : string;
+ j, k : integer;
 begin
  result:= False;
- ReadComplete:= '';
+ PumpNumFile:= 4; // every action file defines at least 4 pumps
  try
-  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  // Old files only had the command therefore read the whole file and search
-  // if there is a line ending. If yes, we must set the pump names explicitly.
-  Size:= OpenFileStream.Size;
-  SetLength(ReadComplete, Size);
-  OpenFileStream.Read(ReadComplete[1], Size);
-  // we must close and subsequently reopen the stream to get ReadLine working
-  OpenFileStream.Free;
-  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  LineReader:= TStreamReader.Create(OpenFileStream);
-  // read the command
-  LineReader.ReadLine(ReadLine);
-  CommandM.Text:= ReadLine;
-  if Pos(LineEnding, ReadComplete) <> 0 then
+  StringList:= TStringList.Create;
+  k:= StringList.Count;
+  // add all file lines to the string list
+  StringList.LoadFromFile(InputName);
+
+  CommandM.Text:= StringList[0];
+
+  // we know now the number of defined pumps in the file
+  if StringList.Count > 5 then
+   PumpNumFile:= StringList.Count - 1;
+
+  if StringList.Count = 1 then // no pump names defined (in old files)
   begin
-   // read the pump names
    for k:= 1 to PumpNum do
    begin
-    LineReader.ReadLine(ReadLine);
+    PumpName:= 'Pump ' + IntToStr(k);
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= ReadLine;
+     as TGroupBox).Caption:= PumpName;
    end;
   end
   else
   begin
-   for k:= 1 to PumpNum do
+   // read the pump names
+   for k:= 1 to PumpNumFile do
    begin
-    LineReader.ReadLine(ReadLine);
-    PumpName:= 'Pump' + IntToStr(k);
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= PumpName;
+     as TGroupBox).Caption:= StringList[k];
+   end;
+   if PumpNumFile < PumpNum then // reset names of undefined pumps
+   begin
+    for k:= PumpNumFile + 1 to PumpNum do
+    begin
+     PumpName:= 'Pump ' + IntToStr(k);
+     (FindComponent('Pump' + IntToStr(k) + 'GB1')
+      as TGroupBox).Caption:= PumpName;
+    end;
    end;
   end;
+
   // set the pump name for all other steps
   for j:= 2 to StepNum do
    for k:= 1 to PumpNum do
@@ -2726,8 +2732,7 @@ begin
    end;
   result:= True;
  finally
-  LineReader.Free;
-  OpenFileStream.Free;
+  StringList.Free;
  end;
 end;
 
@@ -2738,7 +2743,7 @@ var
  SOrder : array of char;
  LastParsed : char = 'X';
  StepCounter, MCounter, ICounter, i, j, k, G1, p,
-   posSfirst, posSlast: integer;
+   posSfirst, posSlast : integer;
  MousePointer : TPoint;
  StepTime, M1, M2, DutyStepTime : Double;
  Have2M : Boolean;
@@ -2747,8 +2752,8 @@ begin
  StepCounter:= 0; MCounter:= 0; ICounter:= 0;
  M1:= 0; M2:= 0; G1:= 0;
  result:= false; Have2M:= false; StepTime:= 0;
- setLength(SOrder, PumpNum);
- for k:= 0 to PumpNum-1 do
+ setLength(SOrder, PumpNumFile);
+ for k:= 0 to PumpNumFile-1 do
   SOrder[k]:= '0';
 
  // first check address
@@ -2824,7 +2829,7 @@ begin
    MCounter:= 0; // there can be several occurrences of 'M' for every step
    ICounter:= 0; // there can be several occurrences of 'I' for every step
    // initialize
-   for k:= 0 to PumpNum-1 do
+   for k:= 0 to PumpNumFile-1 do
     SOrder[k]:= '0';
    LastParsed:= 'S';
    // determine the length
@@ -2836,7 +2841,7 @@ begin
    k:= 1;
    while k < j-i do
    begin
-    for p:= 1 to PumpNum do
+    for p:= 1 to PumpNumFile do
      if command[i+k] = IntToStr(p) then
      begin
      (FindComponent('Pump' + IntToStr(p) + 'VoltageFS' + IntToStr(StepCounter))
@@ -2885,14 +2890,14 @@ begin
    if (LastParsed = 'M') and (StepTime >= 1) then
    begin
     // check if there is a next 'M' with 1s
-    if (command[i+PumpNum+1] = 'M') then
+    if (command[i+PumpNumFile+1] = 'M') then
     begin
      // determine the length
-     j:= i + PumpNum + 1;
+     j:= i + PumpNumFile + 1;
      repeat
       inc(j)
      until IsDigit(command[j]) = false;
-     StepTime:= StrToFloat(Copy(command, i+PumpNum+2, j-i-(PumpNum+2))) / 1000;
+     StepTime:= StrToFloat(Copy(command, i+PumpNumFile+2, j-i-(PumpNumFile+2))) / 1000;
      if (StepTime >= 1) then
      begin
       inc(StepCounter);
@@ -2902,7 +2907,7 @@ begin
     end;
    end;
    if (StepCounter = 0)
-    or ((LastParsed = 'G') and (command[i+PumpNum+2] <> 'R')) then // not if last 'I'
+    or ((LastParsed = 'G') and (command[i+PumpNumFile+2] <> 'R')) then // not if last 'I'
    begin
     inc(StepCounter);
     ICounter:= 0;
@@ -2923,7 +2928,7 @@ begin
     else
      (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
       as TCheckBox).Checked:= false;
-    for p:= 2 to PumpNum do
+    for p:= 2 to PumpNumFile do
     begin
      if (command[i+p] = '0') or (command[i+p] = '1') then
       if command[i+p] = '1' then
@@ -3082,8 +3087,9 @@ begin
    begin
     if (FindComponent('Pump' + IntToStr(k) + 'GB1')
       as TGroupBox).Caption <> '' then // one cannot output an empty name via FileStream.Write
-     SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption[1]
-      , Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
+     SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1')
+      as TGroupBox).Caption[1],
+      Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
     SaveFileStream.Write(LineEnding, 2);
    end;
   finally
