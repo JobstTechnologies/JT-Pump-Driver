@@ -1,5 +1,13 @@
 Changes
 
+from version 2.67 to 2.68
+
+bugfixes:
+- output an error when trying to load a non-existent action file
+- output an error when trying to load an action file that was created with
+  a JT Pump Driver version supporting up to 8 pumps
+
+
 from version 2.66 to 2.67
 
 bugfix:

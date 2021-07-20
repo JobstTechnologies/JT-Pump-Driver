@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  Crt, StrUtils, PopupNotifier, Character, UITypes, Streamex,
+  Crt, StrUtils, PopupNotifier, Character, UITypes,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm;
 
@@ -311,14 +311,14 @@ type
     function ParseCommand(command: string): Boolean;
     function DialogWithPos(const Message: string; DialogType: TMsgDlgType;
               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
-    function OpenFile(InputName: string): Boolean;
+    function OpenFile(InputName: string; MousePointer : TPoint): Boolean;
     function SaveHandling(InName: string; const Calculation: Boolean): string;
 
   end;
 
 var
   MainForm : TMainForm;
-  Version : string = '2.67';
+  Version : string = '2.68';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -2181,20 +2181,27 @@ var
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  if DropFileName <> '' then // a file was dropped into the main window
-  FileSuccess:= OpenFile(DropFileName)
+  FileSuccess:= OpenFile(DropFileName, MousePointer)
  else
  begin
   OpenDialog.InitialDir:= '';
   OpenDialog.FileName:= '';
   if OpenDialog.Execute then
-   FileSuccess:= OpenFile(OpenDialog.FileName)
+  begin
+   if not FileExists(OpenDialog.FileName) then
+   begin
+    MessageDlgPos('The file' + LineEnding + OpenDialog.FileName + LineEnding
+     + 'cannot be opened or does not exist.',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    exit;
+   end;
+   FileSuccess:= OpenFile(OpenDialog.FileName, MousePointer);
+  end
   else
    exit; // user aborted the loading
  end;
- if not FileSuccess then
-  MessageDlgPos('Error while attempting to open file',
-   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
- else
+
+ if  FileSuccess then
  begin
   // an action file is never live mode
   if LiveModeCB.Checked then
@@ -2245,53 +2252,48 @@ begin
  SaveActionMI.Enabled:= False;
  // show step 1
  RepeatPC.ActivePage:= Step1TS;
- end; // else if not FileSuccess
+ end; // else if FileSuccess
 end;
 
-function TMainForm.OpenFile(InputName: string): Boolean;
+function TMainForm.OpenFile(InputName: string; MousePointer : TPoint): Boolean;
 // read file content
 var
- OpenFileStream : TFileStream;
- LineReader : TStreamReader;
- ReadLine, ReadComplete, PumpName : string;
- j, k, Size : integer;
+ StringList : TStringList;
+ j, k : integer;
 begin
  result:= False;
- ReadComplete:= '';
  try
-  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  // Old files only had the command therefore read the whole file and search
-  // if there is a line ending. If yes, we must set the pump names explicitly.
-  Size:= OpenFileStream.Size;
-  SetLength(ReadComplete, Size);
-  OpenFileStream.Read(ReadComplete[1], Size);
-  // we must close and subsequently reopen the stream to get ReadLine working
-  OpenFileStream.Free;
-  OpenFileStream:= TFileStream.Create(InputName, fmOpenRead);
-  LineReader:= TStreamReader.Create(OpenFileStream);
-  // read the command
-  LineReader.ReadLine(ReadLine);
-  CommandM.Text:= ReadLine;
-  if Pos(LineEnding, ReadComplete) <> 0 then
+  StringList:= TStringList.Create;
+  k:= StringList.Count;
+  // add all file lines to the string list
+  StringList.LoadFromFile(InputName);
+
+  // handle the case that a file created with a JT pump driver version
+  // for up to 8 pumps is loaded
+  if StringList.Count > 5 then
   begin
-   // read the pump names
+   MessageDlgPos('The loaded action file defines actions for more than 4 pumps.'
+    + LineEnding + 'This software can only control up to 4 pumps.',
+    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+   exit;
+  end;
+
+  CommandM.Text:= StringList[0];
+
+  if StringList.Count = 1 then // no pump names defined (in old files)
+  begin
    for k:= 1 to PumpNum do
-   begin
-    LineReader.ReadLine(ReadLine);
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= ReadLine;
-   end;
+     as TGroupBox).Caption:= 'Pump ' + IntToStr(k);
   end
   else
   begin
+   // read the pump names
    for k:= 1 to PumpNum do
-   begin
-    LineReader.ReadLine(ReadLine);
-    PumpName:= 'Pump' + IntToStr(k);
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= PumpName;
-   end;
+     as TGroupBox).Caption:= StringList[k];
   end;
+
   // set the pump name for all other steps
   for j:= 2 to StepNum do
    for k:= 1 to PumpNum do
@@ -2302,8 +2304,7 @@ begin
    end;
   result:= True;
  finally
-  LineReader.Free;
-  OpenFileStream.Free;
+  StringList.Free;
  end;
 end;
 
@@ -2606,7 +2607,7 @@ begin
  if OutName <> '' then
  begin
   try
-   if FileExists(OutName) = true then
+   if FileExists(OutName) then
     begin
      SaveFileStream:= TFileStream.Create(OutName, fmOpenReadWrite);
      // the new command might be shorter, therefore delete its content
@@ -2649,7 +2650,7 @@ begin
   // add file extension '.PDAction' if it is missing
   if (ExtractFileExt(OutNameTemp) <> '.PDAction') then
    Insert('.PDAction', OutNameTemp,Length(OutNameTemp) + 1);
-  if FileExists(OutNameTemp) = true then
+  if FileExists(OutNameTemp) then
   begin
    with CreateMessageDialog // MessageDlg with mbNo as default
        ('Do you want to overwrite the existing file' + LineEnding
