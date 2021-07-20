@@ -1272,7 +1272,7 @@ begin
  for j:= 2 to StepNum-1 do
  begin
   if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-      as TCheckBox).Checked = True then
+      as TCheckBox).Checked then
    (FindComponent('Step' + IntToStr(j+1) + 'TS')
     as TTabSheet).TabVisible:= True
   else
@@ -2196,7 +2196,7 @@ begin
   for j:= 2 to StepNum-1 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-       as TCheckBox).Checked = True then
+       as TCheckBox).Checked then
     (FindComponent('Step' + IntToStr(j+1) + 'TS')
      as TTabSheet).TabVisible:= True
   else
@@ -2351,7 +2351,7 @@ begin
   for j:= 2 to StepNum-1 do
   begin
    if (FindComponent('Step' + IntToStr(j) + 'UseCB')
-       as TCheckBox).Checked = True then
+       as TCheckBox).Checked then
     (FindComponent('Step' + IntToStr(j+1) + 'TS')
      as TTabSheet).TabVisible:= True
    else
@@ -3111,7 +3111,7 @@ begin
   SaveDialog.FileName:= ExtractFileName(InName);
  if SaveDialog.FileName <> '' then
   SaveDialog.FileName:= ExtractFileName(SaveDialog.FileName);
- if SaveDialog.Execute = true then
+ if SaveDialog.Execute then
  begin
   OutNameTemp:= SaveDialog.FileName;
   // add file extension '.PDAction' if it is missing
