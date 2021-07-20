@@ -2600,7 +2600,16 @@ begin
   OpenDialog.InitialDir:= '';
   OpenDialog.FileName:= '';
   if OpenDialog.Execute then
-   FileSuccess:= OpenFile(OpenDialog.FileName)
+  begin
+   if not FileExists(OpenDialog.FileName) then
+   begin
+    MessageDlgPos('The file' + LineEnding + OpenDialog.FileName + LineEnding
+     + 'cannot be opened or does not exist.',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    exit;
+   end;
+   FileSuccess:= OpenFile(OpenDialog.FileName);
+  end
   else
    exit; // user aborted the loading
  end;
@@ -2677,7 +2686,6 @@ function TMainForm.OpenFile(InputName: string): Boolean;
 // read file content
 var
  StringList : TStringList;
- PumpName : string;
  j, k : integer;
 begin
  result:= False;
@@ -2697,11 +2705,8 @@ begin
   if StringList.Count = 1 then // no pump names defined (in old files)
   begin
    for k:= 1 to PumpNum do
-   begin
-    PumpName:= 'Pump ' + IntToStr(k);
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= PumpName;
-   end;
+     as TGroupBox).Caption:= 'Pump ' + IntToStr(k);
   end
   else
   begin
@@ -2714,11 +2719,8 @@ begin
    if PumpNumFile < PumpNum then // reset names of undefined pumps
    begin
     for k:= PumpNumFile + 1 to PumpNum do
-    begin
-     PumpName:= 'Pump ' + IntToStr(k);
      (FindComponent('Pump' + IntToStr(k) + 'GB1')
-      as TGroupBox).Caption:= PumpName;
-    end;
+      as TGroupBox).Caption:= 'Pump ' + IntToStr(k);
    end;
   end;
 
@@ -3071,7 +3073,7 @@ begin
  if OutName <> '' then
  begin
   try
-   if FileExists(OutName) = true then
+   if FileExists(OutName) then
     begin
      SaveFileStream:= TFileStream.Create(OutName, fmOpenReadWrite);
      // the new command might be shorter, therefore delete its content
@@ -3115,7 +3117,7 @@ begin
   // add file extension '.PDAction' if it is missing
   if (ExtractFileExt(OutNameTemp) <> '.PDAction') then
    Insert('.PDAction', OutNameTemp, Length(OutNameTemp) + 1);
-  if FileExists(OutNameTemp) = true then
+  if FileExists(OutNameTemp) then
   begin
    with CreateMessageDialog // MessageDlg with mbNo as default
        ('Do you want to overwrite the existing file' + LineEnding
