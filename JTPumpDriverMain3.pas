@@ -1954,6 +1954,9 @@ begin
   ConnectionMI.Enabled:= False;
   FirmwareUpdateMI.Enabled:= False;
   FirmwareResetMI.Enabled:= False;
+  // disable menu to load and save action files
+  LoadActionMI.Enabled:= False;
+  SaveActionMI.Enabled:= False;
   // send the command
   ser.SendString(command);
   if ser.LastError <> 0 then
@@ -2022,6 +2025,9 @@ begin
    ConnectionMI.Enabled:= False;
    FirmwareUpdateMI.Enabled:= False;
    FirmwareResetMI.Enabled:= False;
+   // disable menu to load and save action files
+   LoadActionMI.Enabled:= False;
+   SaveActionMI.Enabled:= False;
    // send the command
    ser.SendString(command);
    if ser.LastError <> 0 then
@@ -2166,6 +2172,8 @@ begin
  ConnectionMI.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
  FirmwareResetMI.Enabled:= True;
+ LoadActionMI.Enabled:= True;
+ SaveActionMI.Enabled:= True;
  RunBB.Caption:= 'Run Pumps';
  RunBB.Enabled:= True;
  RunFreeBB.Enabled:= True;
@@ -2275,6 +2283,9 @@ begin
  ConnectionMI.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
  FirmwareResetMI.Enabled:= True;
+ // re-enable menu to load and save action files
+ LoadActionMI.Enabled:= True;
+ SaveActionMI.Enabled:= True;
  command:= '';
  // address
  command:= '/0';

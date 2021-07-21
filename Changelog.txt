@@ -7,6 +7,7 @@ bugfixes:
   can now be loaded and executed without errors
 - output an error when trying to load a non-existent action file
 - the settings for pump 5 - 8 are now disabled when their step is not used
+- no action file can be loaded or saved while the pumps are running
 
 
 from version 3.02 to 3.03
