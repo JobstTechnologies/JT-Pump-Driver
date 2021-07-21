@@ -26,7 +26,6 @@ object MainForm: TMainForm
       Caption = 'Step 1'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       object Pump1GB1: TGroupBox
         Left = 14
         Height = 200
@@ -358,7 +357,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -423,7 +421,6 @@ object MainForm: TMainForm
       Caption = 'Step 2'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       object Step2UseCB: TCheckBox
         Left = 8
         Height = 19
@@ -705,7 +702,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 188
         Enabled = False
-        ParentFont = False
         TabOrder = 1
         object Unit2RBs: TRadioButton
           Left = 88
@@ -714,7 +710,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -724,7 +719,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime2FSE: TFloatSpinEdit
@@ -735,7 +729,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -747,7 +740,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -760,7 +752,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 84
         Enabled = False
-        ParentFont = False
         TabOrder = 6
         object Label1: TLabel
           Left = 64
@@ -790,7 +781,6 @@ object MainForm: TMainForm
       Caption = 'Step 3'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       TabVisible = False
       object Step3UseCB: TCheckBox
         Left = 8
@@ -1073,7 +1063,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 188
         Enabled = False
-        ParentFont = False
         TabOrder = 1
         object Unit3RBs: TRadioButton
           Left = 88
@@ -1082,7 +1071,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -1092,7 +1080,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime3FSE: TFloatSpinEdit
@@ -1103,7 +1090,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1115,7 +1101,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -1158,7 +1143,6 @@ object MainForm: TMainForm
       Caption = 'Step 4'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       TabVisible = False
       object Step4UseCB: TCheckBox
         Left = 8
@@ -1450,7 +1434,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -1460,7 +1443,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime4FSE: TFloatSpinEdit
@@ -1471,7 +1453,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1483,7 +1464,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -1526,7 +1506,6 @@ object MainForm: TMainForm
       Caption = 'Step 5'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       TabVisible = False
       object Step5UseCB: TCheckBox
         Left = 8
@@ -1822,7 +1801,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -1832,7 +1810,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime5FSE: TFloatSpinEdit
@@ -1843,7 +1820,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1855,7 +1831,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -1898,7 +1873,6 @@ object MainForm: TMainForm
       Caption = 'Step 6'
       ClientHeight = 468
       ClientWidth = 360
-      ParentFont = False
       TabVisible = False
       object Step6UseCB: TCheckBox
         Left = 8
@@ -1965,7 +1939,6 @@ object MainForm: TMainForm
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 2
           Value = 3.3
@@ -2032,7 +2005,6 @@ object MainForm: TMainForm
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 2
           Value = 3.3
@@ -2099,7 +2071,6 @@ object MainForm: TMainForm
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 2
           Value = 3.3
@@ -2166,7 +2137,6 @@ object MainForm: TMainForm
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 2
           Value = 3.3
@@ -2198,7 +2168,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -2208,7 +2177,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime6FSE: TFloatSpinEdit
@@ -2219,7 +2187,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2231,7 +2198,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -2325,7 +2291,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -2335,7 +2300,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime7FSE: TFloatSpinEdit
@@ -2346,7 +2310,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2358,7 +2321,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
