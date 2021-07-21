@@ -46,7 +46,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -56,7 +55,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime1FSE: TFloatSpinEdit
@@ -67,7 +65,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -79,7 +76,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -151,8 +147,6 @@ object MainForm: TMainForm
             Caption = 'Pump 1'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 0
@@ -160,12 +154,11 @@ object MainForm: TMainForm
             object Pump1OnOffCB1: TCheckBox
               Left = 8
               Height = 19
-              Top = 6
+              Top = 8
               Width = 36
               Caption = 'On'
               Checked = True
               OnChange = PumpOnOffCBLoopChange
-              ParentFont = False
               State = cbChecked
               TabOrder = 0
             end
@@ -229,7 +222,6 @@ object MainForm: TMainForm
             Caption = 'Pump 2'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 1
@@ -241,7 +233,6 @@ object MainForm: TMainForm
               Width = 36
               Caption = 'On'
               OnChange = PumpOnOffCBLoopChange
-              ParentFont = False
               TabOrder = 0
             end
             object Pump2DirectionRG1: TRadioGroup
@@ -306,7 +297,6 @@ object MainForm: TMainForm
             Caption = 'Pump 3'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 2
@@ -318,7 +308,6 @@ object MainForm: TMainForm
               Width = 36
               Caption = 'On'
               OnChange = PumpOnOffCBLoopChange
-              ParentFont = False
               TabOrder = 0
             end
             object Pump3DirectionRG1: TRadioGroup
@@ -383,7 +372,6 @@ object MainForm: TMainForm
             Caption = 'Pump 4'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 3
@@ -395,7 +383,6 @@ object MainForm: TMainForm
               Width = 36
               Caption = 'On'
               OnChange = PumpOnOffCBLoopChange
-              ParentFont = False
               TabOrder = 0
             end
             object Pump4DirectionRG1: TRadioGroup
@@ -465,8 +452,6 @@ object MainForm: TMainForm
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 0
@@ -541,7 +526,6 @@ object MainForm: TMainForm
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 1
@@ -618,7 +602,6 @@ object MainForm: TMainForm
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 2
@@ -695,7 +678,6 @@ object MainForm: TMainForm
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
             ParentShowHint = False
             ShowHint = True
             TabOrder = 3
@@ -803,7 +785,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -813,7 +794,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime2FSE: TFloatSpinEdit
@@ -824,7 +804,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -836,7 +815,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -895,7 +873,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB2: TCheckBox
@@ -967,7 +944,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB2: TCheckBox
@@ -1039,7 +1015,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB2: TCheckBox
@@ -1111,7 +1086,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB2: TCheckBox
@@ -1182,16 +1156,12 @@ object MainForm: TMainForm
           object Pump5GB2: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB2: TCheckBox
@@ -1257,15 +1227,12 @@ object MainForm: TMainForm
           object Pump6GB2: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB2: TCheckBox
@@ -1333,15 +1300,12 @@ object MainForm: TMainForm
           object Pump7GB2: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB2: TCheckBox
@@ -1409,15 +1373,12 @@ object MainForm: TMainForm
           object Pump8GB2: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB2: TCheckBox
@@ -1522,7 +1483,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -1532,7 +1492,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime3FSE: TFloatSpinEdit
@@ -1543,7 +1502,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1555,7 +1513,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -1614,7 +1571,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB3: TCheckBox
@@ -1686,7 +1642,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB3: TCheckBox
@@ -1758,7 +1713,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB3: TCheckBox
@@ -1830,7 +1784,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB3: TCheckBox
@@ -1901,16 +1854,12 @@ object MainForm: TMainForm
           object Pump5GB3: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB3: TCheckBox
@@ -1976,15 +1925,12 @@ object MainForm: TMainForm
           object Pump6GB3: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB3: TCheckBox
@@ -2052,15 +1998,12 @@ object MainForm: TMainForm
           object Pump7GB3: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB3: TCheckBox
@@ -2128,15 +2071,12 @@ object MainForm: TMainForm
           object Pump8GB3: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB3: TCheckBox
@@ -2241,7 +2181,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -2251,7 +2190,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime4FSE: TFloatSpinEdit
@@ -2262,7 +2200,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2274,7 +2211,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -2333,7 +2269,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB4: TCheckBox
@@ -2405,7 +2340,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB4: TCheckBox
@@ -2477,7 +2411,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB4: TCheckBox
@@ -2549,7 +2482,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB4: TCheckBox
@@ -2620,16 +2552,12 @@ object MainForm: TMainForm
           object Pump5GB4: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB4: TCheckBox
@@ -2695,15 +2623,12 @@ object MainForm: TMainForm
           object Pump6GB4: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB4: TCheckBox
@@ -2771,15 +2696,12 @@ object MainForm: TMainForm
           object Pump7GB4: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB4: TCheckBox
@@ -2847,15 +2769,12 @@ object MainForm: TMainForm
           object Pump8GB4: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB4: TCheckBox
@@ -2960,7 +2879,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -2970,7 +2888,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime5FSE: TFloatSpinEdit
@@ -2981,7 +2898,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2993,7 +2909,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -3052,7 +2967,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB5: TCheckBox
@@ -3124,7 +3038,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB5: TCheckBox
@@ -3196,7 +3109,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB5: TCheckBox
@@ -3268,7 +3180,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB5: TCheckBox
@@ -3339,16 +3250,12 @@ object MainForm: TMainForm
           object Pump5GB5: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB5: TCheckBox
@@ -3414,15 +3321,12 @@ object MainForm: TMainForm
           object Pump6GB5: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB5: TCheckBox
@@ -3490,15 +3394,12 @@ object MainForm: TMainForm
           object Pump7GB5: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB5: TCheckBox
@@ -3566,15 +3467,12 @@ object MainForm: TMainForm
           object Pump8GB5: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB5: TCheckBox
@@ -3679,7 +3577,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -3689,7 +3586,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime6FSE: TFloatSpinEdit
@@ -3700,7 +3596,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 0.1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -3712,7 +3607,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -3771,7 +3665,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB6: TCheckBox
@@ -3843,7 +3736,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB6: TCheckBox
@@ -3915,7 +3807,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB6: TCheckBox
@@ -3987,7 +3878,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 151
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB6: TCheckBox
@@ -4058,16 +3948,12 @@ object MainForm: TMainForm
           object Pump5GB6: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB6: TCheckBox
@@ -4133,15 +4019,12 @@ object MainForm: TMainForm
           object Pump6GB6: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB6: TCheckBox
@@ -4209,15 +4092,12 @@ object MainForm: TMainForm
           object Pump7GB6: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB6: TCheckBox
@@ -4285,15 +4165,12 @@ object MainForm: TMainForm
           object Pump8GB6: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB6: TCheckBox
@@ -4416,7 +4293,6 @@ object MainForm: TMainForm
           Width = 25
           Caption = 's'
           Checked = True
-          ParentFont = False
           TabOrder = 1
           TabStop = True
         end
@@ -4426,7 +4302,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 41
           Caption = 'min'
-          ParentFont = False
           TabOrder = 2
         end
         object RunTime7FSE: TFloatSpinEdit
@@ -4437,7 +4312,6 @@ object MainForm: TMainForm
           Width = 72
           MaxValue = 9999
           MinValue = 1
-          ParentFont = False
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -4449,7 +4323,6 @@ object MainForm: TMainForm
           Top = 2
           Width = 27
           Caption = 'h'
-          ParentFont = False
           TabOrder = 3
         end
       end
@@ -4487,8 +4360,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentColor = False
-            ParentFont = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump1OnOffCB7: TCheckBox
@@ -4563,7 +4434,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump2OnOffCB7: TCheckBox
@@ -4637,7 +4507,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump3OnOffCB7: TCheckBox
@@ -4711,7 +4580,6 @@ object MainForm: TMainForm
             ClientHeight = 172
             ClientWidth = 152
             Enabled = False
-            ParentFont = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump4OnOffCB7: TCheckBox
@@ -4784,16 +4652,12 @@ object MainForm: TMainForm
           object Pump5GB7: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 5'
             ClientHeight = 172
             ClientWidth = 144
-            ParentColor = False
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 0
             OnDblClick = PumpGBDblClick
             object Pump5OnOffCB7: TCheckBox
@@ -4859,15 +4723,13 @@ object MainForm: TMainForm
           object Pump6GB7: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 8
             Width = 148
             Caption = 'Pump 6'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
+            Enabled = False
             ParentShowHint = False
-            ShowHint = True
             TabOrder = 1
             OnDblClick = PumpGBDblClick
             object Pump6OnOffCB7: TCheckBox
@@ -4935,15 +4797,12 @@ object MainForm: TMainForm
           object Pump7GB7: TGroupBox
             Left = 8
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 7'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 2
             OnDblClick = PumpGBDblClick
             object Pump7OnOffCB7: TCheckBox
@@ -5011,15 +4870,12 @@ object MainForm: TMainForm
           object Pump8GB7: TGroupBox
             Left = 168
             Height = 192
-            Hint = 'Double-click to change the pump name'
             Top = 200
             Width = 148
             Caption = 'Pump 8'
             ClientHeight = 172
             ClientWidth = 144
-            ParentFont = False
-            ParentShowHint = False
-            ShowHint = True
+            Enabled = False
             TabOrder = 3
             OnDblClick = PumpGBDblClick
             object Pump8OnOffCB7: TCheckBox
