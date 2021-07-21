@@ -1113,7 +1113,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 84
         Enabled = False
-        ParentFont = False
         TabOrder = 6
         object Label3: TLabel
           Left = 64
@@ -1425,7 +1424,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 188
         Enabled = False
-        ParentFont = False
         TabOrder = 1
         object Unit4RBs: TRadioButton
           Left = 88
@@ -1476,7 +1474,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 84
         Enabled = False
-        ParentFont = False
         TabOrder = 6
         object Label4: TLabel
           Left = 64
@@ -1792,7 +1789,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 188
         Enabled = False
-        ParentFont = False
         TabOrder = 1
         object Unit5RBs: TRadioButton
           Left = 88
@@ -1843,7 +1839,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 84
         Enabled = False
-        ParentFont = False
         TabOrder = 6
         object Label5: TLabel
           Left = 64
@@ -2159,7 +2154,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 188
         Enabled = False
-        ParentFont = False
         TabOrder = 1
         object Unit6RBs: TRadioButton
           Left = 88
@@ -2210,7 +2204,6 @@ object MainForm: TMainForm
         ClientHeight = 29
         ClientWidth = 84
         Enabled = False
-        ParentFont = False
         TabOrder = 6
         object Label6: TLabel
           Left = 64
@@ -2249,7 +2242,6 @@ object MainForm: TMainForm
         Caption = 'Duty Cycle'
         ClientHeight = 29
         ClientWidth = 84
-        ParentFont = False
         TabOrder = 0
         object Label12: TLabel
           Left = 64
@@ -2282,7 +2274,6 @@ object MainForm: TMainForm
         Caption = 'Action Time'
         ClientHeight = 29
         ClientWidth = 188
-        ParentFont = False
         TabOrder = 1
         object Unit7RBs: TRadioButton
           Left = 88
@@ -2617,7 +2608,6 @@ object MainForm: TMainForm
       EditLabel.Width = 84
       EditLabel.Caption = 'Current Repeat'
       EditLabel.ParentColor = False
-      EditLabel.ParentFont = False
       ReadOnly = True
       TabOrder = 2
       Visible = False
@@ -2645,7 +2635,6 @@ object MainForm: TMainForm
       EditLabel.Width = 124
       EditLabel.Caption = 'Connected Port'
       EditLabel.ParentColor = False
-      EditLabel.ParentFont = False
       ParentShowHint = False
       ReadOnly = True
       TabOrder = 1
@@ -2662,7 +2651,6 @@ object MainForm: TMainForm
       EditLabel.Width = 124
       EditLabel.Caption = 'Total Time'
       EditLabel.ParentColor = False
-      EditLabel.ParentFont = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2678,7 +2666,6 @@ object MainForm: TMainForm
       EditLabel.Width = 124
       EditLabel.Caption = 'Start Time'
       EditLabel.ParentColor = False
-      EditLabel.ParentFont = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2694,7 +2681,6 @@ object MainForm: TMainForm
       EditLabel.Width = 124
       EditLabel.Caption = 'Finish Time'
       EditLabel.ParentColor = False
-      EditLabel.ParentFont = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2853,7 +2839,6 @@ object MainForm: TMainForm
     Width = 57
     Caption = 'Command'
     ParentColor = False
-    ParentFont = False
   end
   object LiveModeCB: TCheckBox
     Left = 405
