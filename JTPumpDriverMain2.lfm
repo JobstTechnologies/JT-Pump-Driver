@@ -77,7 +77,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -153,7 +152,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -230,7 +228,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -307,7 +304,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -502,7 +498,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -574,7 +569,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -719,7 +713,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -899,7 +892,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -971,7 +963,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1043,7 +1034,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1116,7 +1106,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1296,7 +1285,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1368,7 +1356,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1440,7 +1427,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1513,7 +1499,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1693,7 +1678,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1765,7 +1749,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1837,7 +1820,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -1910,7 +1892,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2090,7 +2071,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2162,7 +2142,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2234,7 +2213,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2307,7 +2285,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2575,7 +2552,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2649,7 +2625,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2723,7 +2698,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
@@ -2797,7 +2771,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentFont = False
           ParentShowHint = False
           TabOrder = 1
         end
