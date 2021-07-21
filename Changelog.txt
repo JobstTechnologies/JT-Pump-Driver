@@ -6,6 +6,7 @@ bugfixes:
 - output an error when trying to load a non-existent action file
 - output an error when trying to load an action file that was created with
   a JT Pump Driver version supporting up to 8 pumps
+- no action file can be loaded or saved while the pumps are running
 
 
 from version 2.66 to 2.67
