@@ -54,6 +54,7 @@ object MainForm: TMainForm
         object Pump1DirectionRG1: TRadioGroup
           Left = 8
           Height = 72
+          Hint = 'Set pump direction'
           Top = 40
           Width = 128
           AutoFill = True
@@ -72,7 +73,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentShowHint = False
           TabOrder = 1
         end
         object Pump1VoltageFS1: TFloatSpinEdit
@@ -85,19 +85,17 @@ object MainForm: TMainForm
           MaxValue = 3.3
           MinValue = 0.1
           OnChange = PumpVoltageFSChange
-          ParentShowHint = False
-          ShowHint = True
           TabOrder = 2
           Value = 3.3
         end
         object Label7: TLabel
           Left = 8
           Height = 15
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
           Top = 123
           Width = 39
           Caption = 'Voltage'
           ParentColor = False
-          ParentShowHint = False
         end
       end
       object Pump4GB1: TGroupBox
@@ -126,6 +124,7 @@ object MainForm: TMainForm
         object Pump4DirectionRG1: TRadioGroup
           Left = 8
           Height = 72
+          Hint = 'Set pump direction'
           Top = 40
           Width = 128
           AutoFill = True
@@ -145,7 +144,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentShowHint = False
           TabOrder = 1
         end
         object Pump4VoltageFS1: TFloatSpinEdit
@@ -159,19 +157,17 @@ object MainForm: TMainForm
           MaxValue = 3.3
           MinValue = 0.1
           OnChange = PumpVoltageFSChange
-          ParentShowHint = False
-          ShowHint = True
           TabOrder = 2
           Value = 3.3
         end
         object Label11: TLabel
           Left = 8
           Height = 15
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
           Top = 123
           Width = 39
           Caption = 'Voltage'
           ParentColor = False
-          ParentShowHint = False
         end
       end
       object Pump2GB1: TGroupBox
@@ -200,6 +196,7 @@ object MainForm: TMainForm
         object Pump2DirectionRG1: TRadioGroup
           Left = 8
           Height = 72
+          Hint = 'Set pump direction'
           Top = 40
           Width = 128
           AutoFill = True
@@ -219,7 +216,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentShowHint = False
           TabOrder = 1
         end
         object Pump2VoltageFS1: TFloatSpinEdit
@@ -233,19 +229,17 @@ object MainForm: TMainForm
           MaxValue = 3.3
           MinValue = 0.1
           OnChange = PumpVoltageFSChange
-          ParentShowHint = False
-          ShowHint = True
           TabOrder = 2
           Value = 3.3
         end
         object Label10: TLabel
           Left = 8
           Height = 15
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
           Top = 123
           Width = 39
           Caption = 'Voltage'
           ParentColor = False
-          ParentShowHint = False
         end
       end
       object Pump3GB1: TGroupBox
@@ -274,6 +268,7 @@ object MainForm: TMainForm
         object Pump3DirectionRG1: TRadioGroup
           Left = 8
           Height = 72
+          Hint = 'Set pump direction'
           Top = 40
           Width = 128
           AutoFill = True
@@ -293,7 +288,6 @@ object MainForm: TMainForm
             'Clockwise'
             'Counterclockwise'
           )
-          ParentShowHint = False
           TabOrder = 1
         end
         object Pump3VoltageFS1: TFloatSpinEdit
@@ -307,19 +301,17 @@ object MainForm: TMainForm
           MaxValue = 3.3
           MinValue = 0.1
           OnChange = PumpVoltageFSChange
-          ParentShowHint = False
-          ShowHint = True
           TabOrder = 2
           Value = 3.3
         end
         object Label9: TLabel
           Left = 8
           Height = 15
+          Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
           Top = 123
           Width = 39
           Caption = 'Voltage'
           ParentColor = False
-          ParentShowHint = False
         end
       end
       object ActionTime1GB: TGroupBox
