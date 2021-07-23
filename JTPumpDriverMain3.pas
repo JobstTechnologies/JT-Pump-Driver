@@ -706,6 +706,9 @@ begin
      IndicatorPanelP.Caption:= 'Wrong device';
      IndicatorPanelP.Color:= clRed;
      ConnComPortLE.Color:= clRed;
+     ser.CloseSocket;
+     ser.Free;
+     HaveSerial:= False;
      exit;
     end;
     // JT Pump Driver requires a certain firmware version
