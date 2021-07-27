@@ -1080,7 +1080,7 @@ begin
 end;
 
 procedure TMainForm.GenerateCommandBBClick(Sender: TObject);
-// call function to collect data an generate command
+// call function to collect data and generate command
 var
  command : string;
  i, j : integer;
@@ -1634,7 +1634,8 @@ begin
    if ser.LastError <> 0 then
    begin
     with Application do
-     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
+     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error',
+                MB_ICONERROR + MB_OK);
     ConnComPortLE.Color:= clRed;
     ConnComPortLE.Text:= 'Try to reconnect';
     IndicatorPanelP.Caption:= 'Connection failiure';
@@ -1711,6 +1712,10 @@ begin
   // show first tab and start its timer
   RepeatPC.ActivePage:= Step1TS;
   StepTimer1.Enabled:= true;
+  // if there are more steps, highlight the first one as being active
+  // by adding an asterisk to the step name
+  if Step2UseCB.Checked then
+   Step1TS.Caption:= 'Step 1 *';
   // do not show unused steps
   for j:= 2 to StepNum do
   begin
@@ -1782,10 +1787,14 @@ begin
  IndicatorPanelP.Caption:= 'Run finished';
  IndicatorPanelP.Color:= clInfoBk;
  RepeatOutputLE.Visible:= False;
- // stop all timers
+ // stop all timers and reset captions
  for j:= 1 to StepNum do
+ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+   as TTabSheet).Caption:= 'Step ' + IntToStr(j);
+ end;
  // enable all setting possibilities only if no file is loaded
  if (LoadedActionFileM.Text = 'None')
   or (LoadedActionFileM.Text = 'Free Pumps') then
@@ -1827,12 +1836,16 @@ end;
 procedure TMainForm.StepTimer1Finished(Sender: TObject);
 begin
  StepTimer1.Enabled:= False;
+ // remove possible asterisk from step caption
+ Step1TS.Caption:= 'Step 1';
  // if there is a step 2, start its timer and show its tab
  if Step2UseCB.checked then
  begin
-  // the interval is calculated in TMainForm.GenerateCommand
+  // the interval is calculated in GenerateCommand
   StepTimer2.Enabled:= True;
   RepeatPC.ActivePage:= Step2TS;
+  // highlight it as active step by adding an asterisk to the step name
+  Step2TS.Caption:= 'Step 2 *';
  end;
 end;
 
@@ -1846,22 +1859,30 @@ begin
  // so get the 10th character of the name
  Step:= StrToInt(Copy(SenderName, 10, 1));
  (FindComponent('StepTimer' + IntToStr(Step))
-        as TTimer).Enabled:= False;
+  as TTimer).Enabled:= False;
+ // remove asterisk from current step caption
+ (FindComponent('Step' + IntToStr(Step) + 'TS')
+  as TTabSheet).Caption:= 'Step ' + IntToStr(Step);
  // if there is a step+1, start its timer and show its tab
  if (FindComponent('Step' + IntToStr(Step+1) + 'UseCB')
-        as TCheckBox).checked then
+     as TCheckBox).checked then
  begin
-  // the interval is calculated in TMainForm.GenerateCommand
+  // the interval is calculated in GenerateCommand
   (FindComponent('StepTimer' + IntToStr(Step+1))
-        as TTimer).Enabled:= True;
-  RepeatPC.ActivePage:= (FindComponent('StepTimer' + IntToStr(Step+1) + 'TS')
-        as TTabSheet);
+  as TTimer).Enabled:= True;
+  RepeatPC.ActivePage:= (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+                         as TTabSheet);
+  // highlight the new active step by adding an asterisk to the step name
+  (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+   as TTabSheet).Caption:= 'Step ' + IntToStr(Step+1) + ' *';
  end
  else // there might be a repeat
  begin
   // switch to step 1
   StepTimer1.Enabled:= True;
   RepeatPC.ActivePage:= Step1TS;
+  // highlight it as active by adding an asterisk to the step name
+  Step1TS.Caption:= 'Step 1 *';
  end;
 end;
 
@@ -1920,9 +1941,6 @@ begin
    HaveSerial:= False;
    exit;
   end;
-  //received:= ser.RecvString(1000);
-  //with Application do
-  // MessageBox(PChar(received), 'Information', MB_ICONINFORMATION+MB_OK);
  end;
  // output stop time only when there was actually a run
  if IndicatorPanelP.Caption = 'Pumps are running' then
@@ -1940,10 +1958,14 @@ begin
  RunBB.Enabled:= False;
  RunFreeBB.Enabled:= False;
  GenerateCommandBB.Enabled:= True;
- // stop all timers
+ // stop all timers and reset captions
  for j:= 1 to StepNum do
+ begin
   (FindComponent('StepTimer' + IntToStr(j))
    as TTimer).Enabled:= False;
+  (FindComponent('Step' + IntToStr(j) + 'TS')
+   as TTabSheet).Caption:= 'Step ' + IntToStr(j);
+ end;
  // enable all setting possibilities only if no file is loaded
  if (LoadedActionFileM.Text = 'None')
   or (LoadedActionFileM.Text = 'Free Pumps') then

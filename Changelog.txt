@@ -1,5 +1,14 @@
 Changes
 
+from version 2.68 to 2.69
+
+improvement:
+- when more than one step is used, the currently executed step is
+  highlighted by an asterisk in its name
+
+bugfix:
+- when running multiple steps, show the currently executed step correctly
+
 from version 2.67 to 2.68
 
 bugfixes:
