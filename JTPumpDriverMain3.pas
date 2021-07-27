@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.04';
+  Version : string = '3.05';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -1242,7 +1242,7 @@ begin
 end;
 
 procedure TMainForm.GenerateCommandBBClick(Sender: TObject);
-// call function to collect data an generate command
+// call function to collect data and generate command
 var
  command : string;
  i, j : integer;
@@ -1266,10 +1266,11 @@ begin
    as TTabSheet).Enabled:= True;
   (FindComponent('S' + IntToStr(j) + 'P58')
    as TTabSheet).Enabled:= True;
-  // enable tooltips for pump name
-  for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= True;
+  if j = 1 then
+   // enable tooltips for pump name
+   for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= True;
  end;
  // view tab after last used step
  for j:= 2 to StepNum-1 do
@@ -2070,14 +2071,26 @@ begin
   // not the pump settings when in live mode
   if not LiveModeCB.Checked then
   begin
+   // the user must be able to see if the pumps 5 - 8 are set
+   // therefore we cannot just disable the StepXTS component but its
+   // child components except of SXPC
    for j:= 1 to StepNum do
    begin
-    (FindComponent('Step' + IntToStr(j) + 'TS')
+    (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Enabled:= False;
+    (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+     as TGroupBox).Enabled:= False;
+    (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+     as TGroupBox).Enabled:= False;
+    (FindComponent('S' + IntToStr(j) + 'P14')
      as TTabSheet).Enabled:= False;
-    // disable tooltips for pump name
-    for i:= 1 to PumpNum do
-     (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-      as TGroupBox).ShowHint:= False;
+    (FindComponent('S' + IntToStr(j) + 'P58')
+     as TTabSheet).Enabled:= False;
+    if j = 1 then
+     // disable tooltips for pump name
+     for i:= 1 to PumpNum do
+      (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+       as TGroupBox).ShowHint:= False;
    end;
   end;
   RepeatOutputLE.Visible:= False;
@@ -2196,12 +2209,21 @@ begin
   RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= True;
+   (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= True;
-   // enable tooltips for pump name
-   for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= True;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= True;
+   if j = 1 then
+    // enable tooltips for pump name
+    for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= True;
   end;
   // view tab after last used step
   for j:= 2 to StepNum-1 do
@@ -2322,9 +2344,6 @@ begin
    HaveSerial:= False;
    exit;
   end;
-  //received:= ser.RecvString(1000);
-  //with Application do
-  // MessageBox(PChar(received), 'Information', MB_ICONINFORMATION+MB_OK);
  end;
  // output stop time only when there was actually a run
  if IndicatorPanelP.Caption = 'Pumps are running' then
@@ -2354,12 +2373,21 @@ begin
   RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= True;
+   (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= True;
-   // enable tooltips for pump name
-   for i:= 1 to PumpNum do
-    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-     as TGroupBox).ShowHint:= True;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= True;
+   if j = 1 then
+    // enable tooltips for pump name
+    for i:= 1 to PumpNum do
+     (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+      as TGroupBox).ShowHint:= True;
   end;
   // view tab after last used step
   for j:= 2 to StepNum-1 do
@@ -2482,14 +2510,19 @@ begin
  // SenderName is in the form "StepxTS" and we need the x
  // so get the 5th character of the name
  Step:= StrToInt(Copy(SenderName, 5, 1));
- if (FindComponent('Step' + IntToStr(Step) + 'UseCB') as TCheckBox).Checked then
+ if (FindComponent('Step' + IntToStr(Step) + 'UseCB')
+     as TCheckBox).Checked then
  begin
   if Step <> StepNum then
-   (FindComponent('Step' + IntToStr(Step+1) + 'TS') as TTabSheet).TabVisible:= True;
-  (FindComponent('ActionTime' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= True;
-  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= True;
+   (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+    as TTabSheet).TabVisible:= True;
+  (FindComponent('ActionTime' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= True;
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step)) as TGroupBox).Enabled:= True;
+   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step))
+    as TGroupBox).Enabled:= True;
   // in case it was disabled on unchecking step 2
   if (Step = 2) and (not ActionTime1GB.Enabled) then
    ActionTime1GB.Enabled:= True;
@@ -2497,11 +2530,15 @@ begin
  else
  begin
   if Step <> StepNum then
-   (FindComponent('Step' + IntToStr(Step+1) + 'TS') as TTabSheet).TabVisible:= False;
-  (FindComponent('ActionTime' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= False;
-  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= False;
+   (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+    as TTabSheet).TabVisible:= False;
+  (FindComponent('ActionTime' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= False;
+  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= False;
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step)) as TGroupBox).Enabled:= False;
+   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step))
+    as TGroupBox).Enabled:= False;
   // if there is only one step and endless repeat disable time settings
   if (Step = 2) and (RunEndlessCB.Checked) then
    ActionTime1GB.Enabled:= False;
@@ -2664,8 +2701,8 @@ begin
   for j:= 1 to StepNum do
   begin
    // the user must be able to see if the pumps 5 - 8 are set
-   // therefore we cannot just disable the StepXTS component but it
-   // child component except of SXPC
+   // therefore we cannot just disable the StepXTS component but its
+   // child components except of SXPC
    (FindComponent('Step' + IntToStr(j) + 'UseCB')
     as TCheckBox).Enabled:= False;
    (FindComponent('ActionTime' + IntToStr(j) + 'GB')
@@ -2676,9 +2713,10 @@ begin
     as TTabSheet).Enabled:= False;
    (FindComponent('S' + IntToStr(j) + 'P58')
     as TTabSheet).Enabled:= False;
-   for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= False;
+   if j = 1 then
+    for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= False;
   end;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps

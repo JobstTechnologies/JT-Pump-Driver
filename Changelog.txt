@@ -1,5 +1,15 @@
 Changes
 
+from version 3.04 to 3.05
+
+bugfix:
+- re-enable all settings after an action file was loaded and run
+  
+improvements:
+- it is now possible to view the state of pumps 5 - 8 while the pumps
+  are running 
+
+
 from version 3.03 to 3.04
 
 bugfixes:
