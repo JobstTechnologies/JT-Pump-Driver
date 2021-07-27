@@ -2,12 +2,15 @@ Changes
 
 from version 3.04 to 3.05
 
-bugfix:
+bugfixes:
 - re-enable all settings after an action file was loaded and run
-  
+- when running multiple steps, show the currently executed step correctly
+
 improvements:
+- when more than one step is used, the currently executed step is
+  highlighted by an asterisk in its name
 - it is now possible to view the state of pumps 5 - 8 while the pumps
-  are running 
+  are running
 
 
 from version 3.03 to 3.04
