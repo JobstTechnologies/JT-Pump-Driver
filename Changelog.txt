@@ -1,5 +1,11 @@
 Changes
 
+from version 2.69 to 2.610
+
+bugfix:
+- when entering Live mode assure that the other action steps are ignored
+
+
 from version 2.68 to 2.69
 
 improvement:
