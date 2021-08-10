@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.05';
+  Version : string = '3.06';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -1191,6 +1191,8 @@ begin
   for j:= 2 to StepNum do
    (FindComponent('Step' + IntToStr(j) + 'TS')
     as TTabSheet).TabVisible:= false;
+  // assure that step 2 is not used
+  Step2UseCB.Checked:= false;
   RunSettingsGB.Enabled:= false;
   RunFreeBB.Enabled:= false;
   Step1TS.Caption:= 'Live';
