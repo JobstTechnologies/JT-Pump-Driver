@@ -2314,6 +2314,8 @@ end;
 
 procedure TMainForm.StepTimerLastFinished(Sender: TObject);
 begin
+ // remove asterisk from step caption
+ Step7TS.Caption:= 'Step 7';
  (FindComponent('StepTimer' + IntToStr(StepNum))
         as TTimer).Enabled:= False;
  // switch to step 1
