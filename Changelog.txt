@@ -2,8 +2,9 @@ Changes
 
 from version 3.05 to 3.06
 
-bugfix:
+bugfixes:
 - when entering Live mode assure that the other action steps are ignored
+- don't allow to enter more than 100% duty cycle
 
 
 from version 3.04 to 3.05
