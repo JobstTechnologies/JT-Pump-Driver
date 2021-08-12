@@ -2135,44 +2135,56 @@ begin
  // reset increment to 1. If this is not sufficent,
  // it will be reset later in this procedure
  (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Increment:= 1;
+   as TFloatSpinEdit).Increment:= 1;
  // if the duty cycle is not 100% we must require 1.1 V for the pumps
- // otherwise the voltage would be to low to start a short movement
- if ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Value < 100) then
+ // otherwise the voltage would be too low to start a short movement
+ if (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+       as TFloatSpinEdit).Value < 100 then
   for j:= 1 to PumpNum do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
-      as TFloatSpinEdit).MinValue:= 1.1
+     as TFloatSpinEdit).MinValue:= 1.1
  else
+ begin
   for j:= 1 to PumpNum do
    (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
-      as TFloatSpinEdit).MinValue:= 0.1;
+     as TFloatSpinEdit).MinValue:= 0.1;
+  // also allow 50 ms OnTime because this might have been changed previously
+  (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+   as TFloatSpinEdit).MinValue:= 0.05;
+ end;
  // calculate necessary time increment
  if ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Value / 100) >= 0.05 then
+       as TFloatSpinEdit).Value / 100) >= 0.05 then
   DutyTime:= 1 // base time is 1s
  else // calculate a base time so that the OnTime is 50 ms
   DutyTime:= 0.05 / ((FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
         as TFloatSpinEdit).Value / 100);
  // if the unit is s, we can also set a new increment
+ // and we must adjust the MinValue if duty is < 100 %
  if (FindComponent('Unit' + IntToStr(Step) + 'RBs')
-        as TRadioButton).Checked then
+      as TRadioButton).Checked then
+ begin
   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Increment:= round(DutyTime);
+    as TFloatSpinEdit).Increment:= round(DutyTime);
+  if (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+       as TFloatSpinEdit).Value < 100 then
+   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
+     as TFloatSpinEdit).MinValue:= round(DutyTime);
+ end;
  // the set time might be smaller than necessary
  StepTime:= 1; // 1s
  if (FindComponent('Unit' + IntToStr(Step) + 'RBmin')
-        as TRadioButton).Checked then
-    StepTime:= 60
+      as TRadioButton).Checked then
+  StepTime:= 60
  else if (FindComponent('Unit' + IntToStr(Step) + 'RBh')
-        as TRadioButton).Checked then
-    StepTime:= 3600;
+           as TRadioButton).Checked then
+  StepTime:= 3600;
  StepTime:= (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Value * StepTime; // time in s
+              as TFloatSpinEdit).Value * StepTime; // time in s
  if StepTime < DutyTime then
   // the maximal DutyTime is 50 s, thus the unit is already s
   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Value:= DutyTime;
+    as TFloatSpinEdit).Value:= DutyTime;
 
  // if in live mode send trigger command generation and sending
  if LiveModeCB.Checked and OverallTimer.Enabled then

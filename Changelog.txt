@@ -2,6 +2,9 @@ Changes
 
 from version 2.69 to 2.610
 
+improvement:
+- it is now possible to set a time down to 0.05 s per action step
+
 bugfixes:
 - when entering Live mode assure that the other action steps are ignored
 - don't allow to enter more than 100% duty cycle

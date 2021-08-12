@@ -344,7 +344,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -712,7 +712,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1069,7 +1069,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 0.1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1426,7 +1426,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 0.1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -1787,7 +1787,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 0.1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2148,7 +2148,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 0.1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -2268,7 +2268,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 72
           MaxValue = 9999
-          MinValue = 1
+          MinValue = 0.05
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
