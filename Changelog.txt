@@ -2,8 +2,9 @@ Changes
 
 from version 2.69 to 2.610
 
-bugfix:
+bugfixes:
 - when entering Live mode assure that the other action steps are ignored
+- don't allow to enter more than 100% duty cycle
 
 
 from version 2.68 to 2.69
