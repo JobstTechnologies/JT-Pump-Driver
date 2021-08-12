@@ -2588,9 +2588,9 @@ begin
  // reset increment to 1. If this is not sufficent,
  // it will be reset later in this procedure
  (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-        as TFloatSpinEdit).Increment:= 1;
+   as TFloatSpinEdit).Increment:= 1;
  // if the duty cycle is not 100% we must require 1.1 V for the pumps
- // otherwise the voltage would be to low to start a short movement
+ // otherwise the voltage would be too low to start a short movement
  if (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
        as TFloatSpinEdit).Value < 100 then
   for j:= 1 to PumpNum do
