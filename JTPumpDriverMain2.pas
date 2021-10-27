@@ -318,7 +318,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.610';
+  Version : string = '2.611';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -576,6 +576,8 @@ begin
     RunBB.Enabled:= true;
     StopBB.Enabled:= true;
     RunFreeBB.Enabled:= true;
+    // disable tooltip for Run button, because only necessary if unconnected
+    RunBB.ShowHint:= false;
    end;
   end; //end inner finally
  end; //end outer finally

@@ -1,5 +1,12 @@
 Changes
 
+from version 2.610 to 2.611
+
+bugfixes:
+- restore missing tooltip for some buttons
+- fix compilation with Lazarus 2.0.x
+
+
 from version 2.69 to 2.610
 
 improvement:
