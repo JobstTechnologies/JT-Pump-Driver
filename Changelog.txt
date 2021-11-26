@@ -1,5 +1,11 @@
 Changes
 
+from version 3.06 to 3.07
+
+bugfix:
+- fix a minor UI issue
+
+
 from version 3.05 to 3.06
 
 improvement:
