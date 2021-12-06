@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  Crt, StrUtils, PopupNotifier, Character, UITypes,
+  Crt, StrUtils, PopupNotifier, Character, System.UITypes,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.06';
+  Version : string = '3.07';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -2687,6 +2687,8 @@ var
  i, j : integer;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
+ DummyString:= '';
+
  if DropFileName <> '' then // a file was dropped into the main window
   FileSuccess:= OpenFile(DropFileName)
  else
@@ -2724,13 +2726,16 @@ begin
   else
    InName:= OpenDialog.FileName;
   SaveDialog.FileName:= ''; // will be re-set in TMainForm.SaveHandling
+  // show the full path as tooltip
+  if DropfileName <> '' then
+   LoadedActionFileM.Hint:= DropfileName
+  else
+   LoadedActionFileM.Hint:= DummyString;
   // display file name without suffix
   DummyString:= ExtractFileName(InName);
   SetLength(DummyString, Length(DummyString) - 9);
   LoadedActionFileM.Text:= DummyString;
   LoadedActionFileM.Color:= clActiveCaption;
-  // sometimes the file name is too long to fit into the widget, thus show it as tooltip
-  LoadedActionFileM.Hint:= DummyString;
   command:= CommandM.Text;
   // parse the command
   ParseSuccess:= ParseCommand(command);

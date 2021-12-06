@@ -2,8 +2,14 @@ Changes
 
 from version 3.06 to 3.07
 
+improvement:
+- display full path of loaded action file as tooltip
+
 bugfix:
 - fix a minor UI issue
+
+compilation:
+- since this release at least Lazarus 2.2 RC2 is necessary to compile
 
 
 from version 3.05 to 3.06
