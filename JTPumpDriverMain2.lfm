@@ -13,7 +13,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.2.0.3'
   object RepeatPC: TPageControl
     Left = 16
     Height = 496
@@ -95,7 +95,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB1: TGroupBox
@@ -167,7 +166,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB1: TGroupBox
@@ -239,7 +237,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump3GB1: TGroupBox
@@ -311,7 +308,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime1GB: TGroupBox
@@ -378,7 +374,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle1FSE: TFloatSpinEdit
           Left = 8
@@ -487,7 +482,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB2: TGroupBox
@@ -552,7 +546,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB2: TGroupBox
@@ -617,7 +610,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump1GB2: TGroupBox
@@ -682,7 +674,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime2GB: TGroupBox
@@ -751,7 +742,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle2FSE: TFloatSpinEdit
           Left = 8
@@ -848,7 +838,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB3: TGroupBox
@@ -913,7 +902,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB3: TGroupBox
@@ -978,7 +966,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump1GB3: TGroupBox
@@ -1043,7 +1030,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime3GB: TGroupBox
@@ -1112,7 +1098,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle3FSE: TFloatSpinEdit
           Left = 8
@@ -1209,7 +1194,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB4: TGroupBox
@@ -1274,7 +1258,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB4: TGroupBox
@@ -1339,7 +1322,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump1GB4: TGroupBox
@@ -1404,7 +1386,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime4GB: TGroupBox
@@ -1473,7 +1454,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle4FSE: TFloatSpinEdit
           Left = 8
@@ -1571,7 +1551,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB5: TGroupBox
@@ -1637,7 +1616,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB5: TGroupBox
@@ -1703,7 +1681,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump1GB5: TGroupBox
@@ -1769,7 +1746,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime5GB: TGroupBox
@@ -1838,7 +1814,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle5FSE: TFloatSpinEdit
           Left = 8
@@ -1936,7 +1911,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB6: TGroupBox
@@ -2002,7 +1976,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB6: TGroupBox
@@ -2068,7 +2041,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump1GB6: TGroupBox
@@ -2134,7 +2106,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object ActionTime6GB: TGroupBox
@@ -2203,7 +2174,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle6FSE: TFloatSpinEdit
           Left = 8
@@ -2241,7 +2211,6 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
-          ParentColor = False
         end
         object DutyCycle7FSE: TFloatSpinEdit
           Left = 8
@@ -2381,7 +2350,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump2GB7: TGroupBox
@@ -2446,7 +2414,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump4GB7: TGroupBox
@@ -2511,7 +2478,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
       object Pump3GB7: TGroupBox
@@ -2576,7 +2542,6 @@ object MainForm: TMainForm
           Top = 123
           Width = 39
           Caption = 'Voltage'
-          ParentColor = False
         end
       end
     end
@@ -2599,7 +2564,6 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 84
       EditLabel.Caption = 'Current Repeat'
-      EditLabel.ParentColor = False
       ReadOnly = True
       TabOrder = 2
       Visible = False
@@ -2626,7 +2590,6 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Connected Port'
-      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       TabOrder = 1
@@ -2642,7 +2605,6 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Total Time'
-      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2657,7 +2619,6 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Start Time'
-      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2672,7 +2633,6 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Finish Time'
-      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -2699,7 +2659,6 @@ object MainForm: TMainForm
       Top = 104
       Width = 98
       Caption = 'Loaded Action File'
-      ParentColor = False
     end
   end
   object RunSettingsGB: TGroupBox
@@ -2726,7 +2685,6 @@ object MainForm: TMainForm
       Top = 12
       Width = 71
       Caption = 'Repeat times:'
-      ParentColor = False
     end
     object RepeatSE: TSpinEdit
       Left = 87
@@ -2836,7 +2794,6 @@ object MainForm: TMainForm
     Top = 584
     Width = 57
     Caption = 'Command'
-    ParentColor = False
   end
   object LiveModeCB: TCheckBox
     Left = 405
@@ -2963,6 +2920,7 @@ object MainForm: TMainForm
     }
     Text = 'Firmware update is in progress'
     Title = 'Firmware update'
+    TitleFont.Style = [fsBold]
     Visible = False
     Left = 104
     Top = 592

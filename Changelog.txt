@@ -1,5 +1,14 @@
 Changes
 
+from version 2.611 to 2.612
+
+improvement:
+- display full path of loaded action file as tooltip
+
+compilation:
+- since this release at least Lazarus 2.2 RC2 is necessary to compile
+
+
 from version 2.610 to 2.611
 
 bugfixes:
