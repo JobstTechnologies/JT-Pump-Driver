@@ -2272,10 +2272,7 @@ begin
    InName:= OpenDialog.FileName;
   SaveDialog.FileName:= ''; // will be re-set in TMainForm.SaveHandling
   // show the full path as tooltip
-  if DropfileName <> '' then
-   LoadedActionFileM.Hint:= DropfileName
-  else
-   LoadedActionFileM.Hint:= DummyString;
+  LoadedActionFileM.Hint:= InName;
   // display file name without suffix
   DummyString:= ExtractFileName(InName);
   SetLength(DummyString, Length(DummyString) - 9);
