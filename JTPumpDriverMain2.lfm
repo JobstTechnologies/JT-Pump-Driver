@@ -13,7 +13,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
-  LCLVersion = '2.2.0.3'
+  LCLVersion = '2.2.0.4'
   object RepeatPC: TPageControl
     Left = 16
     Height = 496
@@ -382,6 +382,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -750,6 +751,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -1106,6 +1108,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -1462,6 +1465,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -1822,6 +1826,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -2182,6 +2187,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
@@ -2219,6 +2225,7 @@ object MainForm: TMainForm
           Top = 0
           Width = 50
           DecimalPlaces = 1
+          MaxValue = 100
           MinValue = 0.1
           OnChange = DutyCycleXFSEChange
           ParentShowHint = False
