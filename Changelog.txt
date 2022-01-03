@@ -1,11 +1,5 @@
 Changes
 
-from version 2.612 to 2.613
-
-bugfix:
-- crash when entering a duty cycle of zero (compiler bug)
-
-
 from version 2.611 to 2.612
 
 improvement:
@@ -13,6 +7,7 @@ improvement:
 
 compilation:
 - since this release at least Lazarus 2.2 RC2 is necessary to compile
+- crash when entering a duty cycle of zero (compiler bug)
 
 
 from version 2.610 to 2.611
