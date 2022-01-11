@@ -9,7 +9,8 @@ bugfix:
 - fix a minor UI issue
 
 compilation:
-- since this release at least Lazarus 2.2 RC2 is necessary to compile
+- Win32 builds are now available
+- since this release at least Lazarus 2.2 is necessary to compile
 
 
 from version 3.05 to 3.06
