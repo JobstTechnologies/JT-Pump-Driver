@@ -79,8 +79,8 @@ object MainForm: TMainForm
           Left = 8
           Height = 23
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -92,9 +92,37 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Result1FSE1: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label33: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
+        end
+        object Label38: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
         end
       end
       object Pump4GB1: TGroupBox
@@ -149,8 +177,8 @@ object MainForm: TMainForm
           Left = 8
           Height = 23
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -163,9 +191,37 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label43: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE1: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label44: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB1: TGroupBox
@@ -220,8 +276,8 @@ object MainForm: TMainForm
           Left = 8
           Height = 23
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -234,9 +290,37 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label39: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE1: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label40: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump3GB1: TGroupBox
@@ -291,8 +375,8 @@ object MainForm: TMainForm
           Left = 8
           Height = 23
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -305,9 +389,37 @@ object MainForm: TMainForm
           Left = 8
           Height = 15
           Hint = 'The higher the voltage the higher the'#13#10'pumping speed. Maximum value 3.3 V.'
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label41: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE1: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label42: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime1GB: TGroupBox
@@ -468,8 +580,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS2: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -480,9 +592,37 @@ object MainForm: TMainForm
         object Label14: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label47: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE2: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label48: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB2: TGroupBox
@@ -532,8 +672,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS2: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -544,9 +684,37 @@ object MainForm: TMainForm
         object Label15: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label51: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE2: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label52: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB2: TGroupBox
@@ -596,8 +764,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS2: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -608,9 +776,37 @@ object MainForm: TMainForm
         object Label16: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label49: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE2: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label50: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump1GB2: TGroupBox
@@ -661,8 +857,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS2: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -672,9 +868,37 @@ object MainForm: TMainForm
         object Label17: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label45: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE2: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label46: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime2GB: TGroupBox
@@ -825,8 +1049,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS3: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -837,9 +1061,37 @@ object MainForm: TMainForm
         object Label19: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label55: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE3: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label56: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB3: TGroupBox
@@ -889,8 +1141,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS3: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -901,9 +1153,37 @@ object MainForm: TMainForm
         object Label20: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label59: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE3: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label60: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB3: TGroupBox
@@ -953,8 +1233,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS3: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -965,9 +1245,37 @@ object MainForm: TMainForm
         object Label21: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label57: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE3: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label58: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump1GB3: TGroupBox
@@ -1018,8 +1326,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS3: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -1029,9 +1337,37 @@ object MainForm: TMainForm
         object Label22: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label53: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE3: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label54: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime3GB: TGroupBox
@@ -1182,8 +1518,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS4: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1194,9 +1530,37 @@ object MainForm: TMainForm
         object Label24: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label65: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE4: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label66: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB4: TGroupBox
@@ -1246,8 +1610,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS4: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1258,9 +1622,37 @@ object MainForm: TMainForm
         object Label25: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label61: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE4: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label62: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB4: TGroupBox
@@ -1310,8 +1702,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS4: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1322,9 +1714,37 @@ object MainForm: TMainForm
         object Label26: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label67: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE4: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label68: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump1GB4: TGroupBox
@@ -1375,8 +1795,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS4: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -1386,9 +1806,37 @@ object MainForm: TMainForm
         object Label27: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label63: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE4: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label64: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime4GB: TGroupBox
@@ -1539,8 +1987,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS5: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1552,9 +2000,37 @@ object MainForm: TMainForm
         object Label29: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label69: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE5: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label70: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB5: TGroupBox
@@ -1604,8 +2080,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS5: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1617,9 +2093,37 @@ object MainForm: TMainForm
         object Label30: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label73: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE5: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label74: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB5: TGroupBox
@@ -1669,8 +2173,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS5: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1682,9 +2186,37 @@ object MainForm: TMainForm
         object Label31: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label71: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE5: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label72: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump1GB5: TGroupBox
@@ -1735,8 +2267,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS5: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -1747,9 +2279,37 @@ object MainForm: TMainForm
         object Label32: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label75: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE5: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label76: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime5GB: TGroupBox
@@ -1900,8 +2460,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS6: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1913,9 +2473,37 @@ object MainForm: TMainForm
         object Label34: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label83: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE6: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 144
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label84: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB6: TGroupBox
@@ -1965,8 +2553,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS6: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1978,9 +2566,37 @@ object MainForm: TMainForm
         object Label35: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label79: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE6: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label80: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB6: TGroupBox
@@ -2030,8 +2646,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS6: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2043,9 +2659,37 @@ object MainForm: TMainForm
         object Label36: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label81: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE6: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label82: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump1GB6: TGroupBox
@@ -2096,8 +2740,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS6: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -2108,9 +2752,37 @@ object MainForm: TMainForm
         object Label37: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label77: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE6: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label78: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object ActionTime6GB: TGroupBox
@@ -2343,8 +3015,8 @@ object MainForm: TMainForm
         object Pump1VoltageFS7: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -2354,9 +3026,37 @@ object MainForm: TMainForm
         object Label13: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label85: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result1FSE7: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label86: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump2GB7: TGroupBox
@@ -2406,8 +3106,8 @@ object MainForm: TMainForm
         object Pump2VoltageFS7: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2418,9 +3118,37 @@ object MainForm: TMainForm
         object Label18: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label91: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result2FSE7: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label92: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump4GB7: TGroupBox
@@ -2470,8 +3198,8 @@ object MainForm: TMainForm
         object Pump4VoltageFS7: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2482,9 +3210,37 @@ object MainForm: TMainForm
         object Label23: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label89: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result4FSE7: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label90: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
       object Pump3GB7: TGroupBox
@@ -2534,8 +3290,8 @@ object MainForm: TMainForm
         object Pump3VoltageFS7: TFloatSpinEdit
           Left = 8
           Height = 23
-          Top = 144
-          Width = 103
+          Top = 146
+          Width = 60
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2546,9 +3302,37 @@ object MainForm: TMainForm
         object Label28: TLabel
           Left = 8
           Height = 15
-          Top = 123
+          Top = 127
           Width = 39
           Caption = 'Voltage'
+        end
+        object Label87: TLabel
+          Left = 80
+          Height = 30
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 113
+          Width = 49
+          Caption = 'Resulting'#13#10'Speed'
+        end
+        object Result3FSE7: TFloatSpinEdit
+          Left = 80
+          Height = 23
+          Hint = 'Percentage of the maximal pump speed'
+          Top = 146
+          Width = 56
+          Enabled = False
+          MaxValue = 100
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          Value = 100
+        end
+        object Label88: TLabel
+          Left = 140
+          Height = 15
+          Top = 150
+          Width = 10
+          Caption = '%'
         end
       end
     end

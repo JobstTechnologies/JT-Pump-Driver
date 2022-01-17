@@ -17,6 +17,61 @@ type
 
   TMainForm = class(TForm)
     DutyCycle1FSE: TFloatSpinEdit;
+    Label39: TLabel;
+    Label40: TLabel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label44: TLabel;
+    Label45: TLabel;
+    Label46: TLabel;
+    Label47: TLabel;
+    Label48: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Label57: TLabel;
+    Label58: TLabel;
+    Label59: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
+    Label62: TLabel;
+    Label63: TLabel;
+    Label64: TLabel;
+    Label65: TLabel;
+    Label66: TLabel;
+    Label67: TLabel;
+    Label68: TLabel;
+    Label69: TLabel;
+    Label70: TLabel;
+    Label71: TLabel;
+    Label72: TLabel;
+    Label73: TLabel;
+    Label74: TLabel;
+    Label75: TLabel;
+    Label76: TLabel;
+    Label77: TLabel;
+    Label78: TLabel;
+    Label79: TLabel;
+    Label80: TLabel;
+    Label81: TLabel;
+    Label82: TLabel;
+    Label83: TLabel;
+    Label84: TLabel;
+    Label85: TLabel;
+    Label86: TLabel;
+    Label87: TLabel;
+    Label88: TLabel;
+    Label89: TLabel;
+    Label90: TLabel;
+    Label91: TLabel;
+    Label92: TLabel;
+    Result1FSE1: TFloatSpinEdit;
     DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle3FSE: TFloatSpinEdit;
     DutyCycle4FSE: TFloatSpinEdit;
@@ -54,6 +109,8 @@ type
     Label23: TLabel;
     Label28: TLabel;
     Label3: TLabel;
+    Label33: TLabel;
+    Label38: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -62,6 +119,33 @@ type
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
     FirmwareResetMI: TMenuItem;
+    Result2FSE4: TFloatSpinEdit;
+    Result1FSE4: TFloatSpinEdit;
+    Result3FSE4: TFloatSpinEdit;
+    Result4FSE4: TFloatSpinEdit;
+    Result3FSE5: TFloatSpinEdit;
+    Result4FSE5: TFloatSpinEdit;
+    Result2FSE5: TFloatSpinEdit;
+    Result1FSE5: TFloatSpinEdit;
+    Result1FSE6: TFloatSpinEdit;
+    Result2FSE6: TFloatSpinEdit;
+    Result1FSE2: TFloatSpinEdit;
+    Result4FSE6: TFloatSpinEdit;
+    Result3FSE6: TFloatSpinEdit;
+    Result1FSE7: TFloatSpinEdit;
+    Result3FSE7: TFloatSpinEdit;
+    Result4FSE7: TFloatSpinEdit;
+    Result2FSE7: TFloatSpinEdit;
+    Result3FSE2: TFloatSpinEdit;
+    Result4FSE2: TFloatSpinEdit;
+    Result2FSE2: TFloatSpinEdit;
+    Result1FSE3: TFloatSpinEdit;
+    Result3FSE3: TFloatSpinEdit;
+    Result4FSE3: TFloatSpinEdit;
+    Result2FSE3: TFloatSpinEdit;
+    Result2FSE1: TFloatSpinEdit;
+    Result3FSE1: TFloatSpinEdit;
+    Result4FSE1: TFloatSpinEdit;
     SaveActionMI: TMenuItem;
     FileMI: TMenuItem;
     OpenDialog: TOpenDialog;
@@ -318,7 +402,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.612';
+  Version : string = '2.70';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -1509,7 +1593,23 @@ for step:= 1 to StepNum do
 end;
 
 procedure TMainForm.PumpVoltageFSChange(Sender: TObject);
+var
+ Step, PumpNumber : integer;
+ SenderName : string;
 begin
+ SenderName:= (Sender as TComponent).Name;
+ // SenderName is in the form "PumpXVoltageFSY" and we need the X and Y
+ // so get the 5th and 15th character of the name
+ Step:= StrToInt(Copy(SenderName, 15, 1));
+ PumpNumber:= StrToInt(Copy(SenderName, 5, 1));
+ // update the resulting speed
+ (FindComponent('Result' + IntToStr(PumpNumber) + 'FSE' + IntToStr(Step))
+    as TFloatSpinEdit).Value:=
+  (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+   as TFloatSpinEdit).Value *
+  (FindComponent('Pump' + IntToStr(PumpNumber) + 'VoltageFS' + IntToStr(Step))
+   as TFloatSpinEdit).Value / 3.3;
+
  // if in live mode send trigger command generation and sending
  if LiveModeCB.Checked and OverallTimer.Enabled then
   RunImmediate;
@@ -2196,6 +2296,15 @@ begin
   // the maximal DutyTime is 50 s, thus the unit is already s
   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
     as TFloatSpinEdit).Value:= DutyTime;
+
+ // update the resulting speed
+ for j:= 1 to PumpNum do
+  (FindComponent('Result' + IntToStr(j) + 'FSE' + IntToStr(Step))
+    as TFloatSpinEdit).Value:=
+     (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
+       as TFloatSpinEdit).Value *
+     (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
+       as TFloatSpinEdit).Value / 3.3;
 
  // if in live mode send trigger command generation and sending
  if LiveModeCB.Checked and OverallTimer.Enabled then
