@@ -1,5 +1,15 @@
 Changes
 
+from version 2.612 to 2.70
+
+improvement:
+- display resulting maximal pump speed
+
+bugfix:
+- when the USB connection to the driver was lost, the software could be in a
+  state where it could no longer readout the firmware version after reconnecting 
+
+
 from version 2.611 to 2.612
 
 improvement:

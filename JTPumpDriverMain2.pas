@@ -280,7 +280,7 @@ type
     procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormDropFiles(Sender: TObject; const FileNames: array of String);
+    procedure FormDropFiles(Sender: TObject; const {%H-}FileNames: array of String);
     procedure GenerateCommandBBClick(Sender: TObject);
     procedure GetFirmwareVersionMIClick(Sender: TObject);
     procedure LiveModeCBChange(Sender: TObject);
@@ -360,7 +360,9 @@ var
   command : string;
   Reg : TRegistry;
   i, k : integer;
+  FirmwareNumber : double = 0.0;
   MousePointer : TPoint;
+  gotFirmwareNumber : Boolean = false;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  // enable all menus because they would be disabled when formerly
@@ -560,8 +562,15 @@ begin
      IndicatorPanelP.Caption:= 'Firmware too old';
      IndicatorPanelP.Color:= clRed;
      exit;
-    end
-    else if StrToFloat(FirmwareVersion) < RequiredFirmwareVersion then
+    end;
+    // when the USB connection got lost, the software is sometimes in a state
+    // that Windows set the number format back to Windows' default
+    // therefore set here explicitly the number format again
+    DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
+    gotFirmwareNumber:= TryStrToFloat(FirmwareVersion, FirmwareNumber);
+
+    if (gotFirmwareNumber and (FirmwareNumber < RequiredFirmwareVersion))
+     or (not gotFirmwareNumber) then
     begin
      MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
       + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
