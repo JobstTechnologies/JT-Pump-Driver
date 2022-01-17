@@ -169,7 +169,7 @@ object MainForm: TMainForm
         end
       end
       object Pump2GB1: TGroupBox
-        Left = 192
+        Left = 190
         Height = 200
         Hint = 'Double-click to change the pump name'
         Top = 56
@@ -240,7 +240,7 @@ object MainForm: TMainForm
         end
       end
       object Pump3GB1: TGroupBox
-        Left = 16
+        Left = 14
         Height = 200
         Hint = 'Double-click to change the pump name'
         Top = 264
@@ -779,7 +779,7 @@ object MainForm: TMainForm
         TabOrder = 0
       end
       object Pump3GB3: TGroupBox
-        Left = 16
+        Left = 14
         Height = 200
         Top = 264
         Width = 155
@@ -1328,7 +1328,7 @@ object MainForm: TMainForm
         end
       end
       object Pump1GB4: TGroupBox
-        Left = 16
+        Left = 14
         Height = 200
         Top = 56
         Width = 155
@@ -1493,7 +1493,7 @@ object MainForm: TMainForm
         TabOrder = 0
       end
       object Pump3GB5: TGroupBox
-        Left = 16
+        Left = 14
         Height = 200
         Top = 264
         Width = 155
