@@ -1,5 +1,13 @@
 Changes
 
+from version 3.07 to 3.08
+
+bugfixes:
+- fix the Free Pumps functionality
+- when the USB connection to the driver was lost, the software could be in a
+  state where it could no longer readout the firmware version after reconnecting
+
+
 from version 3.06 to 3.07
 
 improvement:
