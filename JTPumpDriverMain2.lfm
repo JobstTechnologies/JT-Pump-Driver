@@ -112,6 +112,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -207,6 +208,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -302,6 +304,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -397,6 +400,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -597,6 +601,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -686,6 +691,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -775,6 +781,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -864,6 +871,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1054,6 +1062,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1143,6 +1152,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1232,6 +1242,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1321,6 +1332,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1510,6 +1522,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1598,6 +1611,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1686,6 +1700,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1775,6 +1790,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -1966,6 +1982,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2056,6 +2073,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2146,6 +2164,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2236,6 +2255,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2427,6 +2447,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2517,6 +2538,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2607,6 +2629,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2697,6 +2720,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -2968,6 +2992,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -3057,6 +3082,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -3146,6 +3172,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
@@ -3235,6 +3262,7 @@ object MainForm: TMainForm
           Width = 49
           Alignment = taCenter
           EditLabel.Height = 30
+          EditLabel.Hint = 'Percentage of the maximal pump speed'
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
           ParentShowHint = False
