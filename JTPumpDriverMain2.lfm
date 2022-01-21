@@ -589,7 +589,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE2: TLabeledEdit
+        object Pump3ResultLE2: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -599,7 +599,6 @@ object MainForm: TMainForm
           EditLabel.Height = 30
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
-          Enabled = False
           ParentShowHint = False
           ReadOnly = True
           ShowHint = True
@@ -679,7 +678,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE2: TLabeledEdit
+        object Pump2ResultLE2: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -768,7 +767,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE2: TLabeledEdit
+        object Pump4ResultLE2: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -778,7 +777,6 @@ object MainForm: TMainForm
           EditLabel.Height = 30
           EditLabel.Width = 49
           EditLabel.Caption = 'Resulting'#13#10'Speed'
-          Enabled = False
           ParentShowHint = False
           ReadOnly = True
           ShowHint = True
@@ -858,7 +856,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE2: TLabeledEdit
+        object Pump1ResultLE2: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1048,7 +1046,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE3: TLabeledEdit
+        object Pump3ResultLE3: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1137,7 +1135,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE3: TLabeledEdit
+        object Pump2ResultLE3: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1226,7 +1224,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE3: TLabeledEdit
+        object Pump4ResultLE3: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1315,7 +1313,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE3: TLabeledEdit
+        object Pump1ResultLE3: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1482,6 +1480,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1503,7 +1502,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE4: TLabeledEdit
+        object Pump3ResultLE4: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1569,6 +1568,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1590,7 +1590,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE4: TLabeledEdit
+        object Pump2ResultLE4: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1656,6 +1656,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1677,7 +1678,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE4: TLabeledEdit
+        object Pump4ResultLE4: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1744,6 +1745,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -1765,7 +1767,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE4: TLabeledEdit
+        object Pump1ResultLE4: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -1932,6 +1934,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -1955,7 +1958,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE5: TLabeledEdit
+        object Pump3ResultLE5: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2021,6 +2024,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2044,7 +2048,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE5: TLabeledEdit
+        object Pump2ResultLE5: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2110,6 +2114,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2133,7 +2138,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE5: TLabeledEdit
+        object Pump4ResultLE5: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2200,6 +2205,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -2222,7 +2228,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE5: TLabeledEdit
+        object Pump1ResultLE5: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2389,6 +2395,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2412,7 +2419,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE6: TLabeledEdit
+        object Pump3ResultLE6: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2478,6 +2485,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2501,7 +2509,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE6: TLabeledEdit
+        object Pump2ResultLE6: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2567,6 +2575,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -2590,7 +2599,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE6: TLabeledEdit
+        object Pump4ResultLE6: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2657,6 +2666,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -2679,7 +2689,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE6: TLabeledEdit
+        object Pump1ResultLE6: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -2928,6 +2938,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Increment = 0.1
           MaxValue = 3.3
           MinValue = 0.1
@@ -2949,7 +2960,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result1FSE7: TLabeledEdit
+        object Pump1ResultLE7: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -3015,6 +3026,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -3037,7 +3049,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result2FSE7: TLabeledEdit
+        object Pump2ResultLE7: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -3103,6 +3115,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -3125,7 +3138,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result4FSE7: TLabeledEdit
+        object Pump4ResultLE7: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
@@ -3191,6 +3204,7 @@ object MainForm: TMainForm
           Height = 23
           Top = 146
           Width = 58
+          Alignment = taCenter
           Enabled = False
           Increment = 0.1
           MaxValue = 3.3
@@ -3213,7 +3227,7 @@ object MainForm: TMainForm
           Width = 10
           Caption = '%'
         end
-        object Result3FSE7: TLabeledEdit
+        object Pump3ResultLE7: TLabeledEdit
           Left = 80
           Height = 23
           Hint = 'Percentage of the maximal pump speed'
