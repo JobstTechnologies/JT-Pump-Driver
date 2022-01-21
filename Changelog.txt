@@ -3,7 +3,7 @@ Changes
 from version 2.612 to 2.70
 
 improvement:
-- display resulting maximal pump speed
+- display resulting percentage of maximal pump speed
 
 bugfix:
 - when the USB connection to the driver was lost, the software could be in a
