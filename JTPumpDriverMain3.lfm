@@ -5029,7 +5029,9 @@ object MainForm: TMainForm
       FAE10000FAF30000FCFF0000FCFF0000FEFF0000FFFF0000FFFF0000FFFF0000
     }
     Text = 'Firmware update is in progress'
+    TextFont.Quality = fqCleartype
     Title = 'Firmware update'
+    TitleFont.Quality = fqCleartype
     TitleFont.Style = [fsBold]
     Visible = False
     Left = 104
