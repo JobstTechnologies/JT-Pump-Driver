@@ -479,7 +479,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.08';
+  Version : string = '3.09';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -613,6 +613,8 @@ begin
   end;
   exit;
  end;
+ // open new connection if not already available
+ if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
  try
   if HaveSerial then
   begin
@@ -1322,7 +1324,7 @@ begin
   IndicatorPanelP.Caption:= '';
  end;
  IndicatorPanelP.Hint:= '';
- setLength(SOrder, PumpNum);
+ setLength(SOrder{%H-}, PumpNum);
  posS:= 1; // 1 and not 0 because we use it to access chars in strings
 
  // address
@@ -2879,7 +2881,7 @@ begin
  StepCounter:= 0; MCounter:= 0; ICounter:= 0;
  M1:= 0; M2:= 0; G1:= 0;
  result:= false; Have2M:= false; StepTime:= 0;
- setLength(SOrder, PumpNumFile);
+ setLength(SOrder{%H-}, PumpNumFile);
  for k:= 0 to PumpNumFile-1 do
   SOrder[k]:= '0';
 

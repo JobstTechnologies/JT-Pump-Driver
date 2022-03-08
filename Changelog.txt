@@ -1,5 +1,12 @@
 Changes
 
+from version 3.08 to 3.09
+
+improvement:
+- when canceling pump driver connection dialog don't disconnect
+  if there is already a connection
+
+
 from version 3.07 to 3.08
 
 bugfixes:
