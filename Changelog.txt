@@ -1,5 +1,12 @@
 Changes
 
+from version 2.70 to 2.71
+
+improvement:
+- when canceling pump driver connection dialog don't disconnect
+  if there is already a connection
+  
+
 from version 2.612 to 2.70
 
 improvement:

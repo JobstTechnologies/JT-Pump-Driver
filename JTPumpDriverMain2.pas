@@ -374,7 +374,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.70';
+  Version : string = '2.71';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -507,6 +507,8 @@ begin
   end;
   exit;
  end;
+ // open new connection if not already available
+ if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
  try
   if HaveSerial then
   begin
