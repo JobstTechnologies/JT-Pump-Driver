@@ -450,7 +450,11 @@ begin
   if SerialUSBPortCB.Items.Count = 1 then
    SerialUSBPortCB.ItemIndex:= 0
   else
-   SerialUSBPortCB.ItemIndex:= -1;
+   // if there is already a connection, display it port
+   if HaveSerial then
+     SerialUSBPortCB.ItemIndex:= SerialUSBPortCB.Items.IndexOf(COMPort)
+   else
+    SerialUSBPortCB.ItemIndex:= -1;
  end;
  // open connection dialog
  SerialUSBSelectionF.ShowModal;
