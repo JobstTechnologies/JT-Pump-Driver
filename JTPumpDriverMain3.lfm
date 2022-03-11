@@ -5040,7 +5040,7 @@ object MainForm: TMainForm
   object StepTimer1: TTimer
     Enabled = False
     Interval = 100
-    OnTimer = StepTimer1Finished
+    OnTimer = StepTimerXFinished
     Left = 352
     Top = 440
   end

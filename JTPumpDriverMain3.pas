@@ -456,7 +456,6 @@ type
     procedure RunFreeBBClick(Sender: TObject);
     procedure SaveActionMIClick(Sender: TObject);
     procedure StepXUseCBChange(Sender: TObject);
-    procedure StepTimer1Finished(Sender: TObject);
     procedure StepTimerXFinished(Sender: TObject);
     procedure StepTimerLastFinished(Sender: TObject);
     procedure StopBBClick(Sender: TObject);
@@ -2270,22 +2269,6 @@ begin
  end;
 end;
 
-procedure TMainForm.StepTimer1Finished(Sender: TObject);
-begin
- StepTimer1.Enabled:= False;
- // remove possible asterisk from step caption
- Step1TS.Caption:= 'Step 1';
- // if there is a step 2, start its timer and show its tab
- if Step2UseCB.checked then
- begin
-  // the interval is calculated in GenerateCommand
-  StepTimer2.Enabled:= True;
-  RepeatPC.ActivePage:= Step2TS;
-  // highlight it as active step by adding an asterisk to the step name
-  Step2TS.Caption:= 'Step 2 *';
- end;
-end;
-
 procedure TMainForm.StepTimerXFinished(Sender: TObject);
 var
  Step : integer;
@@ -2295,11 +2278,6 @@ begin
  // SenderName is in the form "StepTimerX" and we need the X
  // so get the 10th character of the name
  Step:= StrToInt(Copy(SenderName, 10, 1));
- (FindComponent('StepTimer' + IntToStr(Step))
-  as TTimer).Enabled:= False;
- // remove asterisk from current step caption
- (FindComponent('Step' + IntToStr(Step) + 'TS')
-  as TTabSheet).Caption:= 'Step ' + IntToStr(Step);
  // if there is a step+1, start its timer and show its tab
  if (FindComponent('Step' + IntToStr(Step+1) + 'UseCB')
      as TCheckBox).checked then
@@ -2320,6 +2298,17 @@ begin
   RepeatPC.ActivePage:= Step1TS;
   // highlight it as active by adding an asterisk to the step name
   Step1TS.Caption:= 'Step 1 *';
+ end;
+
+ // only when there is only step 1 we must not stop the timer
+ if not ((Step = 1) and (not (MainForm.FindComponent('Step' + IntToStr(Step+1) + 'UseCB')
+     as TCheckBox).checked)) then
+ begin
+  (MainForm.FindComponent('StepTimer' + IntToStr(Step))
+   as TTimer).Enabled:= False;
+  // remove asterisk from current step caption
+  (MainForm.FindComponent('Step' + IntToStr(Step) + 'TS')
+   as TTabSheet).Caption:= 'Step ' + IntToStr(Step);
  end;
 end;
 
