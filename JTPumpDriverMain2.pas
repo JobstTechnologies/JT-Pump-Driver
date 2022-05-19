@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  Crt, StrUtils, PopupNotifier, Character, System.UITypes,
+  Crt, StrUtils, PopupNotifier, Character, System.UITypes, Fileinfo,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm;
 
@@ -373,7 +373,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.72';
+  Version : string = '';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -395,7 +395,16 @@ implementation
 { TMainForm }
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var
+ FileVerInfo: TFileVersionInfo;
 begin
+ try
+  FileVerInfo:= TFileVersionInfo.Create(nil);
+  FileVerInfo.ReadFileInfo;
+  Version:= FileVerInfo.VersionStrings.Values['ProductVersion'];
+ finally
+  FileVerInfo.Free;
+ end;
  MainForm.Caption:= 'JT Pump Driver ' + Version;
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
  LoadedActionFileM.Text:= 'None'; // explicitly set there because the IDE always
@@ -459,12 +468,14 @@ begin
    else
     SerialUSBPortCB.ItemIndex:= -1;
 
- // open connection dialog
- ShowModal;
- if ModalResult = mrOK then
-  COMPort:= SerialUSBPortCB.Text;
+  // open connection dialog
+  ShowModal;
+  if ModalResult = mrOK then
+   COMPort:= SerialUSBPortCB.Text;
 
- if ModalResult = mrNo then // user pressed Disconnect
+ end; // end with SerialUSBSelectionF
+
+ if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
  begin
   ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
@@ -491,9 +502,9 @@ begin
   end;
   exit;
  end;
- if (COMPort = '') then // user forgot to set a COM port
+ if (COMPort = '') then // user set no COM port or chanceled
  begin
-  if ModalResult = mrCancel then
+  if SerialUSBSelectionF.ModalResult = mrCancel then
    exit; // nothing needs to be done
   MessageDlgPos('Error: No COM port selected.',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
@@ -519,8 +530,6 @@ begin
   end;
   exit;
  end;
-
- end; // end with SerialUSBSelectionF
 
  // open new connection if not already available
  if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
