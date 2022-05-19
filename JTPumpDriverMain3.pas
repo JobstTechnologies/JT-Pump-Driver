@@ -618,7 +618,7 @@ begin
   RunBB.Enabled:= false;
   StopBB.Enabled:= false;
   RunFreeBB.Enabled:= false;
-  IndicatorPanelP.Caption:= 'Connection failiure';
+  IndicatorPanelP.Caption:= 'Connection failure';
   IndicatorPanelP.Color:= clRed;
   if HaveSerial then
   begin
@@ -660,7 +660,7 @@ begin
    RunBB.Enabled:= false;
    StopBB.Enabled:= false;
    RunFreeBB.Enabled:= false;
-   IndicatorPanelP.Caption:= 'Connection failiure';
+   IndicatorPanelP.Caption:= 'Connection failure';
    IndicatorPanelP.Color:= clRed;
    exit;
   end;
@@ -2005,7 +2005,7 @@ begin
     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
-   IndicatorPanelP.Caption:= 'Connection failiure';
+   IndicatorPanelP.Caption:= 'Connection failure';
    ConnectionMI.Enabled:= True;
    RunBB.Enabled:= False;
    RunFreeBB.Enabled:= False;
@@ -2077,7 +2077,7 @@ begin
                 MB_ICONERROR + MB_OK);
     ConnComPortLE.Color:= clRed;
     ConnComPortLE.Text:= 'Try to reconnect';
-    IndicatorPanelP.Caption:= 'Connection failiure';
+    IndicatorPanelP.Caption:= 'Connection failure';
     ConnectionMI.Enabled:= True;
     RunBB.Enabled:= False;
     RunFreeBB.Enabled:= False;
@@ -2381,7 +2381,7 @@ begin
     MessageBox(PChar(COMPort + 'error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
-   IndicatorPanelP.Caption:= 'Connection failiure';
+   IndicatorPanelP.Caption:= 'Connection failure';
    ConnectionMI.Enabled:= True;
    if ser.LastError = 9997 then
    begin
