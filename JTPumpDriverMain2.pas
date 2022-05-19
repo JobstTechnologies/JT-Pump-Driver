@@ -373,7 +373,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '2.71';
+  Version : string = '2.72';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 1.3;
   ser: TBlockSerial;
@@ -386,6 +386,7 @@ var
   DropfileName : string = ''; // name of dropped file
   StepNum : integer = 7; // number of steps
   PumpNum : integer = 4; // number of pumps
+  COMPort : string = ''; // name of the connected COM port
 
 implementation
 
@@ -444,9 +445,11 @@ begin
  finally
   Reg.Free;
  end;
- // if there is only one COM port, preselect it
+
  with SerialUSBSelectionF do
  begin
+
+  // if there is only one COM port, preselect it
   if SerialUSBPortCB.Items.Count = 1 then
    SerialUSBPortCB.ItemIndex:= 0
   else
@@ -455,10 +458,13 @@ begin
      SerialUSBPortCB.ItemIndex:= SerialUSBPortCB.Items.IndexOf(COMPort)
    else
     SerialUSBPortCB.ItemIndex:= -1;
- end;
+
  // open connection dialog
- SerialUSBSelectionF.ShowModal;
- if (COMPort = 'Ignore') then // user pressed Disconnect
+ ShowModal;
+ if ModalResult = mrOK then
+  COMPort:= SerialUSBPortCB.Text;
+
+ if ModalResult = mrNo then // user pressed Disconnect
  begin
   ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
@@ -474,7 +480,8 @@ begin
    command:= '/0I';
    for k:= 1 to PumpNum do
     command:= command + '0';
-   command:= command + 'lR' + LineEnding;
+   // blink 3 times
+   command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;
@@ -486,6 +493,8 @@ begin
  end;
  if (COMPort = '') then // user forgot to set a COM port
  begin
+  if ModalResult = mrCancel then
+   exit; // nothing needs to be done
   MessageDlgPos('Error: No COM port selected.',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
   // disable all buttons
@@ -500,7 +509,7 @@ begin
    command:= command + '/0I';
    for k:= 1 to PumpNum do
     command:= command + '0';
-   command:= command + 'lR' + LineEnding;
+   command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;
@@ -510,6 +519,9 @@ begin
   end;
   exit;
  end;
+
+ end; // end with SerialUSBSelectionF
+
  // open new connection if not already available
  if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
  try

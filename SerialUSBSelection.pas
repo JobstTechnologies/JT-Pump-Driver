@@ -16,8 +16,7 @@ type
     CancelButtonB: TButton;
     SerialUSBPortCB: TComboBox;
     SerialUSBPortL: TLabel;
-    procedure CancelButtonBClick(Sender: TObject);
-    procedure OKButtonBClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
 
   public
@@ -26,7 +25,6 @@ type
 
 var
   SerialUSBSelectionF: TSerialUSBSelectionF;
-  COMPort : string;
 
 implementation
 
@@ -34,16 +32,9 @@ implementation
 
 { TSerialUSBSelectionF }
 
-procedure TSerialUSBSelectionF.OKButtonBClick(Sender: TObject);
+procedure TSerialUSBSelectionF.FormCreate(Sender: TObject);
 begin
- COMPort:= SerialUSBPortCB.Text;
- SerialUSBSelectionF.Close; // close dialog
-end;
-
-procedure TSerialUSBSelectionF.CancelButtonBClick(Sender: TObject);
-begin
- COMPort:= 'Ignore';
- SerialUSBSelectionF.Close; // close dialog
+ ActiveControl:= SerialUSBPortCB;
 end;
 
 end.

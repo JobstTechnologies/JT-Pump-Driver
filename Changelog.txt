@@ -1,5 +1,11 @@
 Changes
 
+from version 2.71 to 2.72
+
+improvement:
+- minor UI fixes when selecting the port after connecting to a pump driver
+
+
 from version 2.70 to 2.71
 
 improvement:
