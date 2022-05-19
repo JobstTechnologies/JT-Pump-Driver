@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ComCtrls, Menus, Math,
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
-  Crt, StrUtils, PopupNotifier, Character, System.UITypes,
+  Crt, StrUtils, PopupNotifier, Character, System.UITypes, Fileinfo,
   // the custom forms
   SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
@@ -478,7 +478,7 @@ type
 
 var
   MainForm : TMainForm;
-  Version : string = '3.09';
+  Version : string = '';
   FirmwareVersion : string = 'unknown';
   RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
@@ -492,6 +492,7 @@ var
   StepNum : integer = 7; // number of steps
   PumpNum : integer = 8; // number of pumps
   PumpNumFile : integer = 4; // number of pumps defined in a loaded action file
+  COMPort : string = ''; // name of the connected COM port
 
 implementation
 
@@ -500,7 +501,16 @@ implementation
 { TMainForm }
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var
+ FileVerInfo: TFileVersionInfo;
 begin
+ try
+  FileVerInfo:= TFileVersionInfo.Create(nil);
+  FileVerInfo.ReadFileInfo;
+  Version:= FileVerInfo.VersionStrings.Values['ProductVersion'];
+ finally
+  FileVerInfo.Free;
+ end;
  MainForm.Caption:= 'JT Pump Driver ' + Version;
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
  LoadedActionFileM.Text:= 'None'; // explicitly set there because the IDE always
@@ -550,9 +560,11 @@ begin
  finally
   Reg.Free;
  end;
- // if there is only one COM port, preselect it
+
  with SerialUSBSelectionF do
  begin
+
+  // if there is only one COM port, preselect it
   if SerialUSBPortCB.Items.Count = 1 then
    SerialUSBPortCB.ItemIndex:= 0
   else
@@ -561,10 +573,15 @@ begin
      SerialUSBPortCB.ItemIndex:= SerialUSBPortCB.Items.IndexOf(COMPort)
    else
     SerialUSBPortCB.ItemIndex:= -1;
- end;
- // open connection dialog
- SerialUSBSelectionF.ShowModal;
- if (COMPort = 'Ignore') then // user pressed Disconnect
+
+  // open connection dialog
+  ShowModal;
+  if ModalResult = mrOK then
+   COMPort:= SerialUSBPortCB.Text;
+
+ end; // end with with SerialUSBSelectionF
+
+ if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
  begin
   ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
@@ -580,7 +597,8 @@ begin
    command:= '/0I';
    for k:= 1 to PumpNum do
     command:= command + '0';
-   command:= command + 'lR' + LineEnding;
+   // blink 3 times
+   command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;
@@ -590,8 +608,10 @@ begin
   end;
   exit;
  end;
- if (COMPort = '') then // user forgot to set a COM port
+ if (COMPort = '') then // user set no COM port or chanceled
  begin
+  if SerialUSBSelectionF.ModalResult = mrCancel then
+   exit; // nothing needs to be done
   MessageDlgPos('Error: No COM port selected.',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
   // disable all buttons
@@ -606,7 +626,7 @@ begin
    command:= command + '/0I';
    for k:= 1 to PumpNum do
     command:= command + '0';
-   command:= command + 'lR' + LineEnding;
+   command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
    ser.CloseSocket;
    ser.Free;

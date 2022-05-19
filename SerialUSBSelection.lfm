@@ -7,14 +7,13 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
   ClientHeight = 119
   ClientWidth = 259
   Position = poMainFormCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.2.0.4'
   object SerialUSBPortL: TLabel
     Left = 16
     Height = 15
     Top = 19
     Width = 77
     Caption = 'Serial USB Port'
-    ParentColor = False
     ParentFont = False
   end
   object SerialUSBPortCB: TComboBox
@@ -36,7 +35,7 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
     Width = 81
     Caption = '(Re)Connect'
     Default = True
-    OnClick = OKButtonBClick
+    ModalResult = 1
     ParentFont = False
     TabOrder = 1
   end
@@ -47,7 +46,7 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
     Top = 58
     Width = 81
     Caption = 'Disconnect'
-    OnClick = CancelButtonBClick
+    ModalResult = 7
     ParentFont = False
     TabOrder = 2
   end

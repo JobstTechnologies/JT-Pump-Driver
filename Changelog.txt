@@ -1,5 +1,11 @@
 Changes
 
+from version 3.09 to 3.10
+
+improvement:
+- minor UI fixes when selecting the port after connecting to a pump driver
+
+
 from version 3.08 to 3.09
 
 improvement:
