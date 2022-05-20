@@ -473,6 +473,8 @@ type
               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
     function OpenFile(InputName: string): Boolean;
     function SaveHandling(InName: string; const Calculation: Boolean): string;
+    procedure CloseSerialConn;
+    procedure COMPortScan;
 
   end;
 
@@ -493,6 +495,8 @@ var
   PumpNum : integer = 8; // number of pumps
   PumpNumFile : integer = 4; // number of pumps defined in a loaded action file
   COMPort : string = ''; // name of the connected COM port
+  connectedPumpDriver : longint = 0; // ID of the connected pump driver
+  COMList : array of Int32; // list with available pump drivers (list index is COM port number)
 
 implementation
 
@@ -530,7 +534,7 @@ procedure TMainForm.ConnectionMIClick(Sender: TObject);
 var
   command : string;
   Reg : TRegistry;
-  i, k : integer;
+  i, k, COMNumber, Channel : integer;
   FirmwareNumber : double = 0.0;
   MousePointer : TPoint;
   gotFirmwareNumber : Boolean = false;
@@ -561,18 +565,37 @@ begin
   Reg.Free;
  end;
 
+ // scan for pump drivers
+ COMPortScan;
+
  with SerialUSBSelectionF do
  begin
+  // remove all entries that are no pump drivers
+  i:= 0;
+  While i < SerialUSBPortCB.Items.Count do
+  begin
+   COMNumber:= StrToInt(Copy(SerialUSBPortCB.Items[i], 4, 4));
+   if COMList[COMNumber] < 1 then
+    SerialUSBPortCB.Items.Delete(i)
+   else
+    inc(i);
+  end;
 
   // if there is only one COM port, preselect it
   if SerialUSBPortCB.Items.Count = 1 then
    SerialUSBPortCB.ItemIndex:= 0
   else
-   // if there is already a connection, display it port
+  begin
+   // if there is already a connection, display its port
    if HaveSerial then
      SerialUSBPortCB.ItemIndex:= SerialUSBPortCB.Items.IndexOf(COMPort)
    else
     SerialUSBPortCB.ItemIndex:= -1;
+  end;
+  // update the text since this will be displayed
+  // as proposal when the connection dialog is shwon
+  if SerialUSBPortCB.ItemIndex > -1 then
+   SerialUSBPortCB.Text:= SerialUSBPortCB.Items[SerialUSBPortCB.ItemIndex];
 
   // open connection dialog
   ShowModal;
@@ -600,9 +623,7 @@ begin
    // blink 3 times
    command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
+   CloseSerialConn;
    IndicatorPanelP.Caption:= 'Pumps stopped';
    IndicatorPanelP.Color:= clHighlight;
   end;
@@ -628,9 +649,7 @@ begin
     command:= command + '0';
    command:= command + 'gLM500lM500G2R' + LineEnding;
    ser.SendString(command);
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
+   CloseSerialConn;
    IndicatorPanelP.Caption:= 'Pumps stopped';
    IndicatorPanelP.Color:= clHighlight;
   end;
@@ -640,15 +659,10 @@ begin
  if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
  try
   if HaveSerial then
-  begin
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
-  end;
+   CloseSerialConn;
   ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
   ser:= TBlockSerial.Create;
-  HaveSerial:= True;
   ser.DeadlockTimeout:= 3000; //set timeout to 3 s
   ser.Connect(COMPort);
   // the config must be set after the connection
@@ -679,13 +693,14 @@ begin
    RunFreeBB.Enabled:= false;
    if ser.LastError = 9997 then
     exit; // we cannot close socket or free when the connection timed out
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
+   CloseSerialConn;
    exit;
   end;
+  HaveSerial:= True;
   // output connected port
   ConnComPortLE.Text:= SerialUSBSelectionF.SerialUSBPortCB.Text;
+  Channel:= StrToInt(Copy(COMPort, 4, 4));
+  connectedPumpDriver:= COMList[Channel];
   ConnComPortLE.Color:= clDefault;
   IndicatorPanelP.Caption:= 'Connection successful';
   IndicatorPanelP.Color:= clDefault;
@@ -709,9 +724,7 @@ begin
     RunFreeBB.Enabled:= false;
     if ser.LastError = 9997 then
      exit; // we cannot close socket or free when the connection timed out
-    ser.CloseSocket;
-    ser.Free;
-    HaveSerial:= False;
+    CloseSerialConn;
     exit;
    end
    else
@@ -733,9 +746,7 @@ begin
      IndicatorPanelP.Caption:= 'Wrong device';
      IndicatorPanelP.Color:= clRed;
      ConnComPortLE.Color:= clRed;
-     ser.CloseSocket;
-     ser.Free;
-     HaveSerial:= False;
+     CloseSerialConn;
      exit;
     end;
     // JT Pump Driver requires a certain firmware version
@@ -914,9 +925,7 @@ begin
     end;
     MessageDlgPos('The selected COM port is not the one of a pump driver!',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-    ser.CloseSocket;
-    ser.Free;
-    HaveSerial:= False;
+    CloseSerialConn;
     exited:= true;
     exit;
    end;
@@ -971,11 +980,7 @@ begin
 
   // Closing open connections
   if HaveSerial then
-  begin
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
-  end;
+   CloseSerialConn;
 
   // open new connection with 1200 baud,
   // this rate is mandatory to set the Arduino into boot mode
@@ -1101,9 +1106,7 @@ begin
     ConnComPortLE.Color:= clRed;
     if ser.LastError = 9997 then
      exit; // we cannot close socket or free when the connection timed out
-    ser.CloseSocket;
-    ser.Free;
-    HaveSerial:= False;
+    CloseSerialConn;
     exit;
    end;
    if Pos('.', FirmwareVersion) > 0 then
@@ -1268,12 +1271,8 @@ begin
   finally
    // close connection
     if (HaveSerial) and (ser.LastError <> 9997) then
-    // we cannot close socket or free when the connection timed out
-    begin
-     ser.CloseSocket;
-     ser.free;
-     HaveSerial:= False;
-    end;
+     // we cannot close socket or free when the connection timed out
+     CloseSerialConn;
   end;
 end;
 
@@ -2014,9 +2013,7 @@ begin
     StopBB.Enabled:= False;
     exit; // we cannot close socket or free if the connection timed out
    end;
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
+   CloseSerialConn;
    exit;
   end;
  end
@@ -2086,9 +2083,7 @@ begin
      StopBB.Enabled:= False;
      exit; // we cannot close socket or free if the connection timed out
     end;
-    ser.CloseSocket;
-    ser.Free;
-    HaveSerial:= False;
+    CloseSerialConn;
     exit;
    end;
   end
@@ -2388,9 +2383,7 @@ begin
     StopBB.Enabled:= False;
     exit; // we cannot close socket or free when the connection timed out
    end;
-   ser.CloseSocket;
-   ser.Free;
-   HaveSerial:= False;
+   CloseSerialConn;
    exit;
   end;
  end;
@@ -3287,6 +3280,135 @@ begin
   // store last used name
   SaveDialog.FileName:= ExtractFileName(OutNameTemp);
  end; // end if TabelleSpeichernDialog.Execute
+
+end;
+
+procedure TMainForm.CloseSerialConn;
+begin
+ if HaveSerial then
+ begin
+  // close connection
+  ser.CloseSocket;
+  ser.Free;
+  HaveSerial:= False;
+  COMPort:= '';
+  connectedPumpDriver:= 0;
+ end;
+
+end;
+
+procedure TMainForm.COMPortScan;
+// this routine scanes all open COM ports for pump drivers
+var
+ Reg : TRegistry;
+ RegStrings : TStrings;
+ PortName, command, FirmwareVersion : string;
+ serTest : TBlockSerial;
+ i, ErrorCount, Channel : integer;
+begin
+ // determine all possible COM ports
+ Reg:= TRegistry.Create;
+ RegStrings:= TStringList.Create;
+ try
+  Reg.RootKey:= HKEY_LOCAL_MACHINE;
+  if Reg.OpenKeyReadOnly('HARDWARE\DEVICEMAP\SERIALCOMM') then
+  begin
+   SetLength(COMList, 0); // delete array
+   SetLength(COMList, 999); // a PC cannot have more than 999 COM ports
+   Reg.GetValueNames(RegStrings);
+  end;
+
+  // now test all COM ports
+  for i:= 0 to RegStrings.Count - 1 do
+  begin
+   PortName:= Reg.ReadString(RegStrings[i]);
+
+   // the pump drivers emits on every received command the firmware
+   // this is how we can detect them
+   FirmwareVersion:= '';
+   ErrorCount:= 0;
+
+   // when there is a connection, we must first test if this is still alive
+   // - if yes, we must directly take the driver number
+   // since we cannot connect to an already connected port
+   // - if not we must close the connection
+   if HaveSerial and (PortName = COMPort) then
+   begin
+    // to check the live state send a command
+    try
+     ser.SendString('/0lR' + LineEnding);
+    finally
+     if ser.LastError <> 0 then
+     begin
+      ConnComPortLE.Color:= clRed;
+      ConnComPortLE.Text:= 'Try to reconnect';
+      IndicatorPanelP.Caption:= 'Connection failure';
+      IndicatorPanelP.Color:= clRed;
+      ConnectionMI.Enabled:= True;
+      RunBB.Enabled:= False;
+      StopBB.Enabled:= False;
+      CloseSerialConn;
+      inc(ErrorCount);
+     end;
+    end;
+    if ErrorCount > 0 then
+     continue;
+    Channel:= StrToInt(Copy(COMPort, 4, 4));
+    COMList[Channel]:= connectedPumpDriver;
+    continue;
+   end;
+
+   // open the connection
+   try
+    try
+     serTest:= TBlockSerial.Create;
+     serTest.DeadlockTimeout:= 1000; //set timeout to 1 s
+     serTest.Connect(PortName);
+     // the config must be set after the connection
+     serTest.config(9600, 8, 'N', SB1, False, False);
+    except
+     continue;
+    end;
+
+    // get Firmware version by first sending a command and receiving the reply
+    try
+     command:= '/0lR' + LineEnding;
+     serTest.SendString(command);
+     FirmwareVersion:= serTest.RecvPacket(1000);
+    finally
+     if serTest.LastError <> 0 then
+      inc(ErrorCount);
+    end;
+
+   finally
+    serTest.Free;
+   end;
+
+   if ErrorCount > 0 then
+    continue;
+
+   // FirmwareVersion has now this format:
+   // "JT-PumpDriver-Firmware x.y\n Received command: ..."
+   // but on old versions the firmware does not have any number,
+   // only "received command" is sent back
+   // therefore check for a number dot
+   if Pos('.', FirmwareVersion) > 0 then
+    FirmwareVersion:= copy(FirmwareVersion, Pos('.', FirmwareVersion) - 1, 3)
+   // omit the 'r' because some versions used a capital letter 'R'
+   else if Pos('eceived command:', FirmwareVersion) > 0 then
+    FirmwareVersion:= 'unknown'
+   else // no pump driver
+    continue;
+
+   Channel:= StrToInt(Copy(PortName, 4, 4));
+   // at the moment the pump drivers have no ID, so we set their "ID" to 1
+   COMList[Channel]:= 1;
+
+  end; // test all COM ports
+ finally
+  Reg.Free;
+  RegStrings.Free;
+ end;
 
 end;
 
