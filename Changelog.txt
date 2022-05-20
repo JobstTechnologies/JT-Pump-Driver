@@ -2,8 +2,11 @@ Changes
 
 from version 2.71 to 2.72
 
-improvement:
-- minor UI fixes when selecting the port after connecting to a pump driver
+improvements
+- when connecting only COM ports connected to a pump driver are offered
+
+bugfix:
+- enable to reconnect after the pump driver USB cable was accidentally removed
 
 
 from version 2.70 to 2.71
