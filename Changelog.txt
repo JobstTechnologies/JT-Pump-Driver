@@ -1,20 +1,15 @@
 Changes
 
-from version 2.71 to 2.72
+from version 2.70 to 2.71
 
-improvements
+improvements:
 - when connecting only COM ports connected to a pump driver are offered
+- when canceling pump driver connection dialog don't disconnect
+  if there is already a connection
 
 bugfix:
 - enable to reconnect after the pump driver USB cable was accidentally removed
 
-
-from version 2.70 to 2.71
-
-improvement:
-- when canceling pump driver connection dialog don't disconnect
-  if there is already a connection
-  
 
 from version 2.612 to 2.70
 
