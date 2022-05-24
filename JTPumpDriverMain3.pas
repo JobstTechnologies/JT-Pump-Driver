@@ -474,6 +474,7 @@ type
     function OpenFile(InputName: string): Boolean;
     function SaveHandling(InName: string; const Calculation: Boolean): string;
     procedure CloseSerialConn;
+    procedure SendRepeatToPump;
     procedure COMPortScan;
 
   end;
@@ -497,6 +498,8 @@ var
   COMPort : string = ''; // name of the connected COM port
   connectedPumpDriver : longint = 0; // ID of the connected pump driver
   COMList : array of Int32; // list with available pump drivers (list index is COM port number)
+  commandForRepeat : string; // stores the command sent on every repeat
+  oneDay : longint = 86400000; // time of one day in ms
 
 implementation
 
@@ -1974,6 +1977,7 @@ begin
   exit;
  end;
  CommandM.Text:= command;
+ commandForRepeat:= command;
  // The TinyZero has an input buffer of 512 characters, if it is full, the
  // COM connection will break (no communication posible).
  // There is a special case (in my opinion a bug) that if the input string has
@@ -2054,6 +2058,9 @@ begin
   else
    command:= command + LineEnding;
 
+  // save command to be resend on every repeat if running with SIX
+  commandForRepeat:= command;
+
   // if we have an open serial connection, execute
   if HaveSerial then
   begin
@@ -2133,10 +2140,10 @@ begin
   begin
    RepeatOutputLE.Visible:= True;
    RepeatTime:= trunc(GlobalTime / (StrToFloat(RepeatSE.Text) + 1));
-   if RepeatTime < 86400000 then // if less than one day
+   if RepeatTime < oneDay then
     RepeatTimer.Interval:= trunc(RepeatTime)
    else // to restart timer every day
-    RepeatTimer.Interval:= 86400000;
+    RepeatTimer.Interval:= oneDay;
    RepeatTimer.Enabled:= True;
    CurrentRepeat:= 0;
    RepeatOutputLE.Text:= '0';
@@ -2150,10 +2157,10 @@ begin
   StartTimeLE.Text:= startTime;
 
   // start OverallTimer to indicate running state
-  if GlobalTime < 86400000 then // if less than one day
+  if GlobalTime < oneDay then
    OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
-   OverallTimer.Interval:= 86400000;
+   OverallTimer.Interval:= oneDay;
   OverallTimer.Enabled:= True;
   // show first tab and start its timer
   RepeatPC.ActivePage:= Step1TS;
@@ -2173,17 +2180,44 @@ begin
 
 end;
 
+procedure TMainForm.SendRepeatToPump;
+// send command to pump driver
+begin
+  if HaveSerial then
+  begin
+   ser.SendString(commandForRepeat);
+   if ser.LastError <> 0 then
+   begin
+    with Application do
+     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc),
+                      'Error', MB_ICONERROR + MB_OK);
+    ConnComPortLE.Color:= clRed;
+    ConnComPortLE.Text:= 'Try to reconnect';
+    IndicatorPanelP.Caption:= 'Connection failiure';
+    ConnectionMI.Enabled:= True;
+    RunBB.Enabled:= False;
+    CloseSerialConn;
+    exit;
+   end;
+  end
+  else // no serial connection
+  begin
+   RunBB.Enabled:= False;
+   exit;
+  end;
+end;
+
 procedure TMainForm.RepeatTimerFinished;
 // Actions after repeat time interval ends
 begin
  // if one day has passed but the pumps must run longer
- if GlobalRepeatTime > 86400000 then
+ if GlobalRepeatTime > oneDay then
  begin
-  GlobalRepeatTime:= GlobalRepeatTime - 4000;
-  if GlobalRepeatTime < 86400000 then // if less than one day
+  GlobalRepeatTime:= GlobalRepeatTime - oneDay;
+  if GlobalRepeatTime < oneDay then
    RepeatTimer.Interval:= trunc(GlobalRepeatTime)
   else // to restart timer every day
-   RepeatTimer.Interval:= 86400000;
+   RepeatTimer.Interval:= oneDay;
   RepeatTimer.Enabled:= True;
   exit;
  end;
@@ -2203,17 +2237,17 @@ end;
 procedure TMainForm.OverallTimerFinished;
 // Actions after time interval ends
 var
-  finishTime : string;
+  finishTime, command : string;
   i, j : integer;
 begin
  // if one day has passed but the pumps must run longer
- if GlobalTime > 86400000 then
+ if GlobalTime > oneDay then
  begin
-  GlobalTime:= GlobalTime - 86400000;
-  if GlobalTime < 86400000 then // if less than one day
+  GlobalTime:= GlobalTime - oneDay;
+  if GlobalTime < oneDay then // if less than one day
    OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
-   OverallTimer.Interval:= 86400000;
+   OverallTimer.Interval:= oneDay;
   OverallTimer.Enabled:= True;
   exit;
  end;
@@ -2233,6 +2267,20 @@ begin
  IndicatorPanelP.Caption:= 'Run finished';
  IndicatorPanelP.Color:= clInfoBk;
  RepeatOutputLE.Visible:= False;
+
+ // stop all pumps and valves
+ command:= '/0';
+ // disable all pumps
+ command:= command + 'I';
+ for j:= 1 to PumpNum do
+  command:= command + '0';
+ // execute flag and turn off LED
+ command:= command + 'lR';
+ // execute
+ command:= command + LineEnding;
+ if HaveSerial then
+  ser.SendString(command);
+
  // stop all timers and reset captions
  for j:= 1 to StepNum do
  begin
@@ -2314,6 +2362,10 @@ begin
  begin
   // switch to step 1
   StepTimer1.Enabled:= True;
+  if HaveSerial and
+   (RunEndlessCB.Checked or (RepeatSE.Value > 0)) then
+   // send repeat sequence to pump driver
+   SendRepeatToPump;
   RepeatPC.ActivePage:= Step1TS;
   // highlight it as active by adding an asterisk to the step name
   Step1TS.Caption:= 'Step 1 *';
@@ -2333,12 +2385,19 @@ end;
 
 procedure TMainForm.StepTimerLastFinished(Sender: TObject);
 begin
+ // switch to step 1
+ StepTimer1.Enabled:= True;
+
+ // send repeat sequence to pump driver
+ if HaveSerial and
+  (RunEndlessCB.Checked or (RepeatSE.Value > 0)) then
+  SendRepeatToPump;
+
  // remove asterisk from step caption
  Step7TS.Caption:= 'Step 7';
  (FindComponent('StepTimer' + IntToStr(StepNum))
         as TTimer).Enabled:= False;
- // switch to step 1
- StepTimer1.Enabled:= True;
+
  RepeatPC.ActivePage:= Step1TS;
 end;
 
@@ -2355,7 +2414,6 @@ begin
  // re-enable menu to load and save action files
  LoadActionMI.Enabled:= True;
  SaveActionMI.Enabled:= True;
- command:= '';
  // address
  command:= '/0';
  // disable all pumps
@@ -3372,9 +3430,13 @@ begin
 
     // get Firmware version by first sending a command and receiving the reply
     try
-     command:= '/0lR' + LineEnding;
-     serTest.SendString(command);
-     FirmwareVersion:= serTest.RecvPacket(1000);
+     // if another pump driver is currently running, don't send it a command
+     if serTest.LastError = 0 then
+     begin
+      command:= '/0lR' + LineEnding;
+      serTest.SendString(command);
+      FirmwareVersion:= serTest.RecvPacket(1000);
+     end;
     finally
      if serTest.LastError <> 0 then
       inc(ErrorCount);

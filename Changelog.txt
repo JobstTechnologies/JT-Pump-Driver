@@ -1,5 +1,17 @@
 Changes
 
+from version 3.09 to 3.10
+
+improvement:
+- to assure the actual pump time does not drift away from the desired time
+  send a new command to the pump driver at the end of every repeat
+
+bugfixes:
+- don't connect to other pump drivers that are currently running
+  while scanning the COM ports
+- fix wrong timer when a single repeat is longer than a day
+
+
 from version 3.08 to 3.09
 
 improvements:
