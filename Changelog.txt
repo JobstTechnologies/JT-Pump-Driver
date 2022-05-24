@@ -1,5 +1,16 @@
 Changes
 
+from version 2.71 to 2.72
+
+improvement:
+- to assure the actual pump time does not drift away from the desired time
+  send a new command to the pump driver at the end of every repeat
+
+bugfix:
+- don't connect to other pump drivers that are currently running
+  while scanning the COM ports
+
+
 from version 2.70 to 2.71
 
 improvements:
