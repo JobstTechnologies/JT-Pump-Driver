@@ -393,6 +393,7 @@ var
   connectedPumpDriver : longint = 0; // ID of the connected pump driver
   COMList : array of Int32; // list with available pump drivers (list index is COM port number)
   commandForRepeat : string; // stores the command sent on every repeat
+  oneDay : longint = 86400000; // time of one day in ms
 
 implementation
 
@@ -1799,10 +1800,10 @@ begin
   begin
    RepeatOutputLE.Visible:= True;
    RepeatTime:= trunc(GlobalTime / (StrToFloat(RepeatSE.Text) + 1));
-   if RepeatTime < 86400000 then // if less than one day
+   if RepeatTime < oneDay then
     RepeatTimer.Interval:= trunc(RepeatTime)
    else // to restart timer every day
-    RepeatTimer.Interval:= 86400000;
+    RepeatTimer.Interval:= oneDay;
    RepeatTimer.Enabled:= True;
    CurrentRepeat:= 0;
    RepeatOutputLE.Text:= '0';
@@ -1816,10 +1817,10 @@ begin
   StartTimeLE.Text:= startTime;
 
   // start OverallTimer to indicate running state
-  if GlobalTime < 86400000 then // if less than one day
+  if GlobalTime < oneDay then
    OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
-   OverallTimer.Interval:= 86400000;
+   OverallTimer.Interval:= oneDay;
   OverallTimer.Enabled:= True;
   // show first tab and start its timer
   RepeatPC.ActivePage:= Step1TS;
@@ -1870,13 +1871,13 @@ procedure TMainForm.RepeatTimerFinished;
 // Actions after repeat time interval ends
 begin
  // if one day has passed but the pumps must run longer
- if GlobalRepeatTime > 86400000 then
+ if GlobalRepeatTime > oneDay then
  begin
-  GlobalRepeatTime:= GlobalRepeatTime - 4000;
-  if GlobalRepeatTime < 86400000 then // if less than one day
+  GlobalRepeatTime:= GlobalRepeatTime - oneDay;
+  if GlobalRepeatTime < oneDay then
    RepeatTimer.Interval:= trunc(GlobalRepeatTime)
   else // to restart timer every day
-   RepeatTimer.Interval:= 86400000;
+   RepeatTimer.Interval:= oneDay;
   RepeatTimer.Enabled:= True;
   exit;
  end;
@@ -1900,13 +1901,13 @@ var
   i, j : integer;
 begin
  // if one day has passed but the pumps must run longer
- if GlobalTime > 86400000 then
+ if GlobalTime > oneDay then
  begin
-  GlobalTime:= GlobalTime - 86400000;
-  if GlobalTime < 86400000 then // if less than one day
+  GlobalTime:= GlobalTime - oneDay;
+  if GlobalTime < oneDay then
    OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
-   OverallTimer.Interval:= 86400000;
+   OverallTimer.Interval:= oneDay;
   OverallTimer.Enabled:= True;
   exit;
  end;
