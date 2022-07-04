@@ -2,7 +2,7 @@ Changes
 
 from version 2.71 to 3.10
 
-improvement:
+improvements:
 - up to 8 pumps can be controlled
 - add button to connect to a pump driver so that the corresponding
   menu entry is now an optional method to connect
@@ -16,7 +16,7 @@ bugfixes:
 - fix wrong timer when a single repeat is longer than a day
 
 change:
-- remove button to "pump free"
+- remove button to "Free Pumps"
   (no longer necessary and can be done using an action file)
 
 
