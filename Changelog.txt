@@ -1,6 +1,6 @@
 Changes
 
-from version 3.09 to 3.10
+from version 2.71 to 2.72
 
 improvement:
 - to assure the actual pump time does not drift away from the desired time
@@ -12,7 +12,7 @@ bugfixes:
 - fix wrong timer when a single repeat is longer than a day
 
 
-from version 3.08 to 3.09
+from version 2.70 to 2.71
 
 improvements:
 - when connecting only COM ports connected to a pump driver are offered
@@ -23,61 +23,62 @@ bugfix:
 - enable to reconnect after the pump driver USB cable was accidentally removed
 
 
-from version 3.07 to 3.08
+from version 2.612 to 2.70
 
-bugfixes:
-- fix the Free Pumps functionality
+improvement:
+- display resulting percentage of maximal pump speed
+
+bugfix:
 - when the USB connection to the driver was lost, the software could be in a
-  state where it could no longer readout the firmware version after reconnecting
+  state where it could no longer readout the firmware version after reconnecting 
 
 
-from version 3.06 to 3.07
+from version 2.611 to 2.612
 
 improvement:
 - display full path of loaded action file as tooltip
-
-bugfix:
-- fix a minor UI issue
 
 compilation:
 - Win32 builds are now available
 - since this release at least Lazarus 2.2 is necessary to compile
 
 
-from version 3.05 to 3.06
+from version 2.610 to 2.611
+
+bugfixes:
+- restore missing tooltip for some buttons
+- fix compilation with Lazarus 2.0.x
+
+
+from version 2.69 to 2.610
 
 improvement:
-- it is now possible to set a time down to 0.05 s per action step 
+- it is now possible to set a time down to 0.05 s per action step
 
 bugfixes:
 - when entering Live mode assure that the other action steps are ignored
 - don't allow to enter more than 100% duty cycle
 
 
-from version 3.04 to 3.05
+from version 2.68 to 2.69
 
-bugfixes:
-- re-enable all settings after an action file was loaded and run
-- when running multiple steps, show the currently executed step correctly
-
-improvements:
+improvement:
 - when more than one step is used, the currently executed step is
   highlighted by an asterisk in its name
-- it is now possible to view the state of pumps 5 - 8 while the pumps
-  are running
 
+bugfix:
+- when running multiple steps, show the currently executed step correctly
 
-from version 3.03 to 3.04
+from version 2.67 to 2.68
 
 bugfixes:
-- action files created with versions of JT Pump Driver that only support 4 pumps
-  can now be loaded and executed without errors
 - output an error when trying to load a non-existent action file
-- the settings for pump 5 - 8 are now disabled when their step is not used
+- output an error when trying to load an action file that was created with
+  a JT Pump Driver version supporting up to 8 pumps
 - no action file can be loaded or saved while the pumps are running
 
 
-from version 3.02 to 3.03
+from version 2.66 to 2.67
 
 bugfix:
 - fix that endless repeats of multiple steps could lead to a crash
@@ -85,22 +86,23 @@ bugfix:
   (regression introduced by commit 8ea24e4c)
 
 
-from version 3.01 to 3.02
+from version 2.65 to 2.66
 
 improvement:
 - more stable USB serial connection
 
 
-from version 3.00 to 3.01
+from version 2.64 to 2.65
+
+bugfix:
+- under some circumstances a successful connection to a pump driver was indicated
+  despite the connection failed
+
+
+from version 2.63 to 2.64
 
 new:
 - hidden menu entry to force the flashing of the firmware
-
-
-from version 2.63 to 3.00
-
-new:
-- support for up to 8 pumps
 
 
 from version 2.62 to 2.63
