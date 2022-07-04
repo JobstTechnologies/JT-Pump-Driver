@@ -2,11 +2,11 @@ object MainForm: TMainForm
   Left = 443
   Height = 615
   Top = 117
-  Width = 712
+  Width = 710
   AllowDropFiles = True
   Caption = 'JT Pump Driver'
   ClientHeight = 595
-  ClientWidth = 712
+  ClientWidth = 710
   Color = clWindow
   Menu = MainMenu
   OnClose = FormClose
@@ -16,10 +16,10 @@ object MainForm: TMainForm
   Position = poDefaultPosOnly
   LCLVersion = '2.2.2.0'
   object RepeatPC: TPageControl
-    Left = 16
+    Left = 12
     Height = 512
     Top = 8
-    Width = 368
+    Width = 362
     ActivePage = Step1TS
     ParentShowHint = False
     TabIndex = 0
@@ -27,7 +27,7 @@ object MainForm: TMainForm
     object Step1TS: TTabSheet
       Caption = 'Step 1'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       object ActionTime1GB: TGroupBox
         Left = 54
         Height = 49
@@ -691,7 +691,7 @@ object MainForm: TMainForm
       Hint = 'object S1PC: TPageControl'
       Caption = 'Step 2'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       object Step2UseCB: TCheckBox
         Left = 8
         Height = 19
@@ -1361,7 +1361,7 @@ object MainForm: TMainForm
     object Step3TS: TTabSheet
       Caption = 'Step 3'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       TabVisible = False
       object Step3UseCB: TCheckBox
         Left = 8
@@ -2032,7 +2032,7 @@ object MainForm: TMainForm
     object Step4TS: TTabSheet
       Caption = 'Step 4'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       TabVisible = False
       object Step4UseCB: TCheckBox
         Left = 8
@@ -2703,7 +2703,7 @@ object MainForm: TMainForm
     object Step5TS: TTabSheet
       Caption = 'Step 5'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       TabVisible = False
       object Step5UseCB: TCheckBox
         Left = 8
@@ -3374,7 +3374,7 @@ object MainForm: TMainForm
     object Step6TS: TTabSheet
       Caption = 'Step 6'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       TabVisible = False
       object Step6UseCB: TCheckBox
         Left = 8
@@ -4045,7 +4045,7 @@ object MainForm: TMainForm
     object Step7TS: TTabSheet
       Caption = 'Step7'
       ClientHeight = 484
-      ClientWidth = 360
+      ClientWidth = 354
       TabVisible = False
       object DutyCycle7GB: TGroupBox
         Left = 258
@@ -4723,7 +4723,7 @@ object MainForm: TMainForm
     end
   end
   object StatusGB: TGroupBox
-    Left = 396
+    Left = 388
     Height = 384
     Top = 120
     Width = 148
@@ -4844,7 +4844,7 @@ object MainForm: TMainForm
     end
   end
   object RunSettingsGB: TGroupBox
-    Left = 396
+    Left = 388
     Height = 88
     Top = 32
     Width = 148
@@ -4879,10 +4879,10 @@ object MainForm: TMainForm
     end
   end
   object CommandM: TMemo
-    Left = 15
+    Left = 12
     Height = 37
     Hint = 'The command that will be sent by clicking ''Run Pumps'''
-    Top = 542
+    Top = 544
     Width = 529
     ParentShowHint = False
     ReadOnly = True
@@ -4891,7 +4891,7 @@ object MainForm: TMainForm
     TabOrder = 2
   end
   object CommandL: TLabel
-    Left = 16
+    Left = 12
     Height = 15
     Top = 526
     Width = 57
@@ -4899,7 +4899,7 @@ object MainForm: TMainForm
     ParentColor = False
   end
   object LiveModeCB: TCheckBox
-    Left = 405
+    Left = 398
     Height = 19
     Hint = 'All steps will be disabled and'#13#10'every pump settings change'#13#10'will have an immediate effect'
     Top = 8
@@ -4911,9 +4911,9 @@ object MainForm: TMainForm
     TabOrder = 4
   end
   object DriverConnectionGB: TGroupBox
-    Left = 552
+    Left = 550
     Height = 75
-    Top = 24
+    Top = 32
     Width = 148
     Caption = 'Connection'
     ClientHeight = 55
@@ -4933,9 +4933,9 @@ object MainForm: TMainForm
     end
   end
   object PumpSetupGB: TGroupBox
-    Left = 552
+    Left = 550
     Height = 64
-    Top = 296
+    Top = 312
     Width = 148
     Caption = 'Pump Setup'
     ClientHeight = 44
@@ -4979,9 +4979,9 @@ object MainForm: TMainForm
     Visible = False
   end
   object ActionsGB: TGroupBox
-    Left = 552
+    Left = 550
     Height = 186
-    Top = 104
+    Top = 120
     Width = 148
     Caption = 'Actions'
     ClientHeight = 166
