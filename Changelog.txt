@@ -4,6 +4,9 @@ from version 2.71 to 3.10
 
 improvement:
 - up to 8 pumps can be controlled
+- add button to connect to a pump driver so that the corresponding
+  menu entry is now an optional method to connect
+- on closing the program, ask the user when action is running if he really wants to
 - to assure the actual pump time does not drift away from the desired time
   send a new command to the pump driver at the end of every repeat
 
@@ -11,6 +14,10 @@ bugfixes:
 - don't connect to other pump drivers that are currently running
   while scanning the COM ports
 - fix wrong timer when a single repeat is longer than a day
+
+change:
+- remove button to "pump free"
+  (no longer necessary and can be done using an action file)
 
 
 from version 2.70 to 2.71

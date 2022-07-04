@@ -1,19 +1,20 @@
 object MainForm: TMainForm
   Left = 443
-  Height = 666
+  Height = 615
   Top = 117
-  Width = 554
+  Width = 712
   AllowDropFiles = True
   Caption = 'JT Pump Driver'
-  ClientHeight = 646
-  ClientWidth = 554
+  ClientHeight = 595
+  ClientWidth = 712
   Color = clWindow
   Menu = MainMenu
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDropFiles = FormDropFiles
   Position = poDefaultPosOnly
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.2.2.0'
   object RepeatPC: TPageControl
     Left = 16
     Height = 512
@@ -91,6 +92,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle1FSE: TFloatSpinEdit
           Left = 8
@@ -201,6 +203,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB1: TGroupBox
@@ -271,6 +274,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB1: TGroupBox
@@ -341,6 +345,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB1: TGroupBox
@@ -411,6 +416,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -478,6 +484,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB1: TGroupBox
@@ -543,6 +550,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB1: TGroupBox
@@ -607,6 +615,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB1: TGroupBox
@@ -671,6 +680,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -759,6 +769,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle2FSE: TFloatSpinEdit
           Left = 8
@@ -853,6 +864,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB2: TGroupBox
@@ -920,6 +932,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB2: TGroupBox
@@ -987,6 +1000,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB2: TGroupBox
@@ -1054,6 +1068,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -1126,6 +1141,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB2: TGroupBox
@@ -1195,6 +1211,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB2: TGroupBox
@@ -1264,6 +1281,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB2: TGroupBox
@@ -1333,6 +1351,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -1421,6 +1440,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle3FSE: TFloatSpinEdit
           Left = 8
@@ -1515,6 +1535,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB3: TGroupBox
@@ -1582,6 +1603,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB3: TGroupBox
@@ -1649,6 +1671,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB3: TGroupBox
@@ -1716,6 +1739,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -1788,6 +1812,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB3: TGroupBox
@@ -1857,6 +1882,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB3: TGroupBox
@@ -1926,6 +1952,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB3: TGroupBox
@@ -1995,6 +2022,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -2083,6 +2111,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle4FSE: TFloatSpinEdit
           Left = 8
@@ -2177,6 +2206,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB4: TGroupBox
@@ -2244,6 +2274,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB4: TGroupBox
@@ -2311,6 +2342,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB4: TGroupBox
@@ -2378,6 +2410,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -2450,6 +2483,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB4: TGroupBox
@@ -2519,6 +2553,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB4: TGroupBox
@@ -2588,6 +2623,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB4: TGroupBox
@@ -2657,6 +2693,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -2745,6 +2782,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle5FSE: TFloatSpinEdit
           Left = 8
@@ -2839,6 +2877,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB5: TGroupBox
@@ -2906,6 +2945,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB5: TGroupBox
@@ -2973,6 +3013,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB5: TGroupBox
@@ -3040,6 +3081,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -3112,6 +3154,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB5: TGroupBox
@@ -3181,6 +3224,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB5: TGroupBox
@@ -3250,6 +3294,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB5: TGroupBox
@@ -3319,6 +3364,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -3407,6 +3453,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle6FSE: TFloatSpinEdit
           Left = 8
@@ -3501,6 +3548,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB6: TGroupBox
@@ -3568,6 +3616,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB6: TGroupBox
@@ -3635,6 +3684,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB6: TGroupBox
@@ -3702,6 +3752,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -3774,6 +3825,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB6: TGroupBox
@@ -3843,6 +3895,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB6: TGroupBox
@@ -3912,6 +3965,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB6: TGroupBox
@@ -3981,6 +4035,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -4006,6 +4061,7 @@ object MainForm: TMainForm
           Top = 4
           Width = 10
           Caption = '%'
+          ParentColor = False
         end
         object DutyCycle7FSE: TFloatSpinEdit
           Left = 8
@@ -4163,6 +4219,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump2GB7: TGroupBox
@@ -4233,6 +4290,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump3GB7: TGroupBox
@@ -4302,6 +4360,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump4GB7: TGroupBox
@@ -4371,6 +4430,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -4443,6 +4503,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump6GB7: TGroupBox
@@ -4513,6 +4574,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump7GB7: TGroupBox
@@ -4582,6 +4644,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
           object Pump8GB7: TGroupBox
@@ -4651,6 +4714,7 @@ object MainForm: TMainForm
               Top = 120
               Width = 39
               Caption = 'Voltage'
+              ParentColor = False
             end
           end
         end
@@ -4665,7 +4729,7 @@ object MainForm: TMainForm
     Caption = 'Status Info'
     ClientHeight = 364
     ClientWidth = 144
-    TabOrder = 4
+    TabOrder = 3
     object RepeatOutputLE: TLabeledEdit
       Left = 26
       Height = 23
@@ -4675,6 +4739,7 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 84
       EditLabel.Caption = 'Current Repeat'
+      EditLabel.ParentColor = False
       ReadOnly = True
       TabOrder = 2
       Visible = False
@@ -4701,6 +4766,7 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Connected Port'
+      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       TabOrder = 1
@@ -4716,6 +4782,7 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Total Time'
+      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -4730,6 +4797,7 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Start Time'
+      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -4744,6 +4812,7 @@ object MainForm: TMainForm
       EditLabel.Height = 15
       EditLabel.Width = 124
       EditLabel.Caption = 'Finish Time'
+      EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
@@ -4770,6 +4839,7 @@ object MainForm: TMainForm
       Top = 104
       Width = 98
       Caption = 'Loaded Action File'
+      ParentColor = False
     end
   end
   object RunSettingsGB: TGroupBox
@@ -4796,6 +4866,7 @@ object MainForm: TMainForm
       Top = 12
       Width = 71
       Caption = 'Repeat times:'
+      ParentColor = False
     end
     object RepeatSE: TSpinEdit
       Left = 87
@@ -4806,105 +4877,25 @@ object MainForm: TMainForm
       TabOrder = 0
     end
   end
-  object ActionsGB: TGroupBox
-    Left = 16
-    Height = 64
-    Top = 520
-    Width = 529
-    Caption = 'Actions'
-    ClientHeight = 44
-    ClientWidth = 525
-    TabOrder = 2
-    object RunBB: TBitBtn
-      Left = 8
-      Height = 39
-      Hint = 'Starts the pump action according to the current settings.'#13#10'To enable the button you must first connect to the pump driver'#13#10'using the menu ''Connection''.'
-      Top = 0
-      Width = 104
-      Caption = 'Run Pumps'
-      Enabled = False
-      OnClick = RunBBClick
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-    end
-    object StopBB: TBitBtn
-      Left = 120
-      Height = 39
-      Hint = 'Stops the pump action and all running pumps'
-      Top = 0
-      Width = 104
-      Caption = 'Stop Pumps'
-      Enabled = False
-      OnClick = StopBBClick
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-    end
-    object GenerateCommandBB: TBitBtn
-      Left = 376
-      Height = 39
-      Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a loaded action file'
-      Top = 0
-      Width = 128
-      Caption = 'Generate Command'
-      OnClick = GenerateCommandBBClick
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-    end
-    object RunFreeBB: TBitBtn
-      Left = 248
-      Height = 39
-      Hint = 'Starts the method to free pumps after they have been unused'#13#10'for a longer time resulting in a closed pump hose.'#13#10'When the pump hose is closed you will in most cases hear a'#13#10'sound on every pump rotation. As soon as this sound disappears,'#13#10'the hose should be open and you can click ''Stop Pumps''.'#13#10#13#10'If a ''Free Pumps'' run does not open the pump hose'#13#10'the pump is broken and cannot be repaired.'
-      Top = 0
-      Width = 98
-      Caption = 'Free Pumps'
-      Enabled = False
-      OnClick = RunFreeBBClick
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-    end
-    object Panel1: TPanel
-      Left = 235
-      Height = 42
-      Top = 0
-      Width = 1
-      BevelColor = clBtnShadow
-      BevelInner = bvRaised
-      BevelOuter = bvNone
-      TabOrder = 4
-    end
-    object Panel2: TPanel
-      Left = 361
-      Height = 41
-      Top = 0
-      Width = 1
-      BevelColor = clBtnShadow
-      BevelInner = bvSpace
-      BevelOuter = bvNone
-      TabOrder = 5
-    end
-  end
   object CommandM: TMemo
     Left = 15
     Height = 37
     Hint = 'The command that will be sent by clicking ''Run Pumps'''
-    Top = 600
+    Top = 542
     Width = 529
     ParentShowHint = False
     ReadOnly = True
     ScrollBars = ssAutoVertical
     ShowHint = True
-    TabOrder = 3
+    TabOrder = 2
   end
   object CommandL: TLabel
     Left = 16
     Height = 15
-    Top = 584
+    Top = 526
     Width = 57
     Caption = 'Command'
+    ParentColor = False
   end
   object LiveModeCB: TCheckBox
     Left = 405
@@ -4916,11 +4907,144 @@ object MainForm: TMainForm
     OnChange = LiveModeCBChange
     ParentShowHint = False
     ShowHint = True
+    TabOrder = 4
+  end
+  object DriverConnectionGB: TGroupBox
+    Left = 552
+    Height = 75
+    Top = 24
+    Width = 148
+    Caption = 'Connection'
+    ClientHeight = 55
+    ClientWidth = 144
     TabOrder = 5
+    object DriverConnectBB: TBitBtn
+      Left = 8
+      Height = 39
+      Hint = 'Dis/connects to a pump driver'
+      Top = 4
+      Width = 126
+      Caption = 'Connect Driver'
+      OnClick = DriverConnectBBClick
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+    end
+  end
+  object PumpSetupGB: TGroupBox
+    Left = 552
+    Height = 88
+    Top = 296
+    Width = 148
+    Caption = 'Pump Setup'
+    ClientHeight = 68
+    ClientWidth = 144
+    ParentColor = False
+    TabOrder = 6
+    object HasNoPumpsCB: TCheckBox
+      Left = 6
+      Height = 19
+      Top = 40
+      Width = 128
+      Caption = 'Setup has no pumps'
+      TabOrder = 1
+    end
+    object PumpNumberL: TLabel
+      Left = 6
+      Height = 15
+      Hint = 'Number of pumps in the setup'
+      Top = 12
+      Width = 91
+      Caption = 'Available pumps:'
+      ParentColor = False
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object PumpNumberSE: TSpinEdit
+      Left = 100
+      Height = 23
+      Hint = 'Number of pumps in the setup'
+      Top = 8
+      Width = 38
+      MaxValue = 8
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      Value = 8
+    end
+  end
+  object HaveSerialCB: TCheckBox
+    Left = 552
+    Height = 19
+    Top = 552
+    Width = 122
+    Caption = 'HasPumpDrivConn'
+    OnChange = HaveSerialCBChange
+    TabOrder = 7
+    Visible = False
+  end
+  object ActionsGB: TGroupBox
+    Left = 552
+    Height = 186
+    Top = 104
+    Width = 148
+    Caption = 'Actions'
+    ClientHeight = 166
+    ClientWidth = 144
+    ParentColor = False
+    TabOrder = 8
+    object RunBB: TBitBtn
+      Left = 20
+      Height = 39
+      Hint = 'Starts the pump action according to the current settings.'#13#10'To enable the button you must first connect to the pump driver'#13#10'using the menu ''Connection''.'
+      Top = 4
+      Width = 104
+      Caption = 'Run Action'
+      Enabled = False
+      OnClick = RunBBClick
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+    end
+    object StopBB: TBitBtn
+      Left = 20
+      Height = 39
+      Hint = 'Stops the pump action and all running pumps'
+      Top = 52
+      Width = 104
+      Caption = 'Stop Action'
+      Enabled = False
+      OnClick = StopBBClick
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+    end
+    object GenerateCommandBB: TBitBtn
+      Left = 7
+      Height = 39
+      Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a loaded action file'
+      Top = 116
+      Width = 128
+      Caption = 'Generate Command'
+      OnClick = GenerateCommandBBClick
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+    end
+    object Panel3: TPanel
+      Left = 8
+      Height = 1
+      Top = 104
+      Width = 124
+      BevelColor = clBtnShadow
+      BevelInner = bvRaised
+      BevelOuter = bvNone
+      TabOrder = 3
+    end
   end
   object MainMenu: TMainMenu
-    Left = 432
-    Top = 592
+    Left = 416
+    Top = 496
     object ConnectionMI: TMenuItem
       Caption = 'Connection'
       ShortCut = 16463
@@ -4966,29 +5090,29 @@ object MainForm: TMainForm
     Enabled = False
     Interval = 100
     OnTimer = OverallTimerFinished
-    Left = 491
-    Top = 472
+    Left = 352
+    Top = 544
   end
   object RepeatTimer: TTimer
     Enabled = False
     Interval = 100
     OnTimer = RepeatTimerFinished
-    Left = 400
-    Top = 472
+    Left = 352
+    Top = 496
   end
   object StopTimer: TTimer
     Enabled = False
     Interval = 1500
     OnTimer = StopTimerFinished
-    Left = 368
-    Top = 592
+    Left = 640
+    Top = 480
   end
   object FirmwareFileDialog: TOpenDialog
     Title = 'Open firmware file'
     Filter = 'Binary file|*.bin'
     InitialDir = 'ExtractFileDir(Application.ExeName)'
-    Left = 280
-    Top = 592
+    Left = 560
+    Top = 480
   end
   object FirmwareNote: TPopupNotifier
     Color = clInfoBk
@@ -5034,8 +5158,8 @@ object MainForm: TMainForm
     TitleFont.Quality = fqCleartype
     TitleFont.Style = [fsBold]
     Visible = False
-    Left = 104
-    Top = 592
+    Left = 640
+    Top = 416
   end
   object StepTimer1: TTimer
     Enabled = False
@@ -5081,13 +5205,13 @@ object MainForm: TMainForm
   end
   object SaveDialog: TSaveDialog
     Filter = 'Pump Driver Actions|*.PDAction'
-    Left = 496
-    Top = 592
+    Left = 480
+    Top = 496
   end
   object OpenDialog: TOpenDialog
     Filter = 'Pump Driver Actions|*.PDAction'
-    Left = 24
-    Top = 592
+    Left = 560
+    Top = 416
   end
   object StepTimer7: TTimer
     Enabled = False

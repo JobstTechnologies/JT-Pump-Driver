@@ -16,6 +16,12 @@ type
   { TMainForm }
 
   TMainForm = class(TForm)
+    ActionsGB: TGroupBox;
+    DriverConnectBB: TBitBtn;
+    DriverConnectionGB: TGroupBox;
+    GenerateCommandBB: TBitBtn;
+    HasNoPumpsCB: TCheckBox;
+    HaveSerialCB: TCheckBox;
     LiveModeCB: TCheckBox;
     DutyCycle1FSE: TFloatSpinEdit;
     DutyCycle2FSE: TFloatSpinEdit;
@@ -38,8 +44,6 @@ type
     DutyCycle5GB: TGroupBox;
     DutyCycle6GB: TGroupBox;
     DutyCycle7GB: TGroupBox;
-    GenerateCommandBB: TBitBtn;
-    ActionsGB: TGroupBox;
     CommandL: TLabel;
     CommandM: TMemo;
     FirmwareUpdateMI: TMenuItem;
@@ -90,6 +94,7 @@ type
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
     FirmwareResetMI: TMenuItem;
+    Panel3: TPanel;
     Pump5DirectionRG1: TRadioGroup;
     Pump5DirectionRG2: TRadioGroup;
     Pump5DirectionRG3: TRadioGroup;
@@ -202,6 +207,10 @@ type
     Pump8VoltageFS5: TFloatSpinEdit;
     Pump8VoltageFS6: TFloatSpinEdit;
     Pump8VoltageFS7: TFloatSpinEdit;
+    PumpNumberL: TLabel;
+    PumpNumberSE: TSpinEdit;
+    PumpSetupGB: TGroupBox;
+    RunBB: TBitBtn;
     S2P14: TTabSheet;
     S3P14: TTabSheet;
     S4P14: TTabSheet;
@@ -232,14 +241,13 @@ type
     StepTimer5: TTimer;
     StepTimer6: TTimer;
     StepTimer7: TTimer;
+    StopBB: TBitBtn;
     StopTimer: TTimer;
     StartTimeLE: TLabeledEdit;
     FinishTimeLE: TLabeledEdit;
     S1P14: TTabSheet;
     S1P58: TTabSheet;
     TotalTimeLE: TLabeledEdit;
-    Panel1: TPanel;
-    Panel2: TPanel;
     RunTime1FSE: TFloatSpinEdit;
     RunTime2FSE: TFloatSpinEdit;
     RunTime3FSE: TFloatSpinEdit;
@@ -390,9 +398,7 @@ type
     RepeatOutputLE: TLabeledEdit;
     RepeatPC: TPageControl;
     RepeatSE: TSpinEdit;
-    RunBB: TBitBtn;
     RunEndlessCB: TCheckBox;
-    RunFreeBB: TBitBtn;
     Step1TS: TTabSheet;
     Step1UseCB: TCheckBox;
     Step2TS: TTabSheet;
@@ -407,7 +413,6 @@ type
     Step6UseCB: TCheckBox;
     Step7TS: TTabSheet;
     Step7UseCB: TCheckBox;
-    StopBB: TBitBtn;
     ConnectionMI: TMenuItem;
     MiscellaneousMI: TMenuItem;
     ConnComPortLE: TLabeledEdit;
@@ -437,13 +442,17 @@ type
     Unit7RBs: TRadioButton;
     procedure AboutMIClick(Sender: TObject);
     procedure ConnectionMIClick(Sender: TObject);
+    procedure ConnectionStart(Sender: TObject; Connect: Boolean);
+    procedure DriverConnectBBClick(Sender: TObject);
     procedure DutyCycleXFSEChange(Sender: TObject);
     procedure FirmwareUpdateMIClick(Sender: TObject);
     procedure FormClose(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormDropFiles(Sender: TObject; const {%H-}FileNames: array of String);
     procedure GenerateCommandBBClick(Sender: TObject);
     procedure GetFirmwareVersionMIClick(Sender: TObject);
+    procedure HaveSerialCBChange(Sender: TObject);
     procedure LiveModeCBChange(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
     procedure FirmwareResetMIClick(Sender: TObject);
@@ -489,7 +498,6 @@ var
   GlobalTime : Double = 0;
   GlobalRepeatTime : Double = 0;
   RepeatTime : Double = 0;
-  HaveSerial : Boolean = False;
   InName : string = ''; // name of load file
   DropfileName : string = ''; // name of dropped file
   StepNum : integer = 7; // number of steps
@@ -532,15 +540,20 @@ begin
 end;
 
 procedure TMainForm.ConnectionMIClick(Sender: TObject);
+begin
+ ConnectionStart(Sender, true); // always call to connect
+end;
+
+procedure TMainForm.ConnectionStart(Sender: TObject; Connect: Boolean);
 // opens the connection settings dialog and opens a connections according
 // to the dialog input
 var
-  command : string;
-  Reg : TRegistry;
-  i, k, COMNumber, Channel : integer;
-  FirmwareNumber : double = 0.0;
-  MousePointer : TPoint;
-  gotFirmwareNumber : Boolean = false;
+ command : string;
+ Reg : TRegistry;
+ i, k, COMNumber, Channel : integer;
+ FirmwareNumber : double = 0.0;
+ MousePointer : TPoint;
+ gotFirmwareNumber : Boolean = false;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
  // enable all menus because they would be disabled when formerly
@@ -590,7 +603,7 @@ begin
   else
   begin
    // if there is already a connection, display its port
-   if HaveSerial then
+   if HaveSerialCB.Checked then
      SerialUSBPortCB.ItemIndex:= SerialUSBPortCB.Items.IndexOf(COMPort)
    else
     SerialUSBPortCB.ItemIndex:= -1;
@@ -600,24 +613,28 @@ begin
   if SerialUSBPortCB.ItemIndex > -1 then
    SerialUSBPortCB.Text:= SerialUSBPortCB.Items[SerialUSBPortCB.ItemIndex];
 
-  // open connection dialog
-  ShowModal;
-  if ModalResult = mrOK then
-   COMPort:= SerialUSBPortCB.Text;
+  if Connect then
+  begin
+   // open connection dialog
+   ShowModal;
+   if ModalResult = mrOK then
+    COMPort:= SerialUSBPortCB.Text;
+  end
+  else
+   ModalResult:= mrNo;
 
  end; // end with with SerialUSBSelectionF
 
  if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
  begin
-  ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
+  ConnComPortLE.Text:= 'Not connected';
   IndicatorPanelP.Caption:= '';
   IndicatorPanelP.Color:= clDefault;
   // disable all buttons
   RunBB.Enabled:= false;
   StopBB.Enabled:= false;
-  RunFreeBB.Enabled:= false;
-  if HaveSerial then
+  if HaveSerialCB.Checked then
   begin
    // stop pumps
    command:= '/0I';
@@ -632,7 +649,8 @@ begin
   end;
   exit;
  end;
- if (COMPort = '') then // user set no COM port or chanceled
+
+ if COMPort = '' then // user set no COM port or canceled
  begin
   if SerialUSBSelectionF.ModalResult = mrCancel then
    exit; // nothing needs to be done
@@ -641,10 +659,9 @@ begin
   // disable all buttons
   RunBB.Enabled:= false;
   StopBB.Enabled:= false;
-  RunFreeBB.Enabled:= false;
   IndicatorPanelP.Caption:= 'Connection failure';
   IndicatorPanelP.Color:= clRed;
-  if HaveSerial then
+  if HaveSerialCB.Checked then
   begin
    // stop pumps
    command:= command + '/0I';
@@ -659,28 +676,29 @@ begin
   exit;
  end;
  // open new connection if not already available
- if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
+ if not (HaveSerialCB.Checked and (COMPort = ConnComPortLE.Text)) then
  try
-  if HaveSerial then
+  if HaveSerialCB.Checked then
    CloseSerialConn;
-  ConnComPortLE.Text:= 'Not connected';
   ConnComPortLE.Color:= clHighlight;
   ser:= TBlockSerial.Create;
   ser.DeadlockTimeout:= 3000; //set timeout to 3 s
   ser.Connect(COMPort);
   // the config must be set after the connection
   ser.config(9600, 8, 'N', SB1, False, False);
-
   if ser.LastError <> 0 then
   begin
    // disable all buttons
    RunBB.Enabled:= false;
    StopBB.Enabled:= false;
-   RunFreeBB.Enabled:= false;
    IndicatorPanelP.Caption:= 'Connection failure';
    IndicatorPanelP.Color:= clRed;
+   if ser.LastError = 9997 then
+    exit; // we cannot close socket or free when the connection timed out
+   CloseSerialConn;
    exit;
   end;
+
   // blink 5 times
   command:= '/0gLM500lM500G4R' + LineEnding;
   ser.SendString(command);
@@ -693,20 +711,26 @@ begin
    // disable all buttons
    RunBB.Enabled:= false;
    StopBB.Enabled:= false;
-   RunFreeBB.Enabled:= false;
+   IndicatorPanelP.Caption:= 'Connection failure';
+   IndicatorPanelP.Color:= clRed;
    if ser.LastError = 9997 then
     exit; // we cannot close socket or free when the connection timed out
    CloseSerialConn;
    exit;
   end;
-  HaveSerial:= True;
+  HaveSerialCB.Checked:= True;
   // output connected port
+  ConnComPortLE.Color:= clDefault;
   ConnComPortLE.Text:= SerialUSBSelectionF.SerialUSBPortCB.Text;
+  COMPort:= SerialUSBSelectionF.SerialUSBPortCB.Text;
   Channel:= StrToInt(Copy(COMPort, 4, 4));
   connectedPumpDriver:= COMList[Channel];
-  ConnComPortLE.Color:= clDefault;
   IndicatorPanelP.Caption:= 'Connection successful';
   IndicatorPanelP.Color:= clDefault;
+  // no matter if the firmware might be the right one, we can allow to save and
+  // load action files
+  LoadActionMI.Enabled:= True;
+  SaveActionMI.Enabled:= True;
   // get Firmware version
   try
    FirmwareVersion:= ser.RecvPacket(1000);
@@ -724,71 +748,74 @@ begin
     // disable all buttons
     RunBB.Enabled:= false;
     StopBB.Enabled:= false;
-    RunFreeBB.Enabled:= false;
     if ser.LastError = 9997 then
      exit; // we cannot close socket or free when the connection timed out
     CloseSerialConn;
     exit;
-   end
+   end;
+   // FirmwareVersion has now this format:
+   // "JT-PumpDriver-Firmware x.y\n Received command: ..."
+   // but on old versions the firmware does not have any number,
+   // only "received command" is sent back
+   // therefore check for a number dot
+   if Pos('.', FirmwareVersion) > 0 then
+    FirmwareVersion:= copy(FirmwareVersion, Pos('.', FirmwareVersion) - 1, 3)
+   // omit the 'r' because some versions used a capital letter 'R'
+   else if Pos('eceived command:', FirmwareVersion) > 0 then
+    FirmwareVersion:= 'unknown'
    else
    begin
-    // FirmwareVersion has now this format:
-    // "JT-PumpDriver-Firmware x.y\n Received command: ..."
-    // but on old versions the firmware does not have any number,
-    // only "received command" is sent back
-    // therefore check for a number dot
-    if Pos('.', FirmwareVersion) > 0 then
-     FirmwareVersion:= copy(FirmwareVersion, Pos('.', FirmwareVersion) - 1, 3)
-    // omit the 'r' because some versions used a capital letter 'R'
-    else if Pos('eceived command:', FirmwareVersion) > 0 then
-     FirmwareVersion:= 'unknown'
-    else
-    begin
-     MessageDlgPos('Not connected to a supported pump driver.',
-      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-     IndicatorPanelP.Caption:= 'Wrong device';
-     IndicatorPanelP.Color:= clRed;
-     ConnComPortLE.Color:= clRed;
-     CloseSerialConn;
-     exit;
-    end;
-    // JT Pump Driver requires a certain firmware version
-    if FirmwareVersion = 'unknown' then
-    begin
-     MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
-      + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
-      + LineEnding + 'You have an unknown old firmware version installed.'
-      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
-      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-     IndicatorPanelP.Caption:= 'Firmware too old';
-     IndicatorPanelP.Color:= clRed;
-     exit;
-    end;
-    // when the USB connection got lost, the software is sometimes in a state
-    // that Windows set the number format back to Windows' default
-    // therefore set here explicitly the number format again
-    DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
-    gotFirmwareNumber:= TryStrToFloat(FirmwareVersion, FirmwareNumber);
-
-    if (gotFirmwareNumber and (FirmwareNumber < RequiredFirmwareVersion))
-     or (not gotFirmwareNumber) then
-    begin
-     MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
-      + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
-      + LineEnding + 'You have firmware version ' + FirmwareVersion + ' installed.'
-      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
-      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-     IndicatorPanelP.Caption:= 'Firmware too old';
-     IndicatorPanelP.Color:= clRed;
-     exit;
-    end;
-    // enable all buttons
-    RunBB.Enabled:= true;
-    StopBB.Enabled:= true;
-    RunFreeBB.Enabled:= true;
+    MessageDlgPos('Not connected to a supported pump driver.',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    IndicatorPanelP.Caption:= 'Wrong device';
+    IndicatorPanelP.Color:= clRed;
+    ConnComPortLE.Color:= clRed;
+    CloseSerialConn;
+    exit;
    end;
+   // JT Pump Driver requires a certain firmware version
+   if FirmwareVersion = 'unknown' then
+   begin
+    MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
+     + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
+     + LineEnding + 'You have an unknown old firmware version installed.'
+     + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    IndicatorPanelP.Caption:= 'Firmware too old';
+    IndicatorPanelP.Color:= clRed;
+    exit;
+   end;
+   // when the USB connection got lost, the software is sometimes in a state
+   // that Windows set the number format back to Windows' default
+   // therefore set here explicitly the number format again
+   DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
+   gotFirmwareNumber:= TryStrToFloat(FirmwareVersion, FirmwareNumber);
+
+   if (gotFirmwareNumber and (FirmwareNumber < RequiredFirmwareVersion))
+    or (not gotFirmwareNumber) then
+   begin
+    MessageDlgPos('JT Pump Driver ' + Version + ' requires firmware version '
+     + FloatToStr(RequiredFirmwareVersion) + ' or newer!'
+     + LineEnding + 'You have firmware version ' + FirmwareVersion + ' installed.'
+     + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
+     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    IndicatorPanelP.Caption:= 'Firmware too old';
+    IndicatorPanelP.Color:= clRed;
+    exit;
+   end;
+   // enable all buttons
+   RunBB.Enabled:= true;
+   StopBB.Enabled:= true;
   end; //end inner finally
  end; //end outer finally
+end;
+
+procedure TMainForm.DriverConnectBBClick(Sender: TObject);
+begin
+ if HaveSerialCB.Checked then
+  ConnectionStart(Sender, false) // call to disconnect
+ else
+  ConnectionStart(Sender, true);
 end;
 
 procedure TMainForm.FirmwareUpdateMIClick(Sender: TObject);
@@ -843,7 +870,6 @@ begin
  // disable all buttons
  RunBB.Enabled:= false;
  StopBB.Enabled:= false;
- RunFreeBB.Enabled:= false;
  ConnComPortLE.Text:= 'Not connected';
  ConnComPortLE.Color:= clHighlight;
  IndicatorPanelP.Caption:= '';
@@ -894,13 +920,13 @@ begin
   try
    // for some odd reason not all pump driver output gets received,
    // therefore establish a new connection
-   if HaveSerial then
+   if HaveSerialCB.Checked then
    begin
     ser.CloseSocket;
     ser.Free;
    end;
    ser:= TBlockSerial.Create;
-   HaveSerial:= True;
+   HaveSerialCB.Checked:= True;
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
    ser.Connect(COMPort);
    ser.config(9600, 8, 'N', SB1, False, False);
@@ -982,7 +1008,7 @@ begin
   end;
 
   // Closing open connections
-  if HaveSerial then
+  if HaveSerialCB.Checked then
    CloseSerialConn;
 
   // open new connection with 1200 baud,
@@ -1091,7 +1117,7 @@ begin
   // reconnect
   try
    ser:= TBlockSerial.Create;
-   HaveSerial:= True;
+   HaveSerialCB.Checked:= True;
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
    ser.Connect(BootCOM);
    ser.config(9600, 8, 'N', SB1, False, False);
@@ -1158,7 +1184,6 @@ begin
    // enable all buttons
    RunBB.Enabled:= true;
    StopBB.Enabled:= true;
-   RunFreeBB.Enabled:= true;
    IndicatorPanelP.Color:= clDefault;
   end;
 
@@ -1212,6 +1237,14 @@ begin
  end;
 end;
 
+procedure TMainForm.HaveSerialCBChange(Sender: TObject);
+begin
+ if HaveSerialCB.Checked then
+  DriverConnectBB.Caption:= 'Disconnect Driver'
+ else
+  DriverConnectBB.Caption:= 'Connect Driver';
+end;
+
 procedure TMainForm.AboutMIClick(Sender: TObject);
 begin
  // set version number
@@ -1234,7 +1267,6 @@ begin
   // assure that step 2 is not used
   Step2UseCB.Checked:= false;
   RunSettingsGB.Enabled:= false;
-  RunFreeBB.Enabled:= false;
   Step1TS.Caption:= 'Live';
   // set that run until stop pressed
   RunEndlessCB.Checked:= true;
@@ -1244,7 +1276,6 @@ begin
  else
  begin
   RunSettingsGB.Enabled:= true;
-  RunFreeBB.Enabled:= true;
   // rename step 1 back and show step 2
   Step1TS.Caption:= 'Step 1';
   Step2TS.TabVisible:= true;
@@ -1266,17 +1297,30 @@ begin
  for k:= 1 to PumpNum do
   command:= command + '0';
  command:= command + 'gLM500lM500G2R' + LineEnding;
- if HaveSerial then // the user set a COM port
+ if HaveSerialCB.Checked then // the user set a COM port
   try
    ser.SendString(command);
    // purposely don't emit an error that the serial connection is no longer
    // since the program is closed anyway
   finally
    // close connection
-    if (HaveSerial) and (ser.LastError <> 9997) then
+    if HaveSerialCB.Checked and (ser.LastError <> 9997) then
      // we cannot close socket or free when the connection timed out
      CloseSerialConn;
   end;
+end;
+
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+ // if action is running, ask
+ if OverallTimer.Enabled then
+ begin
+  if MessageDlg('An action is currently running, do you really want to close?',
+                mtConfirmation, [mbYes]+[mbNo], 0, mbNo) = mrNo then
+   CanClose:= False
+  else
+   CanClose:= True;
+ end;
 end;
 
 procedure TMainForm.GenerateCommandBBClick(Sender: TObject);
@@ -1990,7 +2034,7 @@ begin
  else
   command:= command + LineEnding;
   // if we have an open serial connection, execute
- if HaveSerial then
+ if HaveSerialCB.Checked then
  begin
   // disable the connection menu that the user cannot close
   // the conenction while the pumps are running
@@ -2011,7 +2055,6 @@ begin
    IndicatorPanelP.Caption:= 'Connection failure';
    ConnectionMI.Enabled:= True;
    RunBB.Enabled:= False;
-   RunFreeBB.Enabled:= False;
    if ser.LastError = 9997 then
    begin
     StopBB.Enabled:= False;
@@ -2024,7 +2067,6 @@ begin
  else // no serial connection
  begin
   RunBB.Enabled:= False;
-  RunFreeBB.Enabled:= False;
   exit;
  end;
 
@@ -2062,7 +2104,7 @@ begin
   commandForRepeat:= command;
 
   // if we have an open serial connection, execute
-  if HaveSerial then
+  if HaveSerialCB.Checked then
   begin
    // disable the connection menu that the user cannot close
    // the conenction while the pumps are running
@@ -2084,7 +2126,6 @@ begin
     IndicatorPanelP.Caption:= 'Connection failure';
     ConnectionMI.Enabled:= True;
     RunBB.Enabled:= False;
-    RunFreeBB.Enabled:= False;
     if ser.LastError = 9997 then
     begin
      StopBB.Enabled:= False;
@@ -2097,12 +2138,10 @@ begin
   else // no serial connection
   begin
    RunBB.Enabled:= False;
-   RunFreeBB.Enabled:= False;
    exit;
   end;
   RunBB.Caption:= 'Pumps running';
   RunBB.Enabled:= False;
-  RunFreeBB.Enabled:= False;
   GenerateCommandBB.Enabled:= False;
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
@@ -2183,7 +2222,7 @@ end;
 procedure TMainForm.SendRepeatToPump;
 // send command to pump driver
 begin
-  if HaveSerial then
+  if HaveSerialCB.Checked then
   begin
    ser.SendString(commandForRepeat);
    if ser.LastError <> 0 then
@@ -2262,7 +2301,6 @@ begin
  SaveActionMI.Enabled:= True;
  RunBB.Caption:= 'Run Pumps';
  RunBB.Enabled:= True;
- RunFreeBB.Enabled:= True;
  GenerateCommandBB.Enabled:= True;
  IndicatorPanelP.Caption:= 'Run finished';
  IndicatorPanelP.Color:= clInfoBk;
@@ -2278,7 +2316,7 @@ begin
  command:= command + 'lR';
  // execute
  command:= command + LineEnding;
- if HaveSerial then
+ if HaveSerialCB.Checked then
   ser.SendString(command);
 
  // stop all timers and reset captions
@@ -2362,7 +2400,7 @@ begin
  begin
   // switch to step 1
   StepTimer1.Enabled:= True;
-  if HaveSerial and
+  if HaveSerialCB.Checked and
    (RunEndlessCB.Checked or (RepeatSE.Value > 0)) then
    // send repeat sequence to pump driver
    SendRepeatToPump;
@@ -2389,7 +2427,7 @@ begin
  StepTimer1.Enabled:= True;
 
  // send repeat sequence to pump driver
- if HaveSerial and
+ if HaveSerialCB.Checked and
   (RunEndlessCB.Checked or (RepeatSE.Value > 0)) then
   SendRepeatToPump;
 
@@ -2425,7 +2463,7 @@ begin
  // execute
  CommandM.Text:= command;
  command:= command + LineEnding;
- if HaveSerial then
+ if HaveSerialCB.Checked then
  begin
   ser.SendString(command);
   if ser.LastError <> 0 then
@@ -2459,7 +2497,6 @@ begin
  // therefore block the enabing to start a new action for a second
  StopTimer.Enabled:= True;
  RunBB.Enabled:= False;
- RunFreeBB.Enabled:= False;
  GenerateCommandBB.Enabled:= True;
  // stop all timers and reset captions
  for j:= 1 to StepNum do
@@ -2523,7 +2560,6 @@ procedure TMainForm.StopTimerFinished;
 begin
  RunBB.Caption:= 'Run Pumps';
  RunBB.Enabled:= True;
- RunFreeBB.Enabled:= True;
  StopTimer.Enabled:= False;
 end;
 
@@ -3343,12 +3379,12 @@ end;
 
 procedure TMainForm.CloseSerialConn;
 begin
- if HaveSerial then
+ if HaveSerialCB.Checked then
  begin
   // close connection
   ser.CloseSocket;
   ser.Free;
-  HaveSerial:= False;
+  HaveSerialCB.Checked:= False;
   COMPort:= '';
   connectedPumpDriver:= 0;
  end;
@@ -3390,7 +3426,7 @@ begin
    // - if yes, we must directly take the driver number
    // since we cannot connect to an already connected port
    // - if not we must close the connection
-   if HaveSerial and (PortName = COMPort) then
+   if HaveSerialCB.Checked and (PortName = COMPort) then
    begin
     // to check the live state send a command
     try
