@@ -20,7 +20,6 @@ type
     DriverConnectBB: TBitBtn;
     DriverConnectionGB: TGroupBox;
     GenerateCommandBB: TBitBtn;
-    HasNoPumpsCB: TCheckBox;
     HaveSerialCB: TCheckBox;
     LiveModeCB: TCheckBox;
     DutyCycle1FSE: TFloatSpinEdit;
@@ -456,6 +455,7 @@ type
     procedure LiveModeCBChange(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
     procedure FirmwareResetMIClick(Sender: TObject);
+    procedure PumpNumberSEChange(Sender: TObject);
     procedure PumpVoltageFSChange(Sender: TObject);
     procedure PumpGBDblClick(Sender: TObject);
     procedure PumpOnOffCBLoopChange(Sender: TObject);
@@ -826,6 +826,48 @@ end;
 procedure TMainForm.FirmwareResetMIClick(Sender: TObject);
 begin
  FirmwareUpdate(true); // forced update
+end;
+
+procedure TMainForm.PumpNumberSEChange(Sender: TObject);
+var
+ j, k, l : integer;
+begin
+ PumpNum:= PumpNumberSE.Value;
+
+ for j:= 1 to StepNum do
+ begin
+  k:= 0;
+  // enable the specified number of pumps if the step is used
+  for k:= 1 to PumpNum do
+   (FindComponent('Pump' + IntToStr(k) + 'GB' + IntToStr(j))
+    as TGroupBox).Enabled:= (FindComponent('Step'
+                             + IntToStr(j) + 'UseCB') as TCheckBox).checked;
+  // disable non-existent pumps
+  if k < 8 then
+  begin
+   for l:= PumpNum + 1 to 8 do // currently we only support 8 pumps
+   begin
+    (FindComponent('Pump' + IntToStr(l) + 'OnOffCB' + IntToStr(j))
+     as TCheckBox).Checked:= false;
+    (FindComponent('Pump' + IntToStr(l) + 'GB' + IntToStr(j))
+     as TGroupBox).Enabled:= false;
+   end;
+  end;
+  // show/hide the pumps 5-8 tab
+  if k < 5 then
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).TabVisible:= false
+  else
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).TabVisible:= true;
+  // show/hide the pumps 1-4 tab
+  if k < 1 then
+   (FindComponent('S' + IntToStr(j) + 'P14')
+    as TTabSheet).TabVisible:= false
+  else
+   (FindComponent('S' + IntToStr(j) + 'P14')
+    as TTabSheet).TabVisible:= true;
+ end;
 end;
 
 procedure TMainForm.FirmwareUpdate(forced: Boolean);

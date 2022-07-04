@@ -424,6 +424,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB1: TGroupBox
             Left = 8
             Height = 192
@@ -4933,22 +4934,14 @@ object MainForm: TMainForm
   end
   object PumpSetupGB: TGroupBox
     Left = 552
-    Height = 88
+    Height = 64
     Top = 296
     Width = 148
     Caption = 'Pump Setup'
-    ClientHeight = 68
+    ClientHeight = 44
     ClientWidth = 144
     ParentColor = False
     TabOrder = 6
-    object HasNoPumpsCB: TCheckBox
-      Left = 6
-      Height = 19
-      Top = 40
-      Width = 128
-      Caption = 'Setup has no pumps'
-      TabOrder = 1
-    end
     object PumpNumberL: TLabel
       Left = 6
       Height = 15
@@ -4967,10 +4960,12 @@ object MainForm: TMainForm
       Top = 8
       Width = 38
       MaxValue = 8
+      MinValue = 1
+      OnChange = PumpNumberSEChange
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
-      Value = 8
+      Value = 4
     end
   end
   object HaveSerialCB: TCheckBox
