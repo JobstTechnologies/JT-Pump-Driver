@@ -1,4 +1,4 @@
-unit JTPumpDriverMain2;
+unit JTPumpDriverMain3;
 
 {$mode objfpc}{$H+}{$R+}{$Q+}
 
@@ -9,41 +9,15 @@ uses
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
   Crt, StrUtils, PopupNotifier, Character, System.UITypes, Fileinfo,
   // the custom forms
-  SerialUSBSelection, PumpNameSetting, AboutForm;
+  SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    LiveModeCB: TCheckBox;
     DutyCycle1FSE: TFloatSpinEdit;
-    Label40: TLabel;
-    Label42: TLabel;
-    Label44: TLabel;
-    Label46: TLabel;
-    Label48: TLabel;
-    Label50: TLabel;
-    Label52: TLabel;
-    Label54: TLabel;
-    Label56: TLabel;
-    Label58: TLabel;
-    Label60: TLabel;
-    Label62: TLabel;
-    Label64: TLabel;
-    Label66: TLabel;
-    Label68: TLabel;
-    Label70: TLabel;
-    Label72: TLabel;
-    Label74: TLabel;
-    Label76: TLabel;
-    Label78: TLabel;
-    Label80: TLabel;
-    Label82: TLabel;
-    Label84: TLabel;
-    Label86: TLabel;
-    Label88: TLabel;
-    Label90: TLabel;
-    Label92: TLabel;
     DutyCycle2FSE: TFloatSpinEdit;
     DutyCycle3FSE: TFloatSpinEdit;
     DutyCycle4FSE: TFloatSpinEdit;
@@ -82,42 +56,171 @@ type
     Label28: TLabel;
     Label3: TLabel;
     Label33: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
     Label4: TLabel;
+    Label40: TLabel;
+    Label41: TLabel;
+    Label42: TLabel;
+    Label43: TLabel;
+    Label44: TLabel;
+    Label45: TLabel;
+    Label46: TLabel;
+    Label47: TLabel;
+    Label48: TLabel;
+    Label49: TLabel;
     Label5: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label55: TLabel;
+    Label56: TLabel;
+    Label57: TLabel;
+    Label58: TLabel;
+    Label59: TLabel;
     Label6: TLabel;
+    Label60: TLabel;
+    Label61: TLabel;
+    Label62: TLabel;
+    Label63: TLabel;
+    Label64: TLabel;
     Label8: TLabel;
-    LiveModeCB: TCheckBox;
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
     FirmwareResetMI: TMenuItem;
-    Pump1ResultLE1: TLabeledEdit;
-    Pump1ResultLE2: TLabeledEdit;
-    Pump1ResultLE3: TLabeledEdit;
-    Pump1ResultLE4: TLabeledEdit;
-    Pump1ResultLE5: TLabeledEdit;
-    Pump1ResultLE6: TLabeledEdit;
-    Pump1ResultLE7: TLabeledEdit;
-    Pump2ResultLE1: TLabeledEdit;
-    Pump2ResultLE2: TLabeledEdit;
-    Pump2ResultLE3: TLabeledEdit;
-    Pump2ResultLE4: TLabeledEdit;
-    Pump2ResultLE5: TLabeledEdit;
-    Pump2ResultLE6: TLabeledEdit;
-    Pump2ResultLE7: TLabeledEdit;
-    Pump3ResultLE1: TLabeledEdit;
-    Pump3ResultLE2: TLabeledEdit;
-    Pump3ResultLE3: TLabeledEdit;
-    Pump3ResultLE4: TLabeledEdit;
-    Pump3ResultLE5: TLabeledEdit;
-    Pump3ResultLE6: TLabeledEdit;
-    Pump3ResultLE7: TLabeledEdit;
-    Pump4ResultLE1: TLabeledEdit;
-    Pump4ResultLE2: TLabeledEdit;
-    Pump4ResultLE3: TLabeledEdit;
-    Pump4ResultLE4: TLabeledEdit;
-    Pump4ResultLE5: TLabeledEdit;
-    Pump4ResultLE6: TLabeledEdit;
-    Pump4ResultLE7: TLabeledEdit;
+    Pump5DirectionRG1: TRadioGroup;
+    Pump5DirectionRG2: TRadioGroup;
+    Pump5DirectionRG3: TRadioGroup;
+    Pump5DirectionRG4: TRadioGroup;
+    Pump5DirectionRG5: TRadioGroup;
+    Pump5DirectionRG6: TRadioGroup;
+    Pump5DirectionRG7: TRadioGroup;
+    Pump5GB1: TGroupBox;
+    Pump5GB2: TGroupBox;
+    Pump5GB3: TGroupBox;
+    Pump5GB4: TGroupBox;
+    Pump5GB5: TGroupBox;
+    Pump5GB6: TGroupBox;
+    Pump5GB7: TGroupBox;
+    Pump5OnOffCB1: TCheckBox;
+    Pump5OnOffCB2: TCheckBox;
+    Pump5OnOffCB3: TCheckBox;
+    Pump5OnOffCB4: TCheckBox;
+    Pump5OnOffCB5: TCheckBox;
+    Pump5OnOffCB6: TCheckBox;
+    Pump5OnOffCB7: TCheckBox;
+    Pump5VoltageFS1: TFloatSpinEdit;
+    Pump5VoltageFS2: TFloatSpinEdit;
+    Pump5VoltageFS3: TFloatSpinEdit;
+    Pump5VoltageFS4: TFloatSpinEdit;
+    Pump5VoltageFS5: TFloatSpinEdit;
+    Pump5VoltageFS6: TFloatSpinEdit;
+    Pump5VoltageFS7: TFloatSpinEdit;
+    Pump6DirectionRG1: TRadioGroup;
+    Pump6DirectionRG2: TRadioGroup;
+    Pump6DirectionRG3: TRadioGroup;
+    Pump6DirectionRG4: TRadioGroup;
+    Pump6DirectionRG5: TRadioGroup;
+    Pump6DirectionRG6: TRadioGroup;
+    Pump6DirectionRG7: TRadioGroup;
+    Pump6GB1: TGroupBox;
+    Pump6GB2: TGroupBox;
+    Pump6GB3: TGroupBox;
+    Pump6GB4: TGroupBox;
+    Pump6GB5: TGroupBox;
+    Pump6GB6: TGroupBox;
+    Pump6GB7: TGroupBox;
+    Pump6OnOffCB1: TCheckBox;
+    Pump6OnOffCB2: TCheckBox;
+    Pump6OnOffCB3: TCheckBox;
+    Pump6OnOffCB4: TCheckBox;
+    Pump6OnOffCB5: TCheckBox;
+    Pump6OnOffCB6: TCheckBox;
+    Pump6OnOffCB7: TCheckBox;
+    Pump6VoltageFS1: TFloatSpinEdit;
+    Pump6VoltageFS2: TFloatSpinEdit;
+    Pump6VoltageFS3: TFloatSpinEdit;
+    Pump6VoltageFS4: TFloatSpinEdit;
+    Pump6VoltageFS5: TFloatSpinEdit;
+    Pump6VoltageFS6: TFloatSpinEdit;
+    Pump6VoltageFS7: TFloatSpinEdit;
+    Pump7DirectionRG1: TRadioGroup;
+    Pump7DirectionRG2: TRadioGroup;
+    Pump7DirectionRG3: TRadioGroup;
+    Pump7DirectionRG4: TRadioGroup;
+    Pump7DirectionRG5: TRadioGroup;
+    Pump7DirectionRG6: TRadioGroup;
+    Pump7DirectionRG7: TRadioGroup;
+    Pump7GB1: TGroupBox;
+    Pump7GB2: TGroupBox;
+    Pump7GB3: TGroupBox;
+    Pump7GB4: TGroupBox;
+    Pump7GB5: TGroupBox;
+    Pump7GB6: TGroupBox;
+    Pump7GB7: TGroupBox;
+    Pump7OnOffCB1: TCheckBox;
+    Pump7OnOffCB2: TCheckBox;
+    Pump7OnOffCB3: TCheckBox;
+    Pump7OnOffCB4: TCheckBox;
+    Pump7OnOffCB5: TCheckBox;
+    Pump7OnOffCB6: TCheckBox;
+    Pump7OnOffCB7: TCheckBox;
+    Pump7VoltageFS1: TFloatSpinEdit;
+    Pump7VoltageFS2: TFloatSpinEdit;
+    Pump7VoltageFS3: TFloatSpinEdit;
+    Pump7VoltageFS4: TFloatSpinEdit;
+    Pump7VoltageFS5: TFloatSpinEdit;
+    Pump7VoltageFS6: TFloatSpinEdit;
+    Pump7VoltageFS7: TFloatSpinEdit;
+    Pump8DirectionRG1: TRadioGroup;
+    Pump8DirectionRG2: TRadioGroup;
+    Pump8DirectionRG3: TRadioGroup;
+    Pump8DirectionRG4: TRadioGroup;
+    Pump8DirectionRG5: TRadioGroup;
+    Pump8DirectionRG6: TRadioGroup;
+    Pump8DirectionRG7: TRadioGroup;
+    Pump8GB1: TGroupBox;
+    Pump8GB2: TGroupBox;
+    Pump8GB3: TGroupBox;
+    Pump8GB4: TGroupBox;
+    Pump8GB5: TGroupBox;
+    Pump8GB6: TGroupBox;
+    Pump8GB7: TGroupBox;
+    Pump8OnOffCB1: TCheckBox;
+    Pump8OnOffCB2: TCheckBox;
+    Pump8OnOffCB3: TCheckBox;
+    Pump8OnOffCB4: TCheckBox;
+    Pump8OnOffCB5: TCheckBox;
+    Pump8OnOffCB6: TCheckBox;
+    Pump8OnOffCB7: TCheckBox;
+    Pump8VoltageFS1: TFloatSpinEdit;
+    Pump8VoltageFS2: TFloatSpinEdit;
+    Pump8VoltageFS3: TFloatSpinEdit;
+    Pump8VoltageFS4: TFloatSpinEdit;
+    Pump8VoltageFS5: TFloatSpinEdit;
+    Pump8VoltageFS6: TFloatSpinEdit;
+    Pump8VoltageFS7: TFloatSpinEdit;
+    S2P14: TTabSheet;
+    S3P14: TTabSheet;
+    S4P14: TTabSheet;
+    S5P14: TTabSheet;
+    S6P14: TTabSheet;
+    S7P14: TTabSheet;
+    S2P58: TTabSheet;
+    S1PC: TPageControl;
+    S3P58: TTabSheet;
+    S4P58: TTabSheet;
+    S5P58: TTabSheet;
+    S6P58: TTabSheet;
+    S7P58: TTabSheet;
+    S2PC: TPageControl;
+    S3PC: TPageControl;
+    S4PC: TPageControl;
+    S5PC: TPageControl;
+    S6PC: TPageControl;
+    S7PC: TPageControl;
     SaveActionMI: TMenuItem;
     FileMI: TMenuItem;
     OpenDialog: TOpenDialog;
@@ -132,6 +235,8 @@ type
     StopTimer: TTimer;
     StartTimeLE: TLabeledEdit;
     FinishTimeLE: TLabeledEdit;
+    S1P14: TTabSheet;
+    S1P58: TTabSheet;
     TotalTimeLE: TLabeledEdit;
     Panel1: TPanel;
     Panel2: TPanel;
@@ -356,7 +461,6 @@ type
     procedure StopBBClick(Sender: TObject);
     procedure StopTimerFinished;
     procedure OverallTimerFinished;
-    procedure SendRepeatToPump;
     procedure RepeatTimerFinished;
   private
 
@@ -367,9 +471,10 @@ type
     function ParseCommand(command: string): Boolean;
     function DialogWithPos(const Message: string; DialogType: TMsgDlgType;
               Buttons: TMsgDlgButtons; AX, AY: Integer): TModalResult;
-    function OpenFile(InputName: string; MousePointer : TPoint): Boolean;
+    function OpenFile(InputName: string): Boolean;
     function SaveHandling(InName: string; const Calculation: Boolean): string;
     procedure CloseSerialConn;
+    procedure SendRepeatToPump;
     procedure COMPortScan;
 
   end;
@@ -378,7 +483,7 @@ var
   MainForm : TMainForm;
   Version : string = '';
   FirmwareVersion : string = 'unknown';
-  RequiredFirmwareVersion : float = 1.3;
+  RequiredFirmwareVersion : float = 2.0;
   ser: TBlockSerial;
   CurrentRepeat : integer;
   GlobalTime : Double = 0;
@@ -388,7 +493,8 @@ var
   InName : string = ''; // name of load file
   DropfileName : string = ''; // name of dropped file
   StepNum : integer = 7; // number of steps
-  PumpNum : integer = 4; // number of pumps
+  PumpNum : integer = 8; // number of pumps
+  PumpNumFile : integer = 4; // number of pumps defined in a loaded action file
   COMPort : string = ''; // name of the connected COM port
   connectedPumpDriver : longint = 0; // ID of the connected pump driver
   COMList : array of Int32; // list with available pump drivers (list index is COM port number)
@@ -499,7 +605,7 @@ begin
   if ModalResult = mrOK then
    COMPort:= SerialUSBPortCB.Text;
 
- end; // end with SerialUSBSelectionF
+ end; // end with with SerialUSBSelectionF
 
  if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
  begin
@@ -552,7 +658,6 @@ begin
   end;
   exit;
  end;
-
  // open new connection if not already available
  if not (HaveSerial and (COMPort = ConnComPortLE.Text)) then
  try
@@ -681,8 +786,6 @@ begin
     RunBB.Enabled:= true;
     StopBB.Enabled:= true;
     RunFreeBB.Enabled:= true;
-    // disable tooltip for Run button, because only necessary if unconnected
-    RunBB.ShowHint:= false;
    end;
   end; //end inner finally
  end; //end outer finally
@@ -823,7 +926,7 @@ begin
      exited:= true;
      exit; // we cannot close socket or free when the connection timed out
     end;
-    MessageDlgPos('The selected COM port is not one of a pump driver!',
+    MessageDlgPos('The selected COM port is not the one of a pump driver!',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     CloseSerialConn;
     exited:= true;
@@ -1188,14 +1291,24 @@ begin
  // enable all setting possibilities
  LiveModeCB.Enabled:= True;
  RunSettingsGB.Enabled:= not LiveModeCB.Checked;
+ // check all possible steps
  for j:= 1 to StepNum do
  begin
-  (FindComponent('Step' + IntToStr(j) + 'TS')
+  (FindComponent('Step' + IntToStr(j) + 'UseCB')
+   as TCheckBox).Enabled:= True;
+  (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('S' + IntToStr(j) + 'P14')
    as TTabSheet).Enabled:= True;
-  // enable tooltips for pump name
-  for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= True;
+  (FindComponent('S' + IntToStr(j) + 'P58')
+   as TTabSheet).Enabled:= True;
+  if j = 1 then
+   // enable tooltips for pump name
+   for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= True;
  end;
  // view tab after last used step
  for j:= 2 to StepNum-1 do
@@ -1221,14 +1334,15 @@ end;
 function TMainForm.GenerateCommand(out command: string): Boolean;
 // collect data an generate command to be sent
 var
- voltage, jStr : string;
+ voltage, jStr, commandSplit, commandSave, commandOriginal : string;
  SOrder : array of char;
- timeFactor, DutyRepeats, XTime, OnTime, OffTime, j, k : integer;
+ timeFactor, DutyRepeats, XTime, OnTime, OffTime, i, j, k, j2, k2,
+   voltageCalc, countPump, countPumpNumber, posS: integer;
  timeCalc, timeOut, timeStep : Double;
  HaveS : Boolean = False;
 begin
- timeFactor:= 1; timeCalc:= 0;
- command:= ''; voltage:= '';
+ timeFactor:= 1; timeCalc:= 0; voltageCalc:= 0;
+ command:= ''; commandSplit:= ''; voltage:= '';
  if not LiveModeCB.Checked then
  begin
   IndicatorPanelP.Color:= clDefault;
@@ -1236,6 +1350,7 @@ begin
  end;
  IndicatorPanelP.Hint:= '';
  setLength(SOrder{%H-}, PumpNum);
+ posS:= 1; // 1 and not 0 because we use it to access chars in strings
 
  // address
  command:= '/0';
@@ -1253,6 +1368,7 @@ begin
   for k:= 0 to PumpNum-1 do
    SOrder[k]:= '0';
   jStr:= IntToStr(j);
+  voltageCalc:= 0;
   if (FindComponent('Step' + jStr + 'UseCB') as TCheckBox).Checked
    and (FindComponent('Step' + jStr + 'TS') as TTabSheet).TabVisible then
   begin
@@ -1264,6 +1380,14 @@ begin
     or (FindComponent('Pump3OnOffCB' + jStr)
         as TCheckBox).Checked
     or (FindComponent('Pump4OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump5OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump6OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump7OnOffCB' + jStr)
+        as TCheckBox).Checked
+    or (FindComponent('Pump8OnOffCB' + jStr)
         as TCheckBox).Checked
     then
     begin
@@ -1292,6 +1416,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump2OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1310,6 +1435,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump3OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1330,6 +1456,7 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    if (FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked then
    begin
@@ -1352,6 +1479,119 @@ begin
      1 : voltage:= '00' + voltage;
     end;
     command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
+   end;
+   if (FindComponent('Pump5OnOffCB' + jStr) as TCheckBox).Checked then
+   begin
+    if SOrder[0] = '0' then
+     SOrder[0]:= '5'
+    else if SOrder[1] = '0' then
+     SOrder[1]:= '5'
+    else if SOrder[2] = '0' then
+     SOrder[2]:= '5'
+    else if SOrder[3] = '0' then
+     SOrder[3]:= '5'
+    else
+     SOrder[4]:= '5';
+    command:= command + '5';
+    // 3.3 V is the maximum
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump5VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
+    // we need to write always 3 characters
+    case length(voltage) of
+     2 : voltage:= '0' + voltage;
+     1 : voltage:= '00' + voltage;
+    end;
+    command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
+   end;
+   if (FindComponent('Pump6OnOffCB' + jStr) as TCheckBox).Checked then
+   begin
+    if SOrder[0] = '0' then
+     SOrder[0]:= '6'
+    else if SOrder[1] = '0' then
+     SOrder[1]:= '6'
+    else if SOrder[2] = '0' then
+     SOrder[2]:= '6'
+    else if SOrder[3] = '0' then
+     SOrder[3]:= '6'
+    else if SOrder[4] = '0' then
+     SOrder[4]:= '6'
+    else
+     SOrder[5]:= '6';
+    command:= command + '6';
+    // 3.3 V is the maximum
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump6VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
+    // we need to write always 3 characters
+    case length(voltage) of
+     2 : voltage:= '0' + voltage;
+     1 : voltage:= '00' + voltage;
+    end;
+    command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
+   end;
+   if (FindComponent('Pump7OnOffCB' + jStr) as TCheckBox).Checked then
+   begin
+    if SOrder[0] = '0' then
+     SOrder[0]:= '7'
+    else if SOrder[1] = '0' then
+     SOrder[1]:= '7'
+    else if SOrder[2] = '0' then
+     SOrder[2]:= '7'
+    else if SOrder[3] = '0' then
+     SOrder[3]:= '7'
+    else if SOrder[4] = '0' then
+     SOrder[4]:= '7'
+    else if SOrder[5] = '0' then
+     SOrder[5]:= '7'
+    else
+     SOrder[6]:= '7';
+    command:= command + '7';
+    // 3.3 V is the maximum
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump7VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
+    // we need to write always 3 characters
+    case length(voltage) of
+     2 : voltage:= '0' + voltage;
+     1 : voltage:= '00' + voltage;
+    end;
+    command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
+   end;
+   if (FindComponent('Pump8OnOffCB' + jStr) as TCheckBox).Checked then
+   begin
+    if SOrder[0] = '0' then
+     SOrder[0]:= '8'
+    else if SOrder[1] = '0' then
+     SOrder[1]:= '8'
+    else if SOrder[2] = '0' then
+     SOrder[2]:= '8'
+    else if SOrder[3] = '0' then
+     SOrder[3]:= '8'
+    else if SOrder[4] = '0' then
+     SOrder[4]:= '8'
+    else if SOrder[5] = '0' then
+     SOrder[5]:= '8'
+    else if SOrder[6] = '0' then
+     SOrder[6]:= '8'
+    else
+     SOrder[7]:= '8';
+    command:= command + '8';
+    // 3.3 V is the maximum
+    voltage:= FloatToStr(ceil(
+     (FindComponent('Pump8VoltageFS' + jStr)
+      as TFloatSpinEdit).Value / 3.3 * 999));
+    // we need to write always 3 characters
+    case length(voltage) of
+     2 : voltage:= '0' + voltage;
+     1 : voltage:= '00' + voltage;
+    end;
+    command:= command + voltage;
+    voltageCalc:= voltageCalc + StrToInt(voltage);
    end;
    // direction
    if HaveS then // only if there is any pump running
@@ -1418,6 +1658,78 @@ begin
                 as TFloatSpinEdit).Value * timeFactor;
    end;
    timeCalc:= timeCalc + timeStep;
+
+   // When the sum of the S values is larger than 3*999 we must
+   // split the step into substeps because the pump driver cannot
+   // deliver enough current to start all pumps at once
+   // In this case we will first start up to 3 pumps, then 10 ms later
+   // the next up to 3 and so on
+
+   if voltageCalc > (3*999) then
+   begin
+    // we take blocks of pumps vith a voltage below 3*999 thus restart counting
+    voltageCalc:= 0; k2:= 1;
+    countPump:= 0; countPumpNumber:= 0;
+    commandOriginal:= command;
+    commandSave:= ''; commandSplit:= '';
+    for i:= posS to Length(commandOriginal) do
+    begin
+     if commandOriginal[i] = 'S' then
+     begin
+      // store the position of the first 'S' for this step
+      posS:= i;
+      k2:= i + 1;
+     end;
+     // parse now until the first 'D' is found
+     while isDigit(commandOriginal[k2]) and (posS > 1) do
+     begin
+     voltageCalc:= voltageCalc + StrToInt(Copy(commandOriginal, k2+1, 3));
+      if voltageCalc > (3*999) then
+      begin // we have our first commandSplit
+       commandSave:= commandSave + commandSplit;
+       commandSplit:= commandSave;
+       // add the direction
+       commandSplit:= 'S' + commandSplit + 'D';
+       for j2:= 1 to countPump do
+       begin
+        if SOrder[j2-1] <> '0' then
+         commandSplit:= commandSplit +
+          IntToStr((FindComponent('Pump' + SOrder[j2-1] + 'DirectionRG' + jStr)
+           as TRadioGroup).ItemIndex);
+       end;
+       // add the action
+       commandSplit:= commandSplit + 'I';
+       for j2:= 1 to countPumpNumber do
+        commandSplit:= commandSplit +
+         BoolToStr((FindComponent('Pump' + IntToStr(j2) + 'OnOffCB' + jStr)
+          as TCheckBox).Checked, '1', '0');
+       for j2:= countPumpNumber + 1 to PumpNum do
+        commandSplit:= commandSplit + '0';
+       // eventually add the 10 ms
+       commandSplit:= commandSplit + 'M10';
+       // insert commandSplit to command
+       Insert(commandSplit, command, posS);
+       // move position and start collecting again
+       posS:= posS + length(commandSplit);
+       commandSplit:= '';
+       // we start with the voltage of the currently not yet added pump
+       voltageCalc:= StrToInt(Copy(commandOriginal, k2+1, 3));
+      end; // end if voltageCalc
+      // we can add another pump
+      commandSplit:= commandSplit + Copy(commandOriginal, k2, 4);
+      inc(countPump);
+      countPumpNumber:= StrToInt(commandOriginal[k2]);
+      k2:= k2 + 4;
+
+     end; // end while
+     // when voltageCalc is here > 0 we already parsed enough
+     if voltageCalc > 0 then
+      break;
+    end; // end for i
+    // set position to end of command for next step
+    posS:= length(command);
+   end; // end if voltageCalc > (3*999)
+
    // if the direction changes, wait 999 ms to protect the pumps
    // only if the next step is actually used and we have 100% duty cylce
    // only necessary if DutyCycle = 100
@@ -1443,6 +1755,22 @@ begin
        and (FindComponent('Pump4OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
        and ((FindComponent('Pump4DirectionRG' + jStr) as TRadioGroup).ItemIndex
         <> (FindComponent('Pump4DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump5OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump5OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump5DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump5DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump6OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump6OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump6DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump6DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump7OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump7OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump7DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump7DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump8OnOffCB' + jStr) as TCheckBox).Checked
+       and (FindComponent('Pump8OnOffCB' + IntToStr(j+1)) as TCheckBox).Checked
+       and ((FindComponent('Pump8DirectionRG' + jStr) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump8DirectionRG' + IntToStr(j+1)) as TRadioGroup).ItemIndex))
      then
      begin
       // stop for 999 ms
@@ -1473,6 +1801,22 @@ begin
        and (FindComponent('Pump4OnOffCB' + jStr) as TCheckBox).Checked
        and ((FindComponent('Pump4DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
         <> (FindComponent('Pump4DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump5OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump5OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump5DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump5DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump6OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump6OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump6DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump6DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump7OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump7OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump7DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump7DirectionRG' + jStr) as TRadioGroup).ItemIndex))
+      or ((FindComponent('Pump8OnOffCB' + IntToStr(j-1)) as TCheckBox).Checked
+       and (FindComponent('Pump8OnOffCB' + jStr) as TCheckBox).Checked
+       and ((FindComponent('Pump8DirectionRG' + IntToStr(j-1)) as TRadioGroup).ItemIndex
+        <> (FindComponent('Pump8DirectionRG' + jStr) as TRadioGroup).ItemIndex))
      then
      begin
       // only output if there is no single run
@@ -1593,23 +1937,7 @@ for step:= 1 to StepNum do
 end;
 
 procedure TMainForm.PumpVoltageFSChange(Sender: TObject);
-var
- Step, PumpNumber : integer;
- SenderName : string;
 begin
- SenderName:= (Sender as TComponent).Name;
- // SenderName is in the form "PumpXVoltageFSY" and we need the X and Y
- // so get the 5th and 15th character of the name
- Step:= StrToInt(Copy(SenderName, 15, 1));
- PumpNumber:= StrToInt(Copy(SenderName, 5, 1));
- // update the resulting speed
- (FindComponent('Pump' + IntToStr(PumpNumber) + 'ResultLE' + IntToStr(Step))
-  as TLabeledEdit).Text:= FloatToStr(RoundTo(
-  (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
-   as TFloatSpinEdit).Value *
-  (FindComponent('Pump' + IntToStr(PumpNumber) + 'VoltageFS' + IntToStr(Step))
-   as TFloatSpinEdit).Value / 3.3 , -2));
-
  // if in live mode send trigger command generation and sending
  if LiveModeCB.Checked and OverallTimer.Enabled then
   RunImmediate;
@@ -1782,14 +2110,26 @@ begin
   // not the pump settings when in live mode
   if not LiveModeCB.Checked then
   begin
+   // the user must be able to see if the pumps 5 - 8 are set
+   // therefore we cannot just disable the StepXTS component but its
+   // child components except of SXPC
    for j:= 1 to StepNum do
    begin
-    (FindComponent('Step' + IntToStr(j) + 'TS')
+    (FindComponent('Step' + IntToStr(j) + 'UseCB')
+     as TCheckBox).Enabled:= False;
+    (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+     as TGroupBox).Enabled:= False;
+    (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+     as TGroupBox).Enabled:= False;
+    (FindComponent('S' + IntToStr(j) + 'P14')
      as TTabSheet).Enabled:= False;
-    // disable tooltips for pump name
-    for i:= 1 to PumpNum do
-     (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-      as TGroupBox).ShowHint:= False;
+    (FindComponent('S' + IntToStr(j) + 'P58')
+     as TTabSheet).Enabled:= False;
+    if j = 1 then
+     // disable tooltips for pump name
+     for i:= 1 to PumpNum do
+      (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+       as TGroupBox).ShowHint:= False;
    end;
   end;
   RepeatOutputLE.Visible:= False;
@@ -1904,7 +2244,7 @@ begin
  if GlobalTime > oneDay then
  begin
   GlobalTime:= GlobalTime - oneDay;
-  if GlobalTime < oneDay then
+  if GlobalTime < oneDay then // if less than one day
    OverallTimer.Interval:= trunc(GlobalTime)
   else // to restart timer every day
    OverallTimer.Interval:= oneDay;
@@ -1957,12 +2297,21 @@ begin
   RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= True;
+   (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= True;
-   // enable tooltips for pump name
-   for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= True;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= True;
+   if j = 1 then
+    // enable tooltips for pump name
+    for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= True;
   end;
   // view tab after last used step
   for j:= 2 to StepNum-1 do
@@ -2002,7 +2351,7 @@ begin
  begin
   // the interval is calculated in GenerateCommand
   (FindComponent('StepTimer' + IntToStr(Step+1))
-  as TTimer).Enabled:= True;
+   as TTimer).Enabled:= True;
   RepeatPC.ActivePage:= (FindComponent('Step' + IntToStr(Step+1) + 'TS')
                          as TTabSheet);
   // highlight the new active step by adding an asterisk to the step name
@@ -2048,6 +2397,7 @@ begin
  Step7TS.Caption:= 'Step 7';
  (FindComponent('StepTimer' + IntToStr(StepNum))
         as TTimer).Enabled:= False;
+
  RepeatPC.ActivePage:= Step1TS;
 end;
 
@@ -2127,12 +2477,23 @@ begin
   RunSettingsGB.Enabled:= not LiveModeCB.Checked;
   for j:= 1 to StepNum do
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= True;
+   // only enable action time when not run endless
+   if not RunEndlessCB.Checked then
+    (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+     as TGroupBox).Enabled:= True;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= True;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= True;
-   // enable tooltips for pump name
-   for i:= 1 to PumpNum do
-    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-     as TGroupBox).ShowHint:= True;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= True;
+   if j = 1 then
+    // enable tooltips for pump name
+    for i:= 1 to PumpNum do
+     (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+      as TGroupBox).ShowHint:= True;
   end;
   // view tab after last used step
   for j:= 2 to StepNum-1 do
@@ -2171,23 +2532,36 @@ procedure TMainForm.RunFreeBBClick(Sender: TObject);
 // run 30 seconds in each direction 10 times
 // this is like loading a *.PDAction file, therefore use the file load routines
 var
- j : integer;
+ i, j : integer;
  command : string;
  ParseSuccess : Boolean;
 begin
  LoadedActionFileM.Text:= 'Free Pumps';
  LoadedActionFileM.Color:= clInfoBK;
  LoadedActionFileM.Hint:= 'Free Pumps';
+ // start the pumps in blocks of 3 pumps at once
  // input the action as command
- // '/0LgS1999299939994999D0000I1111M30000I0000M999
- //      S1999299939994999D1111I1111M30000I0000M999G9I0000lR'
+ // '/0LgS199929993999D000I11100000M10
+ //      S199929993999499959996999D000000I11111100M10
+ //      S19992999399949995999699979998999D00000000I11111111M30000
+ //      I00000000M999
+ //      S199929993999D111I11100000M10
+ //      S199929993999499959996999D111111I11111100M10
+ //      S19992999399949995999699979998999D11111111I11111111M30000
+ //      I00000000M999G9I00000000lR
  command:= '/0Lg';
- command:= command + 'S1999299939994999D0000I1111M30000';
- command:= command + 'I0000M999';
- command:= command + 'S1999299939994999D1111I1111M30000';
- command:= command + 'I0000M999G9I0000lR';
+ command:= command + 'S199929993999D000I11100000M10';
+ command:= command + 'S199929993999499959996999D000000I11111100M10';
+ command:= command + 'S19992999399949995999699979998999D00000000I11111111M30000';
+ command:= command + 'I00000000M999';
+ command:= command + 'S199929993999D111I11100000M10';
+ command:= command + 'S199929993999499959996999D111111I11111100M10';
+ command:= command + 'S19992999399949995999699979998999D11111111I11111111M30000';
+ command:= command + 'I00000000M999G9I00000000lR';
 
  CommandM.Text:= command;
+ // we set values for 8 pumps
+ PumpNumFile:= 8;
  // parse the command
  ParseSuccess:= ParseCommand(command);
  if ParseSuccess then
@@ -2197,8 +2571,25 @@ begin
  RunSettingsGB.Enabled:= False;
  LiveModeCB.Enabled:= False;
  for j:= 1 to StepNum do
-  (FindComponent('Step' + IntToStr(j) + 'TS')
+ begin
+  // the user must be able to see if the pumps 5 - 8 are set
+  // therefore we cannot just disable the StepXTS component but its
+  // child components except of SXPC
+  (FindComponent('Step' + IntToStr(j) + 'UseCB')
+   as TCheckBox).Enabled:= False;
+  (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= False;
+  (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+   as TGroupBox).Enabled:= False;
+  (FindComponent('S' + IntToStr(j) + 'P14')
    as TTabSheet).Enabled:= False;
+  (FindComponent('S' + IntToStr(j) + 'P58')
+   as TTabSheet).Enabled:= False;
+  if j = 1 then
+   for i:= 1 to PumpNum do
+   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+    as TGroupBox).ShowHint:= False;
+ end;
  RepeatOutputLE.Visible:= False;
  // do not show unused steps
  for j:= 2 to StepNum do
@@ -2244,14 +2635,19 @@ begin
  // SenderName is in the form "StepxTS" and we need the x
  // so get the 5th character of the name
  Step:= StrToInt(Copy(SenderName, 5, 1));
- if (FindComponent('Step' + IntToStr(Step) + 'UseCB') as TCheckBox).Checked then
+ if (FindComponent('Step' + IntToStr(Step) + 'UseCB')
+     as TCheckBox).Checked then
  begin
   if Step <> StepNum then
-   (FindComponent('Step' + IntToStr(Step+1) + 'TS') as TTabSheet).TabVisible:= True;
-  (FindComponent('ActionTime' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= True;
-  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= True;
+   (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+    as TTabSheet).TabVisible:= True;
+  (FindComponent('ActionTime' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= True;
+  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= True;
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step)) as TGroupBox).Enabled:= True;
+   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step))
+    as TGroupBox).Enabled:= True;
   // in case it was disabled on unchecking step 2
   if (Step = 2) and (not ActionTime1GB.Enabled) then
    ActionTime1GB.Enabled:= True;
@@ -2259,11 +2655,15 @@ begin
  else
  begin
   if Step <> StepNum then
-   (FindComponent('Step' + IntToStr(Step+1) + 'TS') as TTabSheet).TabVisible:= False;
-  (FindComponent('ActionTime' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= False;
-  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB') as TGroupBox).Enabled:= False;
+   (FindComponent('Step' + IntToStr(Step+1) + 'TS')
+    as TTabSheet).TabVisible:= False;
+  (FindComponent('ActionTime' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= False;
+  (FindComponent('DutyCycle' + IntToStr(Step) + 'GB')
+   as TGroupBox).Enabled:= False;
   for j:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step)) as TGroupBox).Enabled:= False;
+   (FindComponent('Pump' + IntToStr(j) + 'GB' + IntToStr(Step))
+    as TGroupBox).Enabled:= False;
   // if there is only one step and endless repeat disable time settings
   if (Step = 2) and (RunEndlessCB.Checked) then
    ActionTime1GB.Enabled:= False;
@@ -2329,20 +2729,11 @@ begin
            as TRadioButton).Checked then
   StepTime:= 3600;
  StepTime:= (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-              as TFloatSpinEdit).Value * StepTime; // time in s
+        as TFloatSpinEdit).Value * StepTime; // time in s
  if StepTime < DutyTime then
   // the maximal DutyTime is 50 s, thus the unit is already s
   (FindComponent('RunTime' + IntToStr(Step) + 'FSE')
-    as TFloatSpinEdit).Value:= DutyTime;
-
- // update the resulting speed
- for j:= 1 to PumpNum do
-  (FindComponent('Pump' + IntToStr(j) + 'ResultLE' + IntToStr(Step))
-    as TLabeledEdit).Text:= FloatToStr(RoundTo(
-     (FindComponent('DutyCycle' + IntToStr(Step) + 'FSE')
-       as TFloatSpinEdit).Value *
-     (FindComponent('Pump' + IntToStr(j) + 'VoltageFS' + IntToStr(Step))
-       as TFloatSpinEdit).Value / 3.3 , -2));
+        as TFloatSpinEdit).Value:= DutyTime;
 
  // if in live mode send trigger command generation and sending
  if LiveModeCB.Checked and OverallTimer.Enabled then
@@ -2393,7 +2784,7 @@ begin
  DummyString:= '';
 
  if DropFileName <> '' then // a file was dropped into the main window
-  FileSuccess:= OpenFile(DropFileName, MousePointer)
+  FileSuccess:= OpenFile(DropFileName)
  else
  begin
   OpenDialog.InitialDir:= '';
@@ -2407,13 +2798,15 @@ begin
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     exit;
    end;
-   FileSuccess:= OpenFile(OpenDialog.FileName, MousePointer);
+   FileSuccess:= OpenFile(OpenDialog.FileName);
   end
   else
    exit; // user aborted the loading
  end;
-
- if  FileSuccess then
+ if not FileSuccess then
+  MessageDlgPos('Error while attempting to open file',
+   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y)
+ else
  begin
   // an action file is never live mode
   if LiveModeCB.Checked then
@@ -2438,18 +2831,31 @@ begin
   // parse the command
   ParseSuccess:= ParseCommand(command);
   if ParseSuccess then
-   // call command generation just to get the action time calculated
+   // call command generation to get the action time calculated and to add
+   // time steps in case many pumps have to be started at once
    GenerateCommand(command);
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
   LiveModeCB.Enabled:= False;
   for j:= 1 to StepNum do
   begin
-   (FindComponent('Step' + IntToStr(j) + 'TS')
+   // the user must be able to see if the pumps 5 - 8 are set
+   // therefore we cannot just disable the StepXTS component but its
+   // child components except of SXPC
+   (FindComponent('Step' + IntToStr(j) + 'UseCB')
+    as TCheckBox).Enabled:= False;
+   (FindComponent('ActionTime' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= False;
+   (FindComponent('DutyCycle' + IntToStr(j) + 'GB')
+    as TGroupBox).Enabled:= False;
+   (FindComponent('S' + IntToStr(j) + 'P14')
     as TTabSheet).Enabled:= False;
-   for i:= 1 to PumpNum do
-   (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
-    as TGroupBox).ShowHint:= False;
+   (FindComponent('S' + IntToStr(j) + 'P58')
+    as TTabSheet).Enabled:= False;
+   if j = 1 then
+    for i:= 1 to PumpNum do
+    (FindComponent('Pump' + IntToStr(i) + 'GB' + IntToStr(j))
+     as TGroupBox).ShowHint:= False;
   end;
   RepeatOutputLE.Visible:= False;
   // do not show unused steps
@@ -2464,33 +2870,28 @@ begin
  SaveActionMI.Enabled:= False;
  // show step 1
  RepeatPC.ActivePage:= Step1TS;
- end; // else if FileSuccess
+ end; // else if not FileSuccess
 end;
 
-function TMainForm.OpenFile(InputName: string; MousePointer : TPoint): Boolean;
+function TMainForm.OpenFile(InputName: string): Boolean;
 // read file content
 var
  StringList : TStringList;
  j, k : integer;
 begin
  result:= False;
+ PumpNumFile:= 4; // every action file defines at least 4 pumps
  try
   StringList:= TStringList.Create;
   k:= StringList.Count;
   // add all file lines to the string list
   StringList.LoadFromFile(InputName);
 
-  // handle the case that a file created with a JT pump driver version
-  // for up to 8 pumps is loaded
-  if StringList.Count > 5 then
-  begin
-   MessageDlgPos('The loaded action file defines actions for more than 4 pumps.'
-    + LineEnding + 'This software can only control up to 4 pumps.',
-    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
-   exit;
-  end;
-
   CommandM.Text:= StringList[0];
+
+  // we know now the number of defined pumps in the file
+  if StringList.Count > 5 then
+   PumpNumFile:= StringList.Count - 1;
 
   if StringList.Count = 1 then // no pump names defined (in old files)
   begin
@@ -2501,9 +2902,17 @@ begin
   else
   begin
    // read the pump names
-   for k:= 1 to PumpNum do
+   for k:= 1 to PumpNumFile do
+   begin
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
      as TGroupBox).Caption:= StringList[k];
+   end;
+   if PumpNumFile < PumpNum then // reset names of undefined pumps
+   begin
+    for k:= PumpNumFile + 1 to PumpNum do
+     (FindComponent('Pump' + IntToStr(k) + 'GB1')
+      as TGroupBox).Caption:= 'Pump ' + IntToStr(k);
+   end;
   end;
 
   // set the pump name for all other steps
@@ -2526,7 +2935,8 @@ var
  address : string;
  SOrder : array of char;
  LastParsed : char = 'X';
- StepCounter, MCounter, ICounter, i, j, k, G1, p : integer;
+ StepCounter, MCounter, ICounter, i, j, k, G1, p,
+   posSfirst, posSlast : integer;
  MousePointer : TPoint;
  StepTime, M1, M2, DutyStepTime : Double;
  Have2M : Boolean;
@@ -2535,8 +2945,8 @@ begin
  StepCounter:= 0; MCounter:= 0; ICounter:= 0;
  M1:= 0; M2:= 0; G1:= 0;
  result:= false; Have2M:= false; StepTime:= 0;
- setLength(SOrder{%H-}, PumpNum);
- for k:= 0 to PumpNum-1 do
+ setLength(SOrder{%H-}, PumpNumFile);
+ for k:= 0 to PumpNumFile-1 do
   SOrder[k]:= '0';
 
  // first check address
@@ -2565,6 +2975,41 @@ begin
   (FindComponent('DutyCycle' + IntToStr(j) + 'FSE')
    as TFloatSpinEdit).Value:= 100;
 
+ // before we can parse the command, we need to clean it up
+ // there might be 10 ms long steps in it used to start many motors at once
+ // we ignore these because they will automatically be re-added at the
+ // next pump run
+ i:= 2;
+ posSfirst:= 0;
+ posSlast:= 0;
+ // parse from 'S' to the next 'S'
+ while i < length(command) do
+ begin
+  if command[i] = 'S' then
+  begin
+   if posSfirst = 0 then
+    posSfirst:= i
+   else
+    posSlast:= i;
+  end;
+  // check if the M command is 'M10' and only then cut out from the command
+  if (posSfirst > 0) and (posSlast > 0)
+   and (Copy(command, posSlast - 3, 3) = 'M10') then
+  begin
+   Delete(command, posSfirst, posSlast - posSfirst);
+   i:= posSfirst;
+   posSfirst:= 0;
+   posSlast:= 0;
+  end
+  else if (posSfirst > 0) and (posSlast > 0) then
+  begin
+   posSfirst:= 0;
+   posSlast:= 0;
+  end
+  else
+   inc(i);
+ end;
+
  // parse the command
  for i:= 2 to Length(command) do
  begin
@@ -2577,7 +3022,7 @@ begin
    MCounter:= 0; // there can be several occurrences of 'M' for every step
    ICounter:= 0; // there can be several occurrences of 'I' for every step
    // initialize
-   for k:= 0 to PumpNum-1 do
+   for k:= 0 to PumpNumFile-1 do
     SOrder[k]:= '0';
    LastParsed:= 'S';
    // determine the length
@@ -2589,7 +3034,7 @@ begin
    k:= 1;
    while k < j-i do
    begin
-    for p:= 1 to PumpNum do
+    for p:= 1 to PumpNumFile do
      if command[i+k] = IntToStr(p) then
      begin
      (FindComponent('Pump' + IntToStr(p) + 'VoltageFS' + IntToStr(StepCounter))
@@ -2638,14 +3083,14 @@ begin
    if (LastParsed = 'M') and (StepTime >= 1) then
    begin
     // check if there is a next 'M' with 1s
-    if (command[i+PumpNum+1] = 'M') then
+    if (command[i+PumpNumFile+1] = 'M') then
     begin
      // determine the length
-     j:= i + PumpNum + 1;
+     j:= i + PumpNumFile + 1;
      repeat
       inc(j)
      until IsDigit(command[j]) = false;
-     StepTime:= StrToFloat(Copy(command, i+PumpNum+2, j-i-(PumpNum+2))) / 1000;
+     StepTime:= StrToFloat(Copy(command, i+PumpNumFile+2, j-i-(PumpNumFile+2))) / 1000;
      if (StepTime >= 1) then
      begin
       inc(StepCounter);
@@ -2655,7 +3100,7 @@ begin
     end;
    end;
    if (StepCounter = 0)
-    or ((LastParsed = 'G') and (command[i+PumpNum+2] <> 'R')) then // not if last 'I'
+    or ((LastParsed = 'G') and (command[i+PumpNumFile+2] <> 'R')) then // not if last 'I'
    begin
     inc(StepCounter);
     ICounter:= 0;
@@ -2676,7 +3121,7 @@ begin
     else
      (FindComponent('Pump1OnOffCB' + IntToStr(StepCounter))
       as TCheckBox).Checked:= false;
-    for p:= 2 to PumpNum do
+    for p:= 2 to PumpNumFile do
     begin
      if (command[i+p] = '0') or (command[i+p] = '1') then
       if command[i+p] = '1' then
@@ -2835,8 +3280,9 @@ begin
    begin
     if (FindComponent('Pump' + IntToStr(k) + 'GB1')
       as TGroupBox).Caption <> '' then // one cannot output an empty name via FileStream.Write
-     SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption[1]
-      , Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
+     SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1')
+      as TGroupBox).Caption[1],
+      Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
     SaveFileStream.Write(LineEnding, 2);
    end;
   finally
@@ -2861,7 +3307,7 @@ begin
   OutNameTemp:= SaveDialog.FileName;
   // add file extension '.PDAction' if it is missing
   if (ExtractFileExt(OutNameTemp) <> '.PDAction') then
-   Insert('.PDAction', OutNameTemp,Length(OutNameTemp) + 1);
+   Insert('.PDAction', OutNameTemp, Length(OutNameTemp) + 1);
   if FileExists(OutNameTemp) then
   begin
    with CreateMessageDialog // MessageDlg with mbNo as default

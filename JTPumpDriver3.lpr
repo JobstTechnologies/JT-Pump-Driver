@@ -1,4 +1,4 @@
-program JTPumpDriver2;
+program JTPumpDriver3;
 
 {$mode objfpc}{$H+}
 
@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, JTPumpDriverMain2, SerialUSBSelection, PumpNameSetting,
+  Forms, JTPumpDriverMain3, SerialUSBSelection, PumpNameSetting,
   AboutForm;
 
 {$R *.res}

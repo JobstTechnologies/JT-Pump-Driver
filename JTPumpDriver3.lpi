@@ -21,10 +21,9 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
-      <MajorVersionNr Value="2"/>
-      <MinorVersionNr Value="7"/>
-      <RevisionNr Value="2"/>
-      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="2.72"/>
+      <MajorVersionNr Value="3"/>
+      <RevisionNr Value="10"/>
+      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="3.10"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -33,7 +32,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="JTPumpDriver2-7-debug"/>
+            <Filename Value="JTPumpDriver3-0-debug"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -81,7 +80,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="JTPumpDriver2-7"/>
+            <Filename Value="JTPumpDriver3-0"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -125,11 +124,11 @@
     </RequiredPackages>
     <Units Count="5">
       <Unit0>
-        <Filename Value="JTPumpDriver2.lpr"/>
+        <Filename Value="JTPumpDriver3.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="JTPumpDriverMain2.pas"/>
+        <Filename Value="JTPumpDriverMain3.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
@@ -162,7 +161,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="JTPumpDriver2-2"/>
+      <Filename Value="JTPumpDriver3-0"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
