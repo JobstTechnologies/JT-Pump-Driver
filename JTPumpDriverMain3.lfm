@@ -5026,7 +5026,7 @@ object MainForm: TMainForm
       ShowHint = True
       TabOrder = 2
     end
-    object Panel3: TPanel
+    object ActionCommandSplitter: TPanel
       Left = 8
       Height = 1
       Top = 104

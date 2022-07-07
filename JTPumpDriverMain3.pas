@@ -93,7 +93,7 @@ type
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
     FirmwareResetMI: TMenuItem;
-    Panel3: TPanel;
+    ActionCommandSplitter: TPanel;
     Pump5DirectionRG1: TRadioGroup;
     Pump5DirectionRG2: TRadioGroup;
     Pump5DirectionRG3: TRadioGroup;
