@@ -4913,7 +4913,7 @@ object MainForm: TMainForm
   object DriverConnectionGB: TGroupBox
     Left = 550
     Height = 75
-    Top = 32
+    Top = 226
     Width = 148
     Caption = 'Connection'
     ClientHeight = 55
@@ -4935,7 +4935,7 @@ object MainForm: TMainForm
   object PumpSetupGB: TGroupBox
     Left = 550
     Height = 64
-    Top = 312
+    Top = 310
     Width = 148
     Caption = 'Pump Setup'
     ClientHeight = 44
@@ -4981,7 +4981,7 @@ object MainForm: TMainForm
   object ActionsGB: TGroupBox
     Left = 550
     Height = 186
-    Top = 120
+    Top = 32
     Width = 148
     Caption = 'Actions'
     ClientHeight = 166
