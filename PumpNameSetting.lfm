@@ -1,14 +1,14 @@
 object PumpNameSettingF: TPumpNameSettingF
   Left = 684
-  Height = 119
+  Height = 110
   Top = 259
-  Width = 241
+  Width = 240
   Caption = 'Pump name selection'
-  ClientHeight = 119
-  ClientWidth = 241
+  ClientHeight = 110
+  ClientWidth = 240
   OnCreate = FormCreate
   OnShow = FormCreate
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.2.2.0'
   object PumpNameE: TEdit
     Left = 88
     Height = 23
@@ -19,8 +19,8 @@ object PumpNameSettingF: TPumpNameSettingF
   end
   object OKButtonB: TBitBtn
     Left = 24
-    Height = 37
-    Top = 59
+    Height = 36
+    Top = 56
     Width = 92
     DefaultCaption = True
     Kind = bkOK
@@ -28,9 +28,9 @@ object PumpNameSettingF: TPumpNameSettingF
     TabOrder = 1
   end
   object CancelButtonB: TBitBtn
-    Left = 120
-    Height = 37
-    Top = 59
+    Left = 124
+    Height = 36
+    Top = 56
     Width = 92
     Cancel = True
     DefaultCaption = True
