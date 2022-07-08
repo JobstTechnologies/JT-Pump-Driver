@@ -1,6 +1,12 @@
 Changes
 
-from version 3.10 to 3.11
+from version 3.10 to 3.20
+
+improvements:
+- the pump names and number of pumps in the setup are now stored for the
+  next run of the program
+- issue proper error messages when reading or writing files that are currently
+  in use by other programs
 
 bugfix:
 - don't show hints how th change name for disabled pumps

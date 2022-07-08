@@ -485,6 +485,8 @@ type
     procedure CloseSerialConn;
     procedure SendRepeatToPump;
     procedure COMPortScan;
+    procedure LoadAppearance(iniFile: string);
+    procedure SaveAppearance(iniFile: string);
 
   end;
 
@@ -508,6 +510,7 @@ var
   COMList : array of Int32; // list with available pump drivers (list index is COM port number)
   commandForRepeat : string; // stores the command sent on every repeat
   oneDay : longint = 86400000; // time of one day in ms
+  const AppearanceFile : string = 'Appearance-JT-PD.ini'; // filename to store appearance
 
 implementation
 
@@ -517,6 +520,7 @@ implementation
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var
+ iniFile : string;
  FileVerInfo: TFileVersionInfo;
 begin
  try
@@ -537,6 +541,13 @@ begin
    LoadActionMIClick(Sender);
    DropfileName:= '';
   end;
+
+ // load the current chart appearance settings
+ // we load from the same folder than the program .exe
+ iniFile:= ExtractFilePath(Application.ExeName) + AppearanceFile;
+ if FileExists(iniFile) then
+  LoadAppearance(iniFile);
+
 end;
 
 procedure TMainForm.ConnectionMIClick(Sender: TObject);
@@ -1337,7 +1348,7 @@ end;
 procedure TMainForm.FormClose(Sender: TObject);
 // Close serial connection
 var
- command : string;
+ command, iniFile : string;
  k : integer;
 begin
  // stop the pumps and blink 3 times
@@ -1356,6 +1367,11 @@ begin
      // we cannot close socket or free when the connection timed out
      CloseSerialConn;
   end;
+
+ // save the current chart appearance settings
+ // we write into the same folder than the program .exe
+ iniFile:= ExtractFilePath(Application.ExeName) + AppearanceFile;
+ SaveAppearance(iniFile);
 end;
 
 procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -3336,7 +3352,10 @@ var
  SaveFileStream : TFileStream;
  CommandResult : Boolean;
  k : integer;
+ MousePointer : TPoint;
 begin
+ MousePointer:= Mouse.CursorPos; // store mouse position
+
  // generate command according to current settings
  CommandResult:= GenerateCommand(command);
  // if GenerateCommand returns e.g. a too long time do nothing
@@ -3347,15 +3366,37 @@ begin
  OutName:= SaveHandling(InName, false); // opens file dialog
  if OutName <> '' then
  begin
-  try
-   if FileExists(OutName) then
+  if FileExists(OutName) then
+  begin
+   try
+    SaveFileStream:= TFileStream.Create(OutName, fmOpenReadWrite);
+   except
+    on EFOpenError do
     begin
-     SaveFileStream:= TFileStream.Create(OutName, fmOpenReadWrite);
-     // the new command might be shorter, therefore delete its content
-     SaveFileStream.Size:= 0;
-    end
-   else
+     MessageDlgPos('Action file is used by another program and cannot be opened.',
+                   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+     exit;
+    end;
+   end;
+   // the new command might be shorter, therefore delete its content
+   SaveFileStream.Size:= 0;
+  end
+  else
+  begin
+   try
     SaveFileStream:= TFileStream.Create(OutName, fmCreate);
+   except
+    on EFOpenError do
+    begin
+     MessageDlgPos('Action file could not be created.' + LineEnding +
+                   'Probably you don''t have write access to the specified folder.',
+                   mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+     exit;
+    end;
+   end;
+  end;
+
+  try
    // write the command
    SaveFileStream.Write(command[1], Length(command));
    SaveFileStream.Write(LineEnding, 2); // line break
@@ -3555,6 +3596,63 @@ begin
   Reg.Free;
   RegStrings.Free;
  end;
+
+end;
+
+procedure TMainForm.LoadAppearance(iniFile: string);
+var
+ i, m : integer;
+ List : TStringList;
+begin
+
+ try
+  List:= TStringList.Create;
+  List.LoadFromFile(iniFile);
+  m:= 0;
+  // first readout the number of pumps
+  PumpNumberSE.Value:= StrToInt(
+   Copy(List[m], Pos(' ', List[m]) + 1, List[m].Length));
+  inc(m);
+  // readout the last pump names
+  for i:= 1 to 8 do
+  begin
+   (FindComponent('Pump' + IntToStr(i) + 'GB1')
+     as TGroupBox).Caption:=
+         Copy(List[m], Pos(' ', List[m]) + 1, List[m].Length);
+   inc(m);
+  end;
+
+ finally
+  List.Free;
+ end;
+end;
+
+procedure TMainForm.SaveAppearance(iniFile: string);
+var
+ i : integer;
+ List: TStringList;
+begin
+
+try
+ List:= TStringList.Create;
+
+ // first store pump setup
+ List.Add('PumpNumberSE.Value ' + IntToStr(PumpNumberSE.Value));
+
+ // store pump names
+ for i:= 1 to 8 do
+ begin
+  List.Add('Pump' + IntToStr(i) + 'GB1.Caption ' +
+   (FindComponent('Pump' + IntToStr(i) + 'GB1')
+     as TGroupBox).Caption);
+ end;
+
+ // save the list
+ List.SaveToFile(iniFile);
+
+finally
+ List.Free;
+end;
 
 end;
 
