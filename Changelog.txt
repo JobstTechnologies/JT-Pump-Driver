@@ -9,7 +9,7 @@ improvements:
   in use by other programs
 
 bugfix:
-- don't show hints how th change name for disabled pumps
+- for disabled pumps don't show hint how to change pump name
 
 
 from version 2.71 to 3.10
