@@ -1,5 +1,11 @@
 Changes
 
+from version 3.20 to 3.21
+
+bugfix:
+- re-add feature to display percentage of maximal speed
+
+
 from version 3.10 to 3.20
 
 improvements:

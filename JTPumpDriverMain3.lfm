@@ -1389,6 +1389,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB2: TGroupBox
             Left = 8
             Height = 192
@@ -2268,6 +2269,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB3: TGroupBox
             Left = 8
             Height = 192
@@ -3147,6 +3149,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB4: TGroupBox
             Left = 8
             Height = 192
@@ -4026,6 +4029,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB5: TGroupBox
             Left = 8
             Height = 192
@@ -4905,6 +4909,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB6: TGroupBox
             Left = 8
             Height = 192
@@ -5791,6 +5796,7 @@ object MainForm: TMainForm
           Caption = 'Pumps 5-8'
           ClientHeight = 394
           ClientWidth = 328
+          TabVisible = False
           object Pump5GB7: TGroupBox
             Left = 8
             Height = 192
