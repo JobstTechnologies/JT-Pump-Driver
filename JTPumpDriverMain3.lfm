@@ -6384,7 +6384,7 @@ object MainForm: TMainForm
     object DriverConnectBB: TBitBtn
       Left = 8
       Height = 39
-      Hint = 'Dis/connects to a pump driver'
+      Hint = 'Connects to a pump driver'
       Top = 4
       Width = 126
       Caption = 'Connect Driver'

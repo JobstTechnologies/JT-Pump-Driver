@@ -5,15 +5,15 @@ unit SerialUSBSelection;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons;
 
 type
 
   { TSerialUSBSelectionF }
 
   TSerialUSBSelectionF = class(TForm)
-    OKButtonB: TButton;
-    CancelButtonB: TButton;
+    ConnectBB: TBitBtn;
+    CancelBB: TBitBtn;
     SerialUSBPortCB: TComboBox;
     SerialUSBPortL: TLabel;
     procedure FormCreate(Sender: TObject);
@@ -36,6 +36,7 @@ procedure TSerialUSBSelectionF.FormCreate(Sender: TObject);
 begin
  ActiveControl:= SerialUSBPortCB;
 end;
+
 
 end.
 

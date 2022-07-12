@@ -541,6 +541,7 @@ type
     procedure CloseSerialConn;
     procedure SendRepeatToPump;
     procedure COMPortScan;
+    procedure DisconnectPumpDriver;
     procedure LoadAppearance(iniFile: string);
     procedure SaveAppearance(iniFile: string);
 
@@ -611,6 +612,33 @@ begin
  ConnectionStart(Sender, true); // always call to connect
 end;
 
+procedure TMainForm.DisconnectPumpDriver;
+var
+ command : string;
+ i : integer;
+begin
+ ConnComPortLE.Color:= clHighlight;
+ ConnComPortLE.Text:= 'Not connected';
+ IndicatorPanelP.Caption:= '';
+ IndicatorPanelP.Color:= clDefault;
+ // disable all buttons
+ RunBB.Enabled:= false;
+ StopBB.Enabled:= false;
+ if HaveSerialCB.Checked then
+ begin
+  // stop pumps
+  command:= '/0I';
+  for i:= 1 to PumpNum do
+   command:= command + '0';
+  // blink 3 times
+  command:= command + 'gLM500lM500G2R' + LineEnding;
+  ser.SendString(command);
+  CloseSerialConn;
+  IndicatorPanelP.Caption:= 'Pumps stopped';
+  IndicatorPanelP.Color:= clHighlight;
+ end;
+end;
+
 procedure TMainForm.ConnectionStart(Sender: TObject; Connect: Boolean);
 // opens the connection settings dialog and opens a connections according
 // to the dialog input
@@ -628,6 +656,13 @@ begin
  GetFirmwareVersionMI.Enabled:= true;
  FirmwareUpdateMI.Enabled:= true;
  FirmwareResetMI.Enabled:= true;
+
+ if not Connect then
+ begin
+  DisconnectPumpDriver;
+  exit;
+ end;
+
  // determine all possible COM ports
  Reg:= TRegistry.Create;
  try
@@ -692,28 +727,9 @@ begin
 
  end; // end with with SerialUSBSelectionF
 
- if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
+ if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Cancel
  begin
-  ConnComPortLE.Color:= clHighlight;
-  ConnComPortLE.Text:= 'Not connected';
-  IndicatorPanelP.Caption:= '';
-  IndicatorPanelP.Color:= clDefault;
-  // disable all buttons
-  RunBB.Enabled:= false;
-  StopBB.Enabled:= false;
-  if HaveSerialCB.Checked then
-  begin
-   // stop pumps
-   command:= '/0I';
-   for k:= 1 to PumpNum do
-    command:= command + '0';
-   // blink 3 times
-   command:= command + 'gLM500lM500G2R' + LineEnding;
-   ser.SendString(command);
-   CloseSerialConn;
-   IndicatorPanelP.Caption:= 'Pumps stopped';
-   IndicatorPanelP.Color:= clHighlight;
-  end;
+  DisconnectPumpDriver;
   exit;
  end;
 
@@ -731,7 +747,7 @@ begin
   if HaveSerialCB.Checked then
   begin
    // stop pumps
-   command:= command + '/0I';
+   command:= '/0I';
    for k:= 1 to PumpNum do
     command:= command + '0';
    command:= command + 'gLM500lM500G2R' + LineEnding;
@@ -1355,9 +1371,15 @@ end;
 procedure TMainForm.HaveSerialCBChange(Sender: TObject);
 begin
  if HaveSerialCB.Checked then
-  DriverConnectBB.Caption:= 'Disconnect Driver'
+ begin
+  DriverConnectBB.Caption:= 'Disconnect Driver';
+  DriverConnectBB.Hint:= 'Connects to a pump driver';
+ end
  else
+ begin
   DriverConnectBB.Caption:= 'Connect Driver';
+  DriverConnectBB.Hint:= 'Disconnects from the pump driver';
+ end;
 end;
 
 procedure TMainForm.AboutMIClick(Sender: TObject);

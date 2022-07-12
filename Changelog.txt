@@ -1,5 +1,11 @@
 Changes
 
+from version 3.21 to 3.22
+
+bugfix:
+- don't make a time-costly port scan on disconnecting from pump driver
+
+
 from version 3.20 to 3.21
 
 bugfix:
