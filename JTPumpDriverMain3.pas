@@ -3582,6 +3582,7 @@ begin
   HaveSerialCB.Checked:= False;
   COMPort:= '';
   connectedPumpDriver:= 0;
+  StopBBClick(StopBB as TObject);
  end;
 
 end;

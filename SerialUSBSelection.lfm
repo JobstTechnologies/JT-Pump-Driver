@@ -1,10 +1,10 @@
 object SerialUSBSelectionF: TSerialUSBSelectionF
   Left = 704
-  Height = 96
+  Height = 100
   Top = 305
   Width = 259
   Caption = 'Serial port selection'
-  ClientHeight = 96
+  ClientHeight = 100
   ClientWidth = 259
   OnCreate = FormCreate
   OnShow = FormCreate
@@ -34,8 +34,8 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
   end
   object ConnectBB: TBitBtn
     Left = 24
-    Height = 30
-    Top = 52
+    Height = 32
+    Top = 54
     Width = 100
     Caption = 'Connect'
     Glyph.Data = {
@@ -143,8 +143,8 @@ object SerialUSBSelectionF: TSerialUSBSelectionF
   end
   object CancelBB: TBitBtn
     Left = 136
-    Height = 30
-    Top = 52
+    Height = 32
+    Top = 54
     Width = 100
     Cancel = True
     DefaultCaption = True
