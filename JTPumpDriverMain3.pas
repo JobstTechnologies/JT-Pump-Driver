@@ -851,9 +851,9 @@ begin
     MessageDlgPos('Not connected to a supported pump driver.',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
     IndicatorPanelP.Caption:= 'Wrong device';
+    CloseSerialConn;
     IndicatorPanelP.Color:= clRed;
     ConnComPortLE.Color:= clRed;
-    CloseSerialConn;
     exit;
    end;
    // JT Pump Driver requires a certain firmware version
@@ -864,6 +864,7 @@ begin
      + LineEnding + 'You have an unknown old firmware version installed.'
      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    CloseSerialConn;
     IndicatorPanelP.Caption:= 'Firmware too old';
     IndicatorPanelP.Color:= clRed;
     exit;
@@ -882,6 +883,7 @@ begin
      + LineEnding + 'You have firmware version ' + FirmwareVersion + ' installed.'
      + LineEnding + 'Please use the menu Miscellaneous -> Firmware Update.',
      mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
+    CloseSerialConn;
     IndicatorPanelP.Caption:= 'Firmware too old';
     IndicatorPanelP.Color:= clRed;
     exit;
@@ -1057,7 +1059,6 @@ begin
     ser.Free;
    end;
    ser:= TBlockSerial.Create;
-   HaveSerialCB.Checked:= True;
    ser.DeadlockTimeout:= 10; //set timeout to 10 s
    ser.Connect(COMPort);
    ser.config(9600, 8, 'N', SB1, False, False);
@@ -1103,6 +1104,8 @@ begin
   // if connected to wrong device, the exit only jumps out of try..finally block
   if exited then
    exit;
+
+  HaveSerialCB.Checked:= True;
   // allow the user to flush the device anyway
   if forced then
   begin
@@ -1373,12 +1376,12 @@ begin
  if HaveSerialCB.Checked then
  begin
   DriverConnectBB.Caption:= 'Disconnect Driver';
-  DriverConnectBB.Hint:= 'Connects to a pump driver';
+  DriverConnectBB.Hint:= 'Disconnects from the pump driver';
  end
  else
  begin
   DriverConnectBB.Caption:= 'Connect Driver';
-  DriverConnectBB.Hint:= 'Disconnects from the pump driver';
+  DriverConnectBB.Hint:= 'Connects to a pump driver';
  end;
 end;
 
