@@ -562,6 +562,7 @@ var
   StepNum : integer = 7; // number of steps
   PumpNum : integer = 8; // number of pumps
   PumpNumFile : integer = 4; // number of pumps defined in a loaded action file
+  PumpPrefix : string = 'Pump: '; // line prefix for action files
   COMPort : string = ''; // name of the connected COM port
   connectedPumpDriver : longint = 0; // ID of the connected pump driver
   COMList : array of Int32; // list with available pump drivers (list index is COM port number)
@@ -589,8 +590,11 @@ begin
  end;
  MainForm.Caption:= 'JT Pump Driver ' + Version;
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
- LoadedActionFileM.Text:= 'None'; // explicitly set there because the IDE always
-                                  // stores initial values with trailing LineEnding
+
+ // explicitly set there because the IDE always
+ // stores initial values with trailing LineEnding
+ LoadedActionFileM.Text:= 'None';
+
  // load file directly if it was provided via command line
  if ParamStr(1) <> '' then
   begin
@@ -1358,7 +1362,8 @@ begin
   ConnectionMIClick(Sender);
  // check again
  StringFound:= Pos('COM', ConnComPortLE.Text);
- if (StringFound = 0) or (ConnComPortLE.Color = clRed) then // abort
+ if ((StringFound = 0) or (ConnComPortLE.Color = clRed))
+  and (IndicatorPanelP.Caption <> 'Firmware too old') then // abort
  begin
   MessageDlgPos('Error: No connection to a pump driver',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
@@ -3087,8 +3092,10 @@ var
  StringList : TStringList;
  j, k : integer;
 begin
+ // initialize
  result:= False;
- PumpNumFile:= 4; // every action file defines at least 4 pumps
+ PumpNumFile:= 0;
+
  try
   StringList:= TStringList.Create;
   k:= StringList.Count;
@@ -3097,9 +3104,13 @@ begin
 
   CommandM.Text:= StringList[0];
 
-  // we know now the number of defined pumps in the file
-  if StringList.Count > 5 then
-   PumpNumFile:= StringList.Count - 1;
+  // get the number of pumps
+  for j:= 1 to StringList.Count - 1 do
+  begin
+   // if a line begins with 'Pump' we know it defines a pump
+   if LeftStr(StringList[j], 4) = 'Pump' then
+    inc(PumpNumFile);
+  end;
 
   if StringList.Count = 1 then // no pump names defined (in old files)
   begin
@@ -3111,10 +3122,9 @@ begin
   begin
    // read the pump names
    for k:= 1 to PumpNumFile do
-   begin
     (FindComponent('Pump' + IntToStr(k) + 'GB1')
-     as TGroupBox).Caption:= StringList[k];
-   end;
+     as TGroupBox).Caption:= Copy(StringList[k], Length(PumpPrefix) + 1,
+                                  Length(StringList[k])); // omit the prefix
    if PumpNumFile < PumpNum then // reset names of undefined pumps
    begin
     for k:= PumpNumFile + 1 to PumpNum do
@@ -3123,14 +3133,16 @@ begin
    end;
   end;
 
-  // set the pump name for all other steps
+  // set the pump names for all other steps
   for j:= 2 to StepNum do
+  begin
    for k:= 1 to PumpNum do
    begin
     (FindComponent('Pump' + IntToStr(k) + 'GB' + IntToStr(j))
      as TGroupBox).Caption:= (FindComponent('Pump' + IntToStr(k) + 'GB1')
      as TGroupBox).Caption;
    end;
+  end;
   result:= True;
  finally
   StringList.Free;
