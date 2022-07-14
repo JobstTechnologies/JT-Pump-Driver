@@ -3521,14 +3521,19 @@ begin
    SaveFileStream.Write(command[1], Length(command));
    SaveFileStream.Write(LineEnding, 2); // line break
    // write the pump names
-   for k:= 1 to PumpNum do
+   // only do this if there are pumps
+   if PumpNum > 0 then
    begin
-    if (FindComponent('Pump' + IntToStr(k) + 'GB1')
-      as TGroupBox).Caption <> '' then // one cannot output an empty name via FileStream.Write
-     SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1')
-      as TGroupBox).Caption[1],
-      Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
-    SaveFileStream.Write(LineEnding, 2);
+    for k:= 1 to PumpNum do
+    begin
+     SaveFileStream.Write(PumpPrefix[1], Length(PumpPrefix)); // prefix
+     if (FindComponent('Pump' + IntToStr(k) + 'GB1')
+       as TGroupBox).Caption <> '' then // one cannot output an empty name via FileStream.Write
+      SaveFileStream.Write((FindComponent('Pump' + IntToStr(k) + 'GB1')
+       as TGroupBox).Caption[1],
+       Length((FindComponent('Pump' + IntToStr(k) + 'GB1') as TGroupBox).Caption));
+     SaveFileStream.Write(LineEnding, 2);
+    end;
    end;
   finally
    SaveFileStream.Free;
