@@ -1382,6 +1382,8 @@ begin
  begin
   DriverConnectBB.Caption:= 'Connect Driver';
   DriverConnectBB.Hint:= 'Connects to a pump driver';
+  ConnComPortLE.Color:= clHighlight;
+  ConnComPortLE.Text:= 'Not connected';
  end;
 end;
 

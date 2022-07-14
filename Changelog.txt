@@ -5,6 +5,9 @@ from version 3.22 to 3.23
 improvement:
 - a progress bar is shown when scan for  pump drivers is performed
 
+bugfix:
+- always display correctly when there is no connection
+
 
 from version 3.21 to 3.22
 

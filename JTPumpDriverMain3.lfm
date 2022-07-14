@@ -6434,8 +6434,8 @@ object MainForm: TMainForm
     Left = 552
     Height = 19
     Top = 552
-    Width = 148
-    Caption = 'HasPumpDriverConnect'
+    Width = 90
+    Caption = 'HaveSerialCB'
     OnChange = HaveSerialCBChange
     TabOrder = 7
     Visible = False

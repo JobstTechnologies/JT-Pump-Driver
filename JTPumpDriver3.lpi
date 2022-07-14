@@ -163,7 +163,6 @@
         <ComponentName Value="ScanningProgressF"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ScanningProgress"/>
       </Unit5>
     </Units>
   </ProjectOptions>
