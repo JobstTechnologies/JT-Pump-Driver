@@ -3614,7 +3614,7 @@ begin
   begin
    ScanningProgressF.ScanningPB.Max:= RegStrings.Count;
    ScanningProgressF.Show;
-   // tell the OS that it has to refresh its window list
+   // that the OS can refresh its window list
    Application.ProcessMessages;
   end;
 
@@ -3624,8 +3624,8 @@ begin
    PortName:= Reg.ReadString(RegStrings[i]);
    ScanningProgressF.ScanningPB.Position:= i;
 
-   // the the OS the application is alive and to assure the changed
-   // is shown
+   // that the application is alive and to assure the changed
+   // progress bar is shown
    Application.ProcessMessages;
 
    // the pump drivers emits on every received command the firmware
