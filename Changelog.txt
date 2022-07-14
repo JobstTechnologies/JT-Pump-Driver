@@ -8,6 +8,7 @@ improvement:
 bugfixes:
 - always display correctly when there is no connection
 - fix loading of action files (regression since version 3.10)
+- display correct number of pumps for loaded action files
 
 
 from version 3.21 to 3.22

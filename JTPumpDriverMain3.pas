@@ -1486,6 +1486,7 @@ begin
  // the button re-enables editing after an action file was loaded
  // enable all setting possibilities
  LiveModeCB.Enabled:= True;
+ PumpSetupGB.Enabled:= True;
  RunSettingsGB.Enabled:= not LiveModeCB.Checked;
  // check all possible steps
  for j:= 1 to StepNum do
@@ -3047,9 +3048,11 @@ begin
    // call command generation to get the action time calculated and to add
    // time steps in case many pumps have to be started at once
    GenerateCommand(command);
+
   // disable all setting possibilities
   RunSettingsGB.Enabled:= False;
   LiveModeCB.Enabled:= False;
+  PumpSetupGB.Enabled:= False;
   for j:= 1 to StepNum do
   begin
    // the user must be able to see if the pumps 5 - 8 are set
@@ -3143,6 +3146,10 @@ begin
      as TGroupBox).Caption;
    end;
   end;
+
+  // update available pumps
+  PumpNumberSE.Value:= PumpNumFile;
+
   result:= True;
  finally
   StringList.Free;
