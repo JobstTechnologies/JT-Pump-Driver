@@ -1,0 +1,27 @@
+object ScanningProgressF: TScanningProgressF
+  Left = 366
+  Height = 74
+  Top = 302
+  Width = 245
+  Caption = 'ScanningProgressF'
+  ClientHeight = 74
+  ClientWidth = 245
+  OnCloseQuery = FormCloseQuery
+  LCLVersion = '2.2.2.0'
+  object ScanningPB: TProgressBar
+    Left = 16
+    Height = 20
+    Top = 40
+    Width = 215
+    ParentColor = False
+    TabOrder = 0
+  end
+  object ScanningL: TLabel
+    Left = 8
+    Height = 15
+    Top = 8
+    Width = 113
+    Caption = 'Scanning COM ports '
+    ParentColor = False
+  end
+end

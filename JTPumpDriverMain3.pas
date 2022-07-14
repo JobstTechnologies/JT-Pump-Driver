@@ -9,7 +9,7 @@ uses
   StdCtrls, ExtCtrls, Spin, Buttons, LCLType, Registry, Process, SynaSer,
   Crt, StrUtils, PopupNotifier, Character, System.UITypes, Fileinfo,
   // the custom forms
-  SerialUSBSelection, PumpNameSetting, AboutForm, Types;
+  ScanningProgress, SerialUSBSelection, PumpNameSetting, AboutForm, Types;
 
 type
 
@@ -3608,10 +3608,25 @@ begin
    Reg.GetValueNames(RegStrings);
   end;
 
+  // since the COM port scan can take some time depending on how many SIX/pumps
+  // are connected, display a progess bar
+  if RegStrings.Count > 2 then
+  begin
+   ScanningProgressF.ScanningPB.Max:= RegStrings.Count;
+   ScanningProgressF.Show;
+   // tell the OS that it has to refresh its window list
+   Application.ProcessMessages;
+  end;
+
   // now test all COM ports
   for i:= 0 to RegStrings.Count - 1 do
   begin
    PortName:= Reg.ReadString(RegStrings[i]);
+   ScanningProgressF.ScanningPB.Position:= i;
+
+   // the the OS the application is alive and to assure the changed
+   // is shown
+   Application.ProcessMessages;
 
    // the pump drivers emits on every received command the firmware
    // this is how we can detect them
@@ -3702,6 +3717,10 @@ begin
  finally
   Reg.Free;
   RegStrings.Free;
+  ScanningProgressF.Hide;
+  // tell the OS there is a window less and this way assures that a subsequent
+  // SerialUSBSelectionF window is properly shown
+  Application.ProcessMessages;
  end;
 
 end;

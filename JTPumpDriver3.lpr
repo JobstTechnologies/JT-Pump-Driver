@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, JTPumpDriverMain3, SerialUSBSelection, PumpNameSetting,
-  AboutForm;
+  AboutForm, ScanningProgress;
 
 {$R *.res}
 
@@ -21,6 +21,7 @@ begin
   Application.CreateForm(TSerialUSBSelectionF, SerialUSBSelectionF);
   Application.CreateForm(TPumpNameSettingF, PumpNameSettingF);
   Application.CreateForm(TAboutFormF, AboutFormF);
+  Application.CreateForm(TScanningProgressF, ScanningProgressF);
   Application.Run;
 end.
 

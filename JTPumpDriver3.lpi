@@ -23,9 +23,9 @@
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="3"/>
       <MinorVersionNr Value="2"/>
-      <RevisionNr Value="2"/>
+      <RevisionNr Value="3"/>
       <BuildNr Value="1"/>
-      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="3.22"/>
+      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="3.23"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -82,7 +82,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="JTPumpDriver3-22"/>
+            <Filename Value="JTPumpDriver3-23"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
@@ -124,7 +124,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="JTPumpDriver3.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -157,6 +157,14 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="ScanningProgress.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ScanningProgressF"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ScanningProgress"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
