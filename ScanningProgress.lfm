@@ -6,7 +6,7 @@ object ScanningProgressF: TScanningProgressF
   Caption = 'ScanningProgressF'
   ClientHeight = 74
   ClientWidth = 245
-  OnCloseQuery = FormCloseQuery
+  Position = poMainFormCenter
   LCLVersion = '2.2.2.0'
   object ScanningPB: TProgressBar
     Left = 16

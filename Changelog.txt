@@ -1,5 +1,11 @@
 Changes
 
+from version 3.23 to 3.24
+
+bugfix:
+- port scan progress bar did not properly close after the scanning
+
+
 from version 3.22 to 3.23
 
 improvement:
