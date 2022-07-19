@@ -1,5 +1,15 @@
 Changes
 
+from version 3.24 to 3.25
+
+improvement:
+- the pump icon turns green to indicate when pumps are running, otherwise
+  the icon is light-blue
+
+bugfix:
+- button to connect driver was active while pumps were running
+
+
 from version 3.23 to 3.24
 
 bugfix:

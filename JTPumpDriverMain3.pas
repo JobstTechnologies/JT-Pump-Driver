@@ -21,6 +21,64 @@ type
     DriverConnectionGB: TGroupBox;
     GenerateCommandBB: TBitBtn;
     HaveSerialCB: TCheckBox;
+    IconImageBlue: TImage;
+    IconImageGreen: TImage;
+    Label100: TLabel;
+    Label101: TLabel;
+    Label102: TLabel;
+    Label103: TLabel;
+    Label104: TLabel;
+    Label105: TLabel;
+    Label106: TLabel;
+    Label107: TLabel;
+    Label108: TLabel;
+    Label109: TLabel;
+    Label110: TLabel;
+    Label111: TLabel;
+    Label112: TLabel;
+    Label113: TLabel;
+    Label114: TLabel;
+    Label115: TLabel;
+    Label116: TLabel;
+    Label117: TLabel;
+    Label118: TLabel;
+    Label119: TLabel;
+    Label120: TLabel;
+    Label65: TLabel;
+    Label66: TLabel;
+    Label67: TLabel;
+    Label68: TLabel;
+    Label69: TLabel;
+    Label70: TLabel;
+    Label71: TLabel;
+    Label72: TLabel;
+    Label73: TLabel;
+    Label74: TLabel;
+    Label75: TLabel;
+    Label76: TLabel;
+    Label77: TLabel;
+    Label78: TLabel;
+    Label79: TLabel;
+    Label80: TLabel;
+    Label81: TLabel;
+    Label82: TLabel;
+    Label83: TLabel;
+    Label84: TLabel;
+    Label85: TLabel;
+    Label86: TLabel;
+    Label87: TLabel;
+    Label88: TLabel;
+    Label89: TLabel;
+    Label90: TLabel;
+    Label91: TLabel;
+    Label92: TLabel;
+    Label93: TLabel;
+    Label94: TLabel;
+    Label95: TLabel;
+    Label96: TLabel;
+    Label97: TLabel;
+    Label98: TLabel;
+    Label99: TLabel;
     LiveModeCB: TCheckBox;
     DutyCycle1FSE: TFloatSpinEdit;
     DutyCycle2FSE: TFloatSpinEdit;
@@ -511,6 +569,8 @@ type
     procedure LiveModeCBChange(Sender: TObject);
     procedure LoadActionMIClick(Sender: TObject);
     procedure FirmwareResetMIClick(Sender: TObject);
+    procedure OverallTimerStartTimer(Sender: TObject);
+    procedure OverallTimerStopTimer(Sender: TObject);
     procedure PumpNumberSEChange(Sender: TObject);
     procedure PumpVoltageFSChange(Sender: TObject);
     procedure PumpGBDblClick(Sender: TObject);
@@ -915,6 +975,33 @@ end;
 procedure TMainForm.FirmwareResetMIClick(Sender: TObject);
 begin
  FirmwareUpdate(true); // forced update
+end;
+
+procedure TMainForm.OverallTimerStartTimer(Sender: TObject);
+begin
+ Application.Icon.Assign(IconImageGreen.Picture.Icon);
+ IndicatorPanelP.Caption:= 'Pumps are running';
+ IndicatorPanelP.Color:= clLime;
+ RunBB.Caption:= 'Pumps running';
+ RunBB.Enabled:= False;
+ GenerateCommandBB.Enabled:= False;
+ // disable menu to load and save action files
+ MainForm.LoadActionMI.Enabled:= False;
+ MainForm.SaveActionMI.Enabled:= False;
+ // disable all setting possibilities
+ RunSettingsGB.Enabled:= False;
+ LiveModeCB.Enabled:= False;
+ // disable the connection menu that the user cannot close
+ // the conenction while the pumps are running
+ ConnectionMI.Enabled:= False;
+ DriverConnectBB.Enabled:= False;
+ FirmwareUpdateMI.Enabled:= False;
+ FirmwareResetMI.Enabled:= False;
+end;
+
+procedure TMainForm.OverallTimerStopTimer(Sender: TObject);
+begin
+ Application.Icon.Assign(IconImageBlue.Picture.Icon);
 end;
 
 procedure TMainForm.PumpNumberSEChange(Sender: TObject);
@@ -2208,6 +2295,7 @@ begin
   // disable the connection menu that the user cannot close
   // the conenction while the pumps are running
   ConnectionMI.Enabled:= False;
+  DriverConnectBB.Enabled:= False;
   FirmwareUpdateMI.Enabled:= False;
   FirmwareResetMI.Enabled:= False;
   // disable menu to load and save action files
@@ -2223,6 +2311,7 @@ begin
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';
    ConnectionMI.Enabled:= True;
+   DriverConnectBB.Enabled:= True;
    RunBB.Enabled:= False;
    if ser.LastError = 9997 then
    begin
@@ -2272,49 +2361,35 @@ begin
   // save command to be resend on every repeat if running with SIX
   commandForRepeat:= command;
 
-  // if we have an open serial connection, execute
-  if HaveSerialCB.Checked then
-  begin
-   // disable the connection menu that the user cannot close
-   // the conenction while the pumps are running
-   ConnectionMI.Enabled:= False;
-   FirmwareUpdateMI.Enabled:= False;
-   FirmwareResetMI.Enabled:= False;
-   // disable menu to load and save action files
-   LoadActionMI.Enabled:= False;
-   SaveActionMI.Enabled:= False;
-   // send the command
-   ser.SendString(command);
-   if ser.LastError <> 0 then
-   begin
-    with Application do
-     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error',
-                MB_ICONERROR + MB_OK);
-    ConnComPortLE.Color:= clRed;
-    ConnComPortLE.Text:= 'Try to reconnect';
-    IndicatorPanelP.Caption:= 'Connection failure';
-    ConnectionMI.Enabled:= True;
-    RunBB.Enabled:= False;
-    if ser.LastError = 9997 then
-    begin
-     StopBB.Enabled:= False;
-     exit; // we cannot close socket or free if the connection timed out
-    end;
-    CloseSerialConn;
-    exit;
-   end;
-  end
-  else // no serial connection
+  // if no serial connection, we can stop here
+  if not HaveSerialCB.Checked then
   begin
    RunBB.Enabled:= False;
    exit;
   end;
-  RunBB.Caption:= 'Pumps running';
-  RunBB.Enabled:= False;
-  GenerateCommandBB.Enabled:= False;
-  // disable all setting possibilities
-  RunSettingsGB.Enabled:= False;
-  LiveModeCB.Enabled:= False;
+
+  // send the command
+  ser.SendString(command);
+  if ser.LastError <> 0 then
+  begin
+   with Application do
+    MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc), 'Error',
+               MB_ICONERROR + MB_OK);
+   ConnComPortLE.Color:= clRed;
+   ConnComPortLE.Text:= 'Try to reconnect';
+   IndicatorPanelP.Caption:= 'Connection failure';
+   ConnectionMI.Enabled:= True;
+   DriverConnectBB.Enabled:= True;
+   RunBB.Enabled:= False;
+   if ser.LastError = 9997 then
+   begin
+    StopBB.Enabled:= False;
+    exit; // we cannot close socket or free if the connection timed out
+   end;
+   CloseSerialConn;
+   exit;
+  end;
+
   // not the pump settings when in live mode
   if not LiveModeCB.Checked then
   begin
@@ -2341,8 +2416,6 @@ begin
    end;
   end;
   RepeatOutputLE.Visible:= False;
-  IndicatorPanelP.Caption:= 'Pumps are running';
-  IndicatorPanelP.Color:= clRed;
   // set timers
   if (StrToInt(RepeatSE.Text) > 0) and (RunEndlessCB.Checked = False) then
   begin
@@ -2403,6 +2476,7 @@ begin
     ConnComPortLE.Text:= 'Try to reconnect';
     IndicatorPanelP.Caption:= 'Connection failiure';
     ConnectionMI.Enabled:= True;
+    DriverConnectBB.Enabled:= True;
     RunBB.Enabled:= False;
     CloseSerialConn;
     exit;
@@ -2464,6 +2538,7 @@ begin
  FinishTimeLE.Text:= finishTime;
  OverallTimer.Enabled:= False;
  ConnectionMI.Enabled:= True;
+ DriverConnectBB.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
  FirmwareResetMI.Enabled:= True;
  LoadActionMI.Enabled:= True;
@@ -2616,6 +2691,7 @@ var
 begin
  // re-enable the connection menu in every case
  ConnectionMI.Enabled:= True;
+ DriverConnectBB.Enabled:= True;
  FirmwareUpdateMI.Enabled:= True;
  FirmwareResetMI.Enabled:= True;
  // re-enable menu to load and save action files
@@ -2643,6 +2719,7 @@ begin
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';
    ConnectionMI.Enabled:= True;
+   DriverConnectBB.Enabled:= True;
    if ser.LastError = 9997 then
    begin
     StopBB.Enabled:= False;
