@@ -1201,7 +1201,7 @@ begin
    end;
   end;
 
-  // if connected to wrong device, the exit only jumps out of try..finally block
+  // if connected to wrong device, exit; only jumps out of try..finally block
   if exited then
    exit;
 
@@ -1241,9 +1241,14 @@ begin
    exit;
   end;
 
-  // Closing open connections
+  // closing open connections
+  // we don't call CloseSerialConn because we need the COMPort info
   if HaveSerialCB.Checked then
-   CloseSerialConn;
+  begin
+   ser.CloseSocket;
+   ser.Free;
+   HaveSerialCB.Checked:= False;
+  end;
 
   // open new connection with 1200 baud,
   // this rate is mandatory to set the Arduino into boot mode
