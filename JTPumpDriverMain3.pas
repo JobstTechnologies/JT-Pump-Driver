@@ -2139,8 +2139,8 @@ begin
    if timeStep > 2147483646 then
    begin
     IndicatorPanelP.Color:= clRed;
-    IndicatorPanelP.Caption:= 'Action Time ' + jStr + 'too long!';
-    IndicatorPanelP.Hint:= 'The time for one action must not exceed 596 h.';
+    IndicatorPanelP.Caption:= 'Step time ' + jStr + 'too long!';
+    IndicatorPanelP.Hint:= 'time for one step must not exceed 596 h';
     result:= False;
     exit;
    end;
