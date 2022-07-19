@@ -6456,7 +6456,7 @@ object MainForm: TMainForm
       Hint = 'Starts the pump action according to the current settings.'#13#10'To enable the button you must first connect to the pump driver'#13#10'using the menu ''Connection''.'
       Top = 4
       Width = 104
-      Caption = 'Run Action'
+      Caption = 'Run Pumps'
       Enabled = False
       OnClick = RunBBClick
       ParentShowHint = False
@@ -6469,7 +6469,7 @@ object MainForm: TMainForm
       Hint = 'Stops the pump action and all running pumps'
       Top = 52
       Width = 104
-      Caption = 'Stop Action'
+      Caption = 'Stop Pumps'
       Enabled = False
       OnClick = StopBBClick
       ParentShowHint = False
