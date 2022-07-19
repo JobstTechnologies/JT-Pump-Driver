@@ -840,6 +840,8 @@ begin
   ser.config(9600, 8, 'N', SB1, False, False);
   if ser.LastError <> 0 then
   begin
+   MessageDlgPos(COMPort + ' error: '
+    + ser.LastErrorDesc, mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
    // disable all buttons
    RunBB.Enabled:= false;
    StopBB.Enabled:= false;
@@ -2476,32 +2478,40 @@ begin
 end;
 
 procedure TMainForm.SendRepeatToPump;
-// send command to pump driver
+// sends command to pump driver
+var
+ errorMsg, saveCOMPort : string;
+ MousePointer : TPoint;
 begin
-  if HaveSerialCB.Checked then
+ if HaveSerialCB.Checked then
+ begin
+  ser.SendString(commandForRepeat);
+  if ser.LastError <> 0 then
   begin
-   ser.SendString(commandForRepeat);
-   if ser.LastError <> 0 then
-   begin
-    with Application do
-     MessageBox(PChar(COMPort + ' error: ' + ser.LastErrorDesc),
-                      'Error', MB_ICONERROR + MB_OK);
-    ConnComPortLE.Color:= clRed;
-    ConnComPortLE.Text:= 'Try to reconnect';
-    IndicatorPanelP.Caption:= 'Connection failiure';
-    IndicatorPanelP.Color:= clRed;
-    ConnectionMI.Enabled:= True;
-    DriverConnectBB.Enabled:= True;
-    RunBB.Enabled:= False;
-    CloseSerialConn;
-    exit;
-   end;
-  end
-  else // no serial connection
-  begin
+   // store message and COMPort because CloseSerialConn will empty them
+   errorMsg:= ser.LastErrorDesc;
+   saveCOMPort:= COMPort;
+   ConnComPortLE.Color:= clRed;
+   ConnComPortLE.Text:= 'Try to reconnect';
+   IndicatorPanelP.Caption:= 'Connection failiure';
+   IndicatorPanelP.Color:= clRed;
+   ConnectionMI.Enabled:= True;
+   DriverConnectBB.Enabled:= True;
    RunBB.Enabled:= False;
+   CloseSerialConn;
+   MousePointer:= Mouse.CursorPos;
+   // since the dialog will interrupt the code execution
+   // it must be after ClosePumpSerialConn
+   MessageDlgPos(saveCOMPort + ' error: '
+   + errorMsg, mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
    exit;
   end;
+ end
+ else // no serial connection
+ begin
+  RunBB.Enabled:= False;
+  exit;
+ end;
 end;
 
 procedure TMainForm.RepeatTimerFinished;
@@ -2703,6 +2713,7 @@ procedure TMainForm.StopBBClick(Sender: TObject);
 var
  command, stopTime : string;
  i, j, k : integer;
+ MousePointer : TPoint;
 begin
  // re-enable the connection menu in every case
  ConnectionMI.Enabled:= True;
@@ -2728,8 +2739,9 @@ begin
   ser.SendString(command);
   if ser.LastError <> 0 then
   begin
-   with Application do
-    MessageBox(PChar(COMPort + 'error: ' + ser.LastErrorDesc), 'Error', MB_ICONERROR+MB_OK);
+   MousePointer:= Mouse.CursorPos;
+   MessageDlgPos(COMPort + ' error: '
+    + ser.LastErrorDesc, mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';

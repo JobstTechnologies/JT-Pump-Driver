@@ -7,8 +7,9 @@ improvements:
   the icon is light-blue
 - better feedback if no pump driver was found during port scan
 
-bugfix:
+bugfixes:
 - button to connect driver was active while pumps were running
+- avoid countless error messages when connection to driver was lost
 
 
 from version 3.23 to 3.24
