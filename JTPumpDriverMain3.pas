@@ -763,8 +763,15 @@ begin
     inc(i);
   end;
 
+  ConnectBB.Enabled:= true;
+  SerialUSBPortCB.Text:= '';
+  if SerialUSBPortCB.Items.Count = 0 then
+  begin
+   ConnectBB.Enabled:= false;
+   SerialUSBPortCB.Text:= 'No driver found';
+  end
   // if there is only one COM port, preselect it
-  if SerialUSBPortCB.Items.Count = 1 then
+  else if SerialUSBPortCB.Items.Count = 1 then
    SerialUSBPortCB.ItemIndex:= 0
   else
   begin
@@ -1128,7 +1135,9 @@ begin
 
   // open connection dialog
   SerialUSBSelectionF.ShowModal;
-  if (COMPort = 'Ignore') then // user pressed Disconnect
+  if SerialUSBSelectionF.ModalResult = mrOK then
+    COMPort:= SerialUSBSelectionF.SerialUSBPortCB.Text;
+  if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
   begin
    MessageDlgPos('No connection, no firmware update possible.',
     mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
