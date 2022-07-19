@@ -3,8 +3,8 @@ Changes
 from version 3.24 to 3.25
 
 improvements:
-- the pump icon turns green to indicate when pumps are running, otherwise
-  the icon is light-blue
+- when pumps are running, the application icon changes to green to indicate this
+  otherwise the icon is light-blue
 - better feedback if no pump driver was found during port scan
 
 bugfixes:
