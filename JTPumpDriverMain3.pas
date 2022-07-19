@@ -813,8 +813,6 @@ begin
   // disable all buttons
   RunBB.Enabled:= false;
   StopBB.Enabled:= false;
-  IndicatorPanelP.Caption:= 'Connection failure';
-  IndicatorPanelP.Color:= clRed;
   if HaveSerialCB.Checked then
   begin
    // stop pumps
@@ -2324,6 +2322,7 @@ begin
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';
+   IndicatorPanelP.Color:= clRed;
    ConnectionMI.Enabled:= True;
    DriverConnectBB.Enabled:= True;
    RunBB.Enabled:= False;
@@ -2392,6 +2391,7 @@ begin
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';
+   IndicatorPanelP.Color:= clRed;
    ConnectionMI.Enabled:= True;
    DriverConnectBB.Enabled:= True;
    RunBB.Enabled:= False;
@@ -2489,6 +2489,7 @@ begin
     ConnComPortLE.Color:= clRed;
     ConnComPortLE.Text:= 'Try to reconnect';
     IndicatorPanelP.Caption:= 'Connection failiure';
+    IndicatorPanelP.Color:= clRed;
     ConnectionMI.Enabled:= True;
     DriverConnectBB.Enabled:= True;
     RunBB.Enabled:= False;
@@ -2732,6 +2733,7 @@ begin
    ConnComPortLE.Color:= clRed;
    ConnComPortLE.Text:= 'Try to reconnect';
    IndicatorPanelP.Caption:= 'Connection failure';
+   IndicatorPanelP.Color:= clRed;
    ConnectionMI.Enabled:= True;
    DriverConnectBB.Enabled:= True;
    if ser.LastError = 9997 then
