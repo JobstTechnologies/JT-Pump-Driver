@@ -1,5 +1,12 @@
 Changes
 
+from version 3.25 to 3.26
+
+improvements:
+- support for pump drivers that have a unique ID
+- change application icon color for better visibility
+
+
 from version 3.24 to 3.25
 
 improvements:
