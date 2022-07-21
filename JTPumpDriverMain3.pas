@@ -21,7 +21,7 @@ type
     DriverConnectionGB: TGroupBox;
     GenerateCommandBB: TBitBtn;
     HaveSerialCB: TCheckBox;
-    IconImageBlue: TImage;
+    IconImageYellow: TImage;
     IconImageGreen: TImage;
     Label100: TLabel;
     Label101: TLabel;
@@ -1008,7 +1008,7 @@ end;
 
 procedure TMainForm.OverallTimerStopTimer(Sender: TObject);
 begin
- Application.Icon.Assign(IconImageBlue.Picture.Icon);
+ Application.Icon.Assign(IconImageYellow.Picture.Icon);
 end;
 
 procedure TMainForm.PumpNumberSEChange(Sender: TObject);
