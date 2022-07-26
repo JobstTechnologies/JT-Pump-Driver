@@ -32,7 +32,7 @@ You can get the latest firmware version as binary from [here](https://github.com
 
 Copyright by Jobst Technologies.
 
-This project uses the Arduino tool [**bossac**](https://github.com/arduino/arduino-flash-tools).
+JT Pump Driver uses the Arduino tool [**bossac**](https://github.com/arduino/arduino-flash-tools).
 
 # Compilation
 
