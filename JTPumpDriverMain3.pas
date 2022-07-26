@@ -1192,7 +1192,7 @@ begin
     command:= '/0LM500lM500R' + LineEnding;
     ser.SendString(command);
     // receive firmware version
-    FirmwareVersion:= ser.RecvPacket(1000);
+    FirmwareVersion:= ser.Recvstring(1000);
    end;
   finally
    if ser.LastError <> 0 then
@@ -1388,7 +1388,7 @@ begin
    command:= '/0LM500lM500R' + LineEnding;
    ser.SendString(command);
    // receive firmware version
-   FirmwareVersion:= ser.RecvPacket(1000);
+   FirmwareVersion:= ser.Recvstring(1000);
   finally
    if ser.LastError <> 0 then
    begin
@@ -1400,7 +1400,7 @@ begin
     CloseSerialConn;
     exit;
    end;
-   if Pos('.', FirmwareVersion) > 0 then
+   if Pos('JT-PumpDriver-Firmware', FirmwareVersion) > 0 then
      FirmwareVersion:= copy(FirmwareVersion, Pos('.', FirmwareVersion) - 1, 3)
    else
      FirmwareVersion:= 'unknown';
@@ -3849,7 +3849,7 @@ begin
      begin
       command:= '/0lR' + LineEnding;
       serTest.SendString(command);
-      driverFeedback:= serTest.RecvPacket(1000);
+      driverFeedback:= serTest.Recvstring(1000);
      end;
     finally
      if serTest.LastError <> 0 then
