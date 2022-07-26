@@ -21,7 +21,6 @@ begin
   Application.CreateForm(TSerialUSBSelectionF, SerialUSBSelectionF);
   Application.CreateForm(TPumpNameSettingF, PumpNameSettingF);
   Application.CreateForm(TAboutFormF, AboutFormF);
-  Application.CreateForm(TScanningProgressF, ScanningProgressF);
   Application.Run;
 end.
 

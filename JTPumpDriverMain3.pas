@@ -3776,6 +3776,7 @@ begin
 
   // since the COM port scan can take some time depending on how many SIX/pumps
   // are connected, display a progess bar
+  ScanningProgressF:= TScanningProgressF.Create(Nil);
   if RegStrings.Count > 2 then
   begin
    ScanningProgressF.ScanningPB.Max:= RegStrings.Count;
@@ -3896,9 +3897,7 @@ begin
   Reg.Free;
   RegStrings.Free;
   ScanningProgressF.Close;
-  // tell the OS there is a window less and this way assures that a subsequent
-  // SerialUSBSelectionF window is properly shown
-  Application.ProcessMessages;
+  ScanningProgressF.Free;
  end;
 
 end;
