@@ -1,5 +1,12 @@
 Changes
 
+from version 3.26 to 3.27
+
+bugfixes:
+- on some PCs the previews in the Windows' taskbar was wrong
+- fix (rather random) connection errors to pump driver
+
+
 from version 3.25 to 3.26
 
 improvements:
