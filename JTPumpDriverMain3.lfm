@@ -6228,7 +6228,7 @@ object MainForm: TMainForm
       Color = clHighlight
       EditLabel.Height = 15
       EditLabel.Width = 124
-      EditLabel.Caption = 'Connected Port'
+      EditLabel.Caption = 'Connected To'
       EditLabel.ParentColor = False
       ParentShowHint = False
       ReadOnly = True
