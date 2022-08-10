@@ -59,6 +59,7 @@ type
     Label77: TLabel;
     Label78: TLabel;
     Label79: TLabel;
+    LoadedActionFileL: TLabel;
     Label80: TLabel;
     Label81: TLabel;
     Label82: TLabel;
@@ -147,7 +148,6 @@ type
     Label62: TLabel;
     Label63: TLabel;
     Label64: TLabel;
-    Label8: TLabel;
     LoadActionMI: TMenuItem;
     LoadedActionFileM: TMemo;
     FirmwareResetMI: TMenuItem;

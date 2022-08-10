@@ -1,11 +1,11 @@
 object MainForm: TMainForm
   Left = 443
-  Height = 615
+  Height = 614
   Top = 117
   Width = 710
   AllowDropFiles = True
   Caption = 'JT Pump Driver'
-  ClientHeight = 595
+  ClientHeight = 594
   ClientWidth = 710
   Color = clWindow
   Menu = MainMenu
@@ -16,11 +16,15 @@ object MainForm: TMainForm
   Position = poDefaultPosOnly
   LCLVersion = '2.2.2.0'
   object RepeatPC: TPageControl
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
     Left = 12
     Height = 512
     Top = 8
     Width = 362
     ActivePage = Step1TS
+    BorderSpacing.Left = 12
+    BorderSpacing.Top = 8
     ParentShowHint = False
     TabIndex = 0
     TabOrder = 0
@@ -29,10 +33,14 @@ object MainForm: TMainForm
       ClientHeight = 484
       ClientWidth = 354
       object ActionTime1GB: TGroupBox
-        Left = 54
+        AnchorSideTop.Control = DutyCycle1GB
+        AnchorSideRight.Control = DutyCycle1GB
+        Left = 58
         Height = 49
         Top = 4
         Width = 192
+        Anchors = [akTop, akRight]
+        BorderSpacing.Right = 8
         Caption = 'Action Time'
         ClientHeight = 29
         ClientWidth = 188
@@ -78,13 +86,19 @@ object MainForm: TMainForm
         end
       end
       object DutyCycle1GB: TGroupBox
+        AnchorSideTop.Control = Step1TS
+        AnchorSideRight.Control = Step1TS
+        AnchorSideRight.Side = asrBottom
         Left = 258
         Height = 49
         Top = 4
-        Width = 88
+        Width = 86
+        Anchors = [akTop, akLeft, akRight]
+        BorderSpacing.Top = 4
+        BorderSpacing.Right = 10
         Caption = 'Duty Cycle'
         ClientHeight = 29
-        ClientWidth = 84
+        ClientWidth = 82
         TabOrder = 1
         object Label2: TLabel
           Left = 64
@@ -111,10 +125,16 @@ object MainForm: TMainForm
         end
       end
       object Step1UseCB: TCheckBox
+        AnchorSideLeft.Control = S1PC
+        AnchorSideTop.Side = asrCenter
+        AnchorSideBottom.Control = ActionTime1GB
+        AnchorSideBottom.Side = asrBottom
         Left = 8
         Height = 19
-        Top = 20
+        Top = 26
         Width = 39
+        Anchors = [akLeft, akBottom]
+        BorderSpacing.Bottom = 8
         Caption = 'Use'
         Checked = True
         OnChange = StepXUseCBChange
@@ -124,11 +144,13 @@ object MainForm: TMainForm
         Visible = False
       end
       object S1PC: TPageControl
+        AnchorSideLeft.Control = Step1TS
         Left = 8
         Height = 422
         Top = 60
         Width = 336
         ActivePage = S1P14
+        BorderSpacing.Left = 8
         TabIndex = 0
         TabOrder = 3
         object S1P14: TTabSheet
@@ -6185,20 +6207,30 @@ object MainForm: TMainForm
     end
   end
   object StatusGB: TGroupBox
-    Left = 388
+    AnchorSideLeft.Control = RunSettingsGB
+    AnchorSideTop.Control = RunSettingsGB
+    AnchorSideTop.Side = asrBottom
+    Left = 386
     Height = 384
     Top = 120
     Width = 148
+    BorderSpacing.Top = 4
     Caption = 'Status Info'
     ClientHeight = 364
     ClientWidth = 144
     TabOrder = 3
     object RepeatOutputLE: TLabeledEdit
-      Left = 26
+      AnchorSideLeft.Control = StatusGB
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideBottom.Control = StatusGB
+      AnchorSideBottom.Side = asrBottom
+      Left = 30
       Height = 23
-      Top = 328
+      Top = 329
       Width = 84
       Alignment = taCenter
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Bottom = 12
       EditLabel.Height = 15
       EditLabel.Width = 84
       EditLabel.Caption = 'Current Repeat'
@@ -6208,10 +6240,16 @@ object MainForm: TMainForm
       Visible = False
     end
     object IndicatorPanelP: TPanel
-      Left = 7
+      AnchorSideLeft.Control = StatusGB
+      AnchorSideRight.Control = StatusGB
+      AnchorSideRight.Side = asrBottom
+      Left = 8
       Height = 43
       Top = 0
-      Width = 130
+      Width = 128
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 8
+      BorderSpacing.Right = 8
       BevelOuter = bvNone
       ParentBackground = False
       ParentColor = False
@@ -6220,14 +6258,19 @@ object MainForm: TMainForm
       TabOrder = 3
     end
     object ConnComPortLE: TLabeledEdit
+      AnchorSideLeft.Control = IndicatorPanelP
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = IndicatorPanelP
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 23
-      Top = 72
-      Width = 124
+      Top = 70
+      Width = 128
       Alignment = taCenter
+      Anchors = [akLeft, akRight]
       Color = clHighlight
       EditLabel.Height = 15
-      EditLabel.Width = 124
+      EditLabel.Width = 128
       EditLabel.Caption = 'Connected To'
       EditLabel.ParentColor = False
       ParentShowHint = False
@@ -6236,14 +6279,18 @@ object MainForm: TMainForm
       Text = 'Not connected'
     end
     object TotalTimeLE: TLabeledEdit
+      AnchorSideLeft.Control = IndicatorPanelP
+      AnchorSideRight.Control = IndicatorPanelP
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 23
       Hint = 'Total time the pumps will act after pressing ''Run Pumps'''
       Top = 184
-      Width = 124
+      Width = 128
       Alignment = taCenter
+      Anchors = [akTop, akLeft, akRight]
       EditLabel.Height = 15
-      EditLabel.Width = 124
+      EditLabel.Width = 128
       EditLabel.Caption = 'Total Time'
       EditLabel.ParentColor = False
       ParentShowHint = False
@@ -6252,13 +6299,17 @@ object MainForm: TMainForm
       TabOrder = 0
     end
     object StartTimeLE: TLabeledEdit
+      AnchorSideLeft.Control = IndicatorPanelP
+      AnchorSideRight.Control = IndicatorPanelP
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 23
       Hint = 'Time when ''Run Pumps'' was pressed'
       Top = 232
-      Width = 124
+      Width = 128
+      Anchors = [akTop, akLeft, akRight]
       EditLabel.Height = 15
-      EditLabel.Width = 124
+      EditLabel.Width = 128
       EditLabel.Caption = 'Start Time'
       EditLabel.ParentColor = False
       ParentShowHint = False
@@ -6267,13 +6318,17 @@ object MainForm: TMainForm
       TabOrder = 4
     end
     object FinishTimeLE: TLabeledEdit
+      AnchorSideLeft.Control = IndicatorPanelP
+      AnchorSideRight.Control = IndicatorPanelP
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 23
       Hint = 'Time when either the action was finished'#13#10'or when ''Stop Pumps'' was pressed'
       Top = 280
-      Width = 124
+      Width = 128
+      Anchors = [akTop, akLeft, akRight]
       EditLabel.Height = 15
-      EditLabel.Width = 124
+      EditLabel.Width = 128
       EditLabel.Caption = 'Finish Time'
       EditLabel.ParentColor = False
       ParentShowHint = False
@@ -6282,12 +6337,19 @@ object MainForm: TMainForm
       TabOrder = 5
     end
     object LoadedActionFileM: TMemo
+      AnchorSideLeft.Control = IndicatorPanelP
+      AnchorSideTop.Control = LoadedActionFileL
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = IndicatorPanelP
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 40
       Hint = 'No action file loaded'
-      Top = 122
-      Width = 124
+      Top = 118
+      Width = 128
       Alignment = taCenter
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Top = 2
       Lines.Strings = (
         'None'
       )
@@ -6296,56 +6358,84 @@ object MainForm: TMainForm
       ShowHint = True
       TabOrder = 6
     end
-    object Label8: TLabel
-      Left = 7
+    object LoadedActionFileL: TLabel
+      AnchorSideLeft.Control = LoadedActionFileM
+      AnchorSideTop.Control = ConnComPortLE
+      AnchorSideTop.Side = asrBottom
+      AnchorSideBottom.Control = LoadedActionFileM
+      Left = 8
       Height = 15
-      Top = 104
+      Top = 101
       Width = 98
+      BorderSpacing.Top = 8
       Caption = 'Loaded Action File'
       ParentColor = False
     end
   end
   object RunSettingsGB: TGroupBox
-    Left = 388
-    Height = 88
+    AnchorSideLeft.Control = RepeatPC
+    AnchorSideLeft.Side = asrBottom
+    Left = 386
+    Height = 84
     Top = 32
     Width = 148
+    BorderSpacing.Left = 12
     Caption = 'Run Settings'
-    ClientHeight = 68
+    ClientHeight = 64
     ClientWidth = 144
     TabOrder = 1
     object RunEndlessCB: TCheckBox
-      Left = 7
+      AnchorSideLeft.Control = RunSettingsGB
+      AnchorSideTop.Control = RepeatSE
+      AnchorSideTop.Side = asrBottom
+      Left = 4
       Height = 19
-      Top = 40
+      Top = 37
       Width = 138
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 8
       Caption = 'Run until Stop pressed'
       OnChange = RunEndlessCBChange
       TabOrder = 1
     end
     object RepeatL: TLabel
+      AnchorSideLeft.Control = RunSettingsGB
+      AnchorSideTop.Control = RunSettingsGB
       Left = 8
       Height = 15
-      Top = 12
+      Top = 10
       Width = 71
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 10
       Caption = 'Repeat times:'
       ParentColor = False
     end
     object RepeatSE: TSpinEdit
+      AnchorSideLeft.Control = RepeatL
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = RepeatL
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Side = asrBottom
       Left = 87
       Height = 23
-      Top = 8
+      Top = 6
       Width = 49
+      BorderSpacing.Left = 8
       MaxValue = 9999
       TabOrder = 0
     end
   end
   object CommandM: TMemo
+    AnchorSideLeft.Control = RepeatPC
+    AnchorSideTop.Control = CommandL
+    AnchorSideTop.Side = asrBottom
     Left = 12
     Height = 37
     Hint = 'The command that will be sent by clicking ''Run Pumps'''
-    Top = 544
+    Top = 543
     Width = 529
+    BorderSpacing.Top = 2
     ParentShowHint = False
     ReadOnly = True
     ScrollBars = ssAutoVertical
@@ -6353,19 +6443,27 @@ object MainForm: TMainForm
     TabOrder = 2
   end
   object CommandL: TLabel
+    AnchorSideLeft.Control = RepeatPC
+    AnchorSideTop.Control = RepeatPC
+    AnchorSideTop.Side = asrBottom
     Left = 12
     Height = 15
     Top = 526
     Width = 57
+    BorderSpacing.Top = 6
+    BorderSpacing.Bottom = 2
     Caption = 'Command'
     ParentColor = False
   end
   object LiveModeCB: TCheckBox
-    Left = 398
+    AnchorSideLeft.Control = RunSettingsGB
+    AnchorSideTop.Control = RepeatPC
+    Left = 394
     Height = 19
     Hint = 'All steps will be disabled and'#13#10'every pump settings change'#13#10'will have an immediate effect'
     Top = 8
     Width = 75
+    BorderSpacing.Left = 8
     Caption = 'Live Mode'
     OnChange = LiveModeCBChange
     ParentShowHint = False
@@ -6373,20 +6471,30 @@ object MainForm: TMainForm
     TabOrder = 4
   end
   object DriverConnectionGB: TGroupBox
-    Left = 550
+    AnchorSideLeft.Control = ActionsGB
+    AnchorSideTop.Control = ActionsGB
+    AnchorSideTop.Side = asrBottom
+    Left = 546
     Height = 75
-    Top = 226
-    Width = 148
+    Top = 222
+    Width = 149
+    BorderSpacing.Top = 4
     Caption = 'Connection'
     ClientHeight = 55
-    ClientWidth = 144
+    ClientWidth = 145
     TabOrder = 5
     object DriverConnectBB: TBitBtn
+      AnchorSideLeft.Control = DriverConnectionGB
+      AnchorSideRight.Control = DriverConnectionGB
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 39
       Hint = 'Connects to a pump driver'
       Top = 4
-      Width = 126
+      Width = 129
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 8
+      BorderSpacing.Right = 8
       Caption = 'Connect Driver'
       OnClick = DriverConnectBBClick
       ParentShowHint = False
@@ -6395,32 +6503,45 @@ object MainForm: TMainForm
     end
   end
   object PumpSetupGB: TGroupBox
-    Left = 550
-    Height = 64
-    Top = 310
-    Width = 148
+    AnchorSideLeft.Control = ActionsGB
+    AnchorSideTop.Control = DriverConnectionGB
+    AnchorSideTop.Side = asrBottom
+    Left = 546
+    Height = 60
+    Top = 301
+    Width = 149
+    BorderSpacing.Top = 4
     Caption = 'Pump Setup'
-    ClientHeight = 44
-    ClientWidth = 144
+    ClientHeight = 40
+    ClientWidth = 145
     ParentColor = False
     TabOrder = 6
     object PumpNumberL: TLabel
-      Left = 6
+      AnchorSideLeft.Control = PumpSetupGB
+      AnchorSideTop.Control = PumpNumberSE
+      AnchorSideTop.Side = asrCenter
+      Left = 4
       Height = 15
       Hint = 'Number of pumps in the setup'
       Top = 12
       Width = 91
+      BorderSpacing.Left = 4
       Caption = 'Available pumps:'
       ParentColor = False
       ParentShowHint = False
       ShowHint = True
     end
     object PumpNumberSE: TSpinEdit
-      Left = 100
+      AnchorSideLeft.Control = PumpNumberL
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = PumpSetupGB
+      Left = 99
       Height = 23
       Hint = 'Number of pumps in the setup'
       Top = 8
       Width = 38
+      BorderSpacing.Left = 4
+      BorderSpacing.Top = 8
       MaxValue = 8
       MinValue = 1
       OnChange = PumpNumberSEChange
@@ -6431,31 +6552,44 @@ object MainForm: TMainForm
     end
   end
   object HaveSerialCB: TCheckBox
-    Left = 552
+    AnchorSideLeft.Control = CommandM
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = CommandM
+    AnchorSideTop.Side = asrCenter
+    Left = 553
     Height = 19
     Top = 552
     Width = 90
+    BorderSpacing.Left = 12
     Caption = 'HaveSerialCB'
     OnChange = HaveSerialCBChange
     TabOrder = 7
     Visible = False
   end
   object ActionsGB: TGroupBox
-    Left = 550
+    AnchorSideLeft.Control = RunSettingsGB
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = RunSettingsGB
+    Left = 546
     Height = 186
     Top = 32
-    Width = 148
+    Width = 149
+    BorderSpacing.Left = 12
     Caption = 'Actions'
     ClientHeight = 166
-    ClientWidth = 144
+    ClientWidth = 145
     ParentColor = False
     TabOrder = 8
     object RunBB: TBitBtn
+      AnchorSideLeft.Control = ActionsGB
+      AnchorSideLeft.Side = asrCenter
+      AnchorSideTop.Control = ActionsGB
       Left = 20
       Height = 39
       Hint = 'Starts the pump action according to the current settings.'#13#10'To enable the button you must first connect to the pump driver'#13#10'using the menu ''Connection''.'
-      Top = 4
+      Top = 8
       Width = 104
+      BorderSpacing.Top = 8
       Caption = 'Run Pumps'
       Enabled = False
       OnClick = RunBBClick
@@ -6464,11 +6598,15 @@ object MainForm: TMainForm
       TabOrder = 0
     end
     object StopBB: TBitBtn
+      AnchorSideLeft.Control = RunBB
+      AnchorSideTop.Control = RunBB
+      AnchorSideTop.Side = asrBottom
       Left = 20
       Height = 39
       Hint = 'Stops the pump action and all running pumps'
-      Top = 52
+      Top = 55
       Width = 104
+      BorderSpacing.Top = 8
       Caption = 'Stop Pumps'
       Enabled = False
       OnClick = StopBBClick
@@ -6477,11 +6615,20 @@ object MainForm: TMainForm
       TabOrder = 1
     end
     object GenerateCommandBB: TBitBtn
-      Left = 7
+      AnchorSideLeft.Control = ActionsGB
+      AnchorSideTop.Control = ActionCommandSplitter
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = ActionsGB
+      AnchorSideRight.Side = asrBottom
+      Left = 8
       Height = 39
       Hint = 'This button has 3 features:'#13#10'1. It generates the serial command that will be sent to the pump driver'#13#10'by clicking ''Run Pumps'' using the current settings'#13#10'2. It calculates the Total Time'#13#10'3. It enables editing the settings for a loaded action file'
-      Top = 116
-      Width = 128
+      Top = 111
+      Width = 129
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
       Caption = 'Generate Command'
       OnClick = GenerateCommandBBClick
       ParentShowHint = False
@@ -6489,10 +6636,19 @@ object MainForm: TMainForm
       TabOrder = 2
     end
     object ActionCommandSplitter: TPanel
+      AnchorSideLeft.Control = ActionsGB
+      AnchorSideTop.Control = StopBB
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = ActionsGB
+      AnchorSideRight.Side = asrBottom
       Left = 8
       Height = 1
-      Top = 104
-      Width = 124
+      Top = 102
+      Width = 129
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
       BevelColor = clBtnShadow
       BevelInner = bvRaised
       BevelOuter = bvNone
