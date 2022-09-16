@@ -1,5 +1,11 @@
 Changes
 
+from version 3.27 to 3.28
+
+bugfix:
+- The menu to get the firmware version was broken
+
+
 from version 3.26 to 3.27
 
 bugfixes:

@@ -1160,6 +1160,8 @@ begin
 
   // open connection dialog
   SerialUSBSelectionF.ShowModal;
+  if SerialUSBSelectionF.ModalResult = mrCancel then
+   exit;
   if SerialUSBSelectionF.ModalResult = mrOK then
     COMPort:= SerialUSBSelectionF.SerialUSBPortCB.Text;
   if SerialUSBSelectionF.ModalResult = mrNo then // user pressed Disconnect
@@ -1488,28 +1490,25 @@ begin
 end;
 
 procedure TMainForm.GetFirmwareVersionMIClick(Sender: TObject);
-// reads the forware version from the board
+// reads the firmware version from the pump driver board
 var
- StringFound : integer;
  MousePointer : TPoint;
 begin
  MousePointer:= Mouse.CursorPos; // store mouse position
- StringFound:= Pos('COM', ConnComPortLE.Text);
- if (StringFound = 0) or (ConnComPortLE.Color = clRed) then // connect first
+
+ if not HaveSerialCB.Checked then // connect first
   ConnectionMIClick(Sender);
- // check again
- StringFound:= Pos('COM', ConnComPortLE.Text);
- if ((StringFound = 0) or (ConnComPortLE.Color = clRed))
-  and (IndicatorPanelP.Caption <> 'Firmware too old') then // abort
+
+ if FirmwareVersion <> 'unknown' then
+ begin
+  MessageDlgPos('Firmware version: ' + FirmwareVersion,
+   mtInformation, [mbOK], 0, MousePointer.X, MousePointer.Y)
+ end
+ else
  begin
   MessageDlgPos('Error: No connection to a pump driver',
    mtError, [mbOK], 0, MousePointer.X, MousePointer.Y);
   exit;
- end
- else // connected
- begin
-  MessageDlgPos('Firmware version: ' + FirmwareVersion,
-   mtInformation, [mbOK], 0, MousePointer.X, MousePointer.Y)
  end;
 end;
 
