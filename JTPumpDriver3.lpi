@@ -23,8 +23,8 @@
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="3"/>
       <MinorVersionNr Value="2"/>
-      <RevisionNr Value="8"/>
-      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="3.28"/>
+      <RevisionNr Value="9"/>
+      <StringTable CompanyName="Jobst Technologies" FileDescription="Program to control pump driver for CCP1 pumps" LegalCopyright="Jobst Technologies GmbH" ProductName="JT Pump Driver" ProductVersion="3.29"/>
     </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -81,7 +81,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="JTPumpDriver-3-28"/>
+            <Filename Value="JTPumpDriver-3-29"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>

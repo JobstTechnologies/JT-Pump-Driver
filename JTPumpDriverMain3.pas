@@ -648,7 +648,7 @@ begin
  finally
   FileVerInfo.Free;
  end;
- MainForm.Caption:= 'JT Pump Driver ' + Version;
+ MainForm.Caption:= Application.Title + ' ' + Version;
  DefaultFormatSettings.DecimalSeparator:= '.'; // we use English numbers
 
  // explicitly set there because the IDE always
@@ -1530,10 +1530,15 @@ end;
 
 procedure TMainForm.AboutMIClick(Sender: TObject);
 begin
- // set version number
- AboutFormF.VersionNumber.Caption:= Version;
- // open the dialog
- AboutFormF.ShowModal;
+ with AboutFormF do
+ begin
+  // set version number
+  NameL.Caption:= Application.Title + ' version ';
+  VersionNumberL.Caption:= Version;
+  Caption:= Application.Title;
+  // open the dialog
+  ShowModal;
+ end;
 end;
 
 procedure TMainForm.LiveModeCBChange(Sender: TObject);

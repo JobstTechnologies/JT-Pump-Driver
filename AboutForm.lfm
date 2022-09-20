@@ -1,14 +1,14 @@
 object AboutFormF: TAboutFormF
   Left = 747
   Height = 230
-  Top = 177
-  Width = 325
+  Top = 178
+  Width = 330
   Caption = 'About JT Pump Driver'
   ClientHeight = 230
-  ClientWidth = 325
+  ClientWidth = 330
   Position = poMainFormCenter
   LCLVersion = '2.2.2.0'
-  object SourceCodeText: TLabel
+  object SourceCodeTextL: TLabel
     Left = 16
     Height = 15
     Top = 144
@@ -16,7 +16,7 @@ object AboutFormF: TAboutFormF
     Caption = 'Source code available at:'
     ParentColor = False
   end
-  object GitHubLink: TLabel
+  object GitHubLinkL: TLabel
     Cursor = crHandPoint
     Left = 16
     Height = 15
@@ -27,9 +27,9 @@ object AboutFormF: TAboutFormF
     Font.Style = [fsUnderline]
     ParentColor = False
     ParentFont = False
-    OnClick = GitHubLinkClick
+    OnClick = GitHubLinkLClick
   end
-  object BitBtn1: TBitBtn
+  object OKBB: TBitBtn
     Left = 128
     Height = 24
     Top = 192
@@ -40,15 +40,15 @@ object AboutFormF: TAboutFormF
     ModalResult = 1
     TabOrder = 0
   end
-  object UsageText: TStaticText
+  object UsageTextST: TStaticText
     Left = 16
     Height = 80
     Top = 56
-    Width = 288
-    Caption = 'Usage:'#13#10'- connect the pump driver to the PC'#13#10'- click on the menu "Connection" and select the'#13#10'  COM port of the pump driver'#13#10'- set the properties you like and press "Run Pumps"'
+    Width = 294
+    Caption = 'Usage:'#13#10'- connect the pump driver to the PC'#13#10'- click on the button "Connect Driver" and select either'#13#10'   the serial number or the COM port of the pump driver'#13#10'- set the properties you like and press "Run Pumps"'
     TabOrder = 1
   end
-  object Label1: TLabel
+  object NameL: TLabel
     Left = 16
     Height = 15
     Top = 13
@@ -56,15 +56,15 @@ object AboutFormF: TAboutFormF
     Caption = 'JT Pump Driver version'
     ParentColor = False
   end
-  object VersionNumber: TLabel
+  object VersionNumberL: TLabel
     Left = 140
     Height = 15
     Top = 13
-    Width = 82
-    Caption = 'VersionNumber'
+    Width = 38
+    Caption = 'Version'
     ParentColor = False
   end
-  object DescriptionText: TStaticText
+  object DescriptionTextST: TStaticText
     Left = 16
     Height = 20
     Top = 32

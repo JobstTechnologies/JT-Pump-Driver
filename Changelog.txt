@@ -1,9 +1,15 @@
 Changes
 
+from version 3.28 to 3.29
+
+bugfix:
+- description in the About dialog was outdated
+
+
 from version 3.27 to 3.28
 
 bugfix:
-- The menu to get the firmware version was broken
+- menu to get the firmware version was broken
 
 
 from version 3.26 to 3.27

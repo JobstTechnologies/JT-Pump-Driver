@@ -13,14 +13,14 @@ type
   { TAboutFormF }
 
   TAboutFormF = class(TForm)
-    BitBtn1: TBitBtn;
-    Label1: TLabel;
-    DescriptionText: TStaticText;
-    VersionNumber: TLabel;
-    UsageText: TStaticText;
-    SourceCodeText: TLabel;
-    GitHubLink: TLabel;
-    procedure GitHubLinkClick(Sender: TObject);
+    OKBB: TBitBtn;
+    NameL: TLabel;
+    DescriptionTextST: TStaticText;
+    VersionNumberL: TLabel;
+    UsageTextST: TStaticText;
+    SourceCodeTextL: TLabel;
+    GitHubLinkL: TLabel;
+    procedure GitHubLinkLClick(Sender: TObject);
   private
 
   public
@@ -36,7 +36,7 @@ implementation
 
 { TAboutFormF }
 
-procedure TAboutFormF.GitHubLinkClick(Sender: TObject);
+procedure TAboutFormF.GitHubLinkLClick(Sender: TObject);
 begin
   OpenURL('https://github.com/JobstTechnologies/JT-Pump-Driver');
 end;
