@@ -663,7 +663,7 @@ begin
    DropfileName:= '';
   end;
 
- // load the current chart appearance settings
+ // load the current appearance settings
  // we load from the same folder than the program .exe
  iniFile:= ExtractFilePath(Application.ExeName) + AppearanceFile;
  if FileExists(iniFile) then
